@@ -2,12 +2,12 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import ApplicationProvider from "../src/contexts/ApplicationContext";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import createEmotionCache from "../src/createEmotionCache";
+import createEmotionCache from "../styles/createEmotionCache";
 import { appWithTranslation } from "next-i18next";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { useState } from "react";
 
 const clientSideEmotionCache = createEmotionCache();
-const queryClient = new QueryClient();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -17,17 +17,20 @@ function MyApp({
   pageProps,
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
+  const [queryClient] = useState(() => new QueryClient());
   return (
-    <QueryClientProvider client={queryClient}>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ApplicationProvider>
-          <Component {...pageProps} />
-        </ApplicationProvider>
-      </CacheProvider>
-    </QueryClientProvider>
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ApplicationProvider>
+            <Component {...pageProps} />
+          </ApplicationProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </CacheProvider>
   );
 }
 export default appWithTranslation(MyApp);

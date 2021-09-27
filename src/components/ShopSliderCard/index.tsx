@@ -35,7 +35,7 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
             left: 9,
             bgcolor: "rgba(255,255,255,0.7)",
             p: 1,
-            borderRadius: "12px",
+            borderRadius: 12,
           }}
         >
           <Typography variant="subtitle2" fontWeight="bold">
@@ -49,7 +49,7 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
             right: 9,
             bgcolor: "rgba(255,255,255,0.7)",
 
-            borderRadius: "12px",
+            borderRadius: 12,
           }}
         >
           <DeliveryTimeChip>

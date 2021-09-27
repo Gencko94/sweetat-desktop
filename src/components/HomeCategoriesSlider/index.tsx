@@ -1,5 +1,4 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { ICategorySlide } from "../../../lib/interfaces/ICategorySlide";
 import Image from "next/image";
 import { Box } from "@mui/system";
 import { useMemo } from "react";

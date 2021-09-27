@@ -44,7 +44,7 @@ const PromoSlider = () => {
       <Swiper freeMode breakpoints={breakpoints}>
         {promoSlides?.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <Box borderRadius="6px" overflow="hidden">
+            <Box borderRadius={6} overflow="hidden">
               <Image
                 placeholder="blur"
                 blurDataURL={`https://sweetat.co/${slide.image_placeholder}`}

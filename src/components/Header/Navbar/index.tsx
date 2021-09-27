@@ -1,11 +1,9 @@
-import isMobile from "../../../../utils/isMobile";
 import dynamic from "next/dynamic";
 
-const DesktopNavbar = dynamic(() => import("../DesktopNavbar"));
-const MobileHeader = dynamic(() => import("../MobileHeader"));
+const DesktopNavbar = dynamic(() => import("../DesktopNavbar"), { ssr: true });
+const MobileHeader = dynamic(() => import("../MobileHeader"), { ssr: true });
 
-const Navbar = () => {
-  const isMobileDevice = isMobile();
+const Navbar = ({ isMobileDevice }: { isMobileDevice: boolean }) => {
   return <>{isMobileDevice ? <MobileHeader /> : <DesktopNavbar />}</>;
 };
 

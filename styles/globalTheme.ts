@@ -17,7 +17,7 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
       },
     },
   },
-  shape: { borderRadius: "6px" },
+  shape: { borderRadius: 6 },
   ...(mode === "light" ? getLightTheme() : getDarkTheme()),
 });
 export const getLightTheme = (): ThemeOptions => ({
