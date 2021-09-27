@@ -14,12 +14,16 @@
     "@emotion/react": "^11.4.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.1",
+    "axios": "^0.21.4",
     "next": "11.1.2",
     "next-i18next": "^8.8.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-query": "^3.24.4"
+    "react-query": "^3.24.4",
+    "swiper": "^7.0.6",
+    "ua-parser-js": "^0.7.28"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.6.0",
@@ -27,6 +31,7 @@
     "@testing-library/react": "^12.1.0",
     "@types/jest": "^27.0.2",
     "@types/react": "17.0.24",
+    "@types/ua-parser-js": "^0.7.36",
     "babel-plugin-import": "^1.13.3",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.2.0",
