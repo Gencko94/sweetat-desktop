@@ -33,9 +33,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
             position: "absolute",
             bottom: 12,
             left: 9,
-            // bgcolor: "rgba(255,255,255,0.7)",
             bgcolor: "secondary.main",
-
             p: 0.5,
             borderRadius: "6px",
           }}

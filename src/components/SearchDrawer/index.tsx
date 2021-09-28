@@ -110,8 +110,9 @@ const SearchDrawer = () => {
               </Typography>
             </Box>
           )}
+          {/* 💀⚡ TODO : Add a Skeleton loading screen... */}
           {status === "loading" && "Loading..."}
-          {data && <SearchResults results={data} type={globalSearchType} />}
+          {data && <SearchResults results={data} />}
         </Box>
       </Container>
     </Drawer>

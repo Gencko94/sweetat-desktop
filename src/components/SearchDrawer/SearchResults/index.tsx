@@ -1,20 +1,31 @@
 import { Box } from "@mui/system";
+import { useContext } from "react";
 import { IItemsSearchResult } from "../../../../lib/interfaces/IItem";
 import { IRestaurant } from "../../../../lib/interfaces/IRestaurant";
-import { SEARCH_TYPE } from "../../../contexts/ApplicationContext";
+import {
+  ApplicationContext,
+  SEARCH_TYPE,
+} from "../../../contexts/ApplicationContext";
+import ShopCard from "../../ShopCard";
 import ShopCardWide from "../../ShopCardWide";
 
 interface ISearchResultsProps {
   results: IItemsSearchResult[] | IRestaurant[];
-  type: SEARCH_TYPE;
 }
 
-const SearchResults = ({ results, type }: ISearchResultsProps) => {
+const SearchResults = ({ results }: ISearchResultsProps) => {
+  const { shopsView, globalSearchType } = useContext(ApplicationContext);
   return (
     <Box>
       {results.map((result) => {
-        if (type === "stores") {
-          return <ShopCardWide key={result.id} shop={result as IRestaurant} />;
+        if (globalSearchType === "stores") {
+          if (shopsView === "wide") {
+            return (
+              <ShopCardWide key={result.id} shop={result as IRestaurant} />
+            );
+          } else {
+            return <ShopCard key={result.id} shop={result as IRestaurant} />;
+          }
         }
       })}
     </Box>

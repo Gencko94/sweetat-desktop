@@ -12,7 +12,8 @@ export type POSITION_COORDS = {
   lng: number;
 };
 export type SEARCH_TYPE = "stores" | "items";
-
+export type SHOP_VIEW = "normal" | "wide";
+export type ITEM_VIEW = "normal" | "wide";
 export const ApplicationContext = createContext<IApplicationContextProps>({
   colorMode: "dark",
   handleSetUserLocation: () => {},
@@ -33,9 +34,19 @@ export const ApplicationContext = createContext<IApplicationContextProps>({
   globalSearchValue: "",
   globalSearchType: "stores",
   handleSetGlobalSearchType: () => {},
+  itemsView: "normal",
+  shopsView: "wide",
+  handleSetItemsView: () => {},
+  handleSetShopsView: () => {},
 });
 
 const ApplicationProvider: React.FC = ({ children }) => {
+  // 📳 🏬 🍴 Shops view state, basically how restaurants should look .
+  const [shopsView, setShopsView] = useState<SHOP_VIEW>("normal");
+
+  // 📳 🍔 Items view state, basically how Items should look .
+  const [itemsView, setItemsView] = useState<ITEM_VIEW>("wide");
+
   // 📍 User coordinates state.
   const [userLocation, setUserLocation] = useState<POSITION_COORDS | null>(
     null
@@ -96,6 +107,12 @@ const ApplicationProvider: React.FC = ({ children }) => {
   const handleSetGlobalSearchType = (type: SEARCH_TYPE) => {
     setGlobalSearchType(type);
   };
+  const handleSetShopsView = (view: SHOP_VIEW) => {
+    setShopsView(view);
+  };
+  const handleSetItemsView = (view: ITEM_VIEW) => {
+    setItemsView(view);
+  };
 
   // 📍 Geolocation getter function.
   const getCurrentLocation = useCallback(async () => {
@@ -134,6 +151,10 @@ const ApplicationProvider: React.FC = ({ children }) => {
         handleSetGlobalSearchValue,
         globalSearchType,
         handleSetGlobalSearchType,
+        itemsView,
+        shopsView,
+        handleSetItemsView,
+        handleSetShopsView,
       }}
     >
       {children}
