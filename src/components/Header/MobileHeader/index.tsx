@@ -4,6 +4,7 @@ import MobileNavbar from "../MobileNavbar";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../contexts/ApplicationContext";
+import SearchBox from "../../SearchBox";
 const MobileHeader = () => {
   const { handleToggleFiltersMenu } = useContext(ApplicationContext);
   return (
@@ -16,7 +17,8 @@ const MobileHeader = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <SearchBar />
+        <SearchBox />
+        {/* <SearchBar /> */}
         <IconButton
           onClick={() => {
             handleToggleFiltersMenu();

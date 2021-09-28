@@ -40,7 +40,7 @@ const FiltersDrawer = () => {
   const { locale } = useRouter();
   const {
     handleToggleFiltersMenu,
-    filtersOpen,
+    filtersMenuOpen,
     globalFilters,
     handleSetGlobalFilters,
   } = useContext(ApplicationContext);
@@ -99,14 +99,14 @@ const FiltersDrawer = () => {
         is_featured: !!globalFilters.filters.is_featured,
       },
     });
-  }, [globalFilters.filters, filtersOpen]);
+  }, [globalFilters.filters, filtersMenuOpen]);
 
   // 🎈💣 ```filtersOpen``` dep is to reset the filter if the drawer is closed and not updated the global state.
 
   return (
     <Drawer
       anchor={locale === "en" ? "right" : "left"}
-      open={filtersOpen}
+      open={filtersMenuOpen}
       onClose={() => handleToggleFiltersMenu()}
       //   PaperProps={{ sx: { right: "100px" } }}
     >
@@ -163,6 +163,7 @@ const FiltersDrawer = () => {
                     component="label"
                     htmlFor={type.key}
                     fontWeight="medium"
+                    sx={{ cursor: "pointer" }}
                   >
                     {t(type.label)}
                   </Typography>
@@ -201,6 +202,7 @@ const FiltersDrawer = () => {
                     component="label"
                     htmlFor={category.id.toString()}
                     fontWeight="medium"
+                    sx={{ cursor: "pointer" }}
                   >
                     {locale === "ar" ? category.ar_name : category.name}
                   </Typography>
