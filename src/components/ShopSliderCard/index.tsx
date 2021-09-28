@@ -65,7 +65,9 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
           {shop.name}
         </Typography>
         <Typography color="text.secondary" variant="body2" fontWeight="medium">
-          {shop.delivery_charges} KD Delivery cost
+          {shop.delivery_charges === "0"
+            ? t`free-delivery`
+            : `${shop.delivery_charges} KD Delivery cost`}
         </Typography>
       </Box>
     </Box>

@@ -6,6 +6,7 @@ import createEmotionCache from "../styles/createEmotionCache";
 import { appWithTranslation } from "next-i18next";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
+import Layout from "../src/components/Layout";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -26,7 +27,9 @@ function MyApp({
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <ApplicationProvider>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </ApplicationProvider>
         </Hydrate>
       </QueryClientProvider>

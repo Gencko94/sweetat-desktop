@@ -1,9 +1,3 @@
-import { CssBaseline } from "@mui/material";
-import {
-  createTheme,
-  ThemeProvider,
-  responsiveFontSizes,
-} from "@mui/material/styles";
 import {
   createContext,
   useCallback,
@@ -25,16 +19,27 @@ export type POSITION_COORDS = {
 interface ContextProps {
   colorMode: COLOR_MODES;
   handleToggleColorMode: () => void;
-  userAddress: IUSER_ADDRESS | undefined;
+  userAddress: IUSER_ADDRESS | null | undefined;
   handleSetUserLocation: (position: POSITION_COORDS) => void;
   userLocation: POSITION_COORDS | null;
+  filtersOpen: boolean;
+  handleToggleFiltersMenu: () => void;
 }
-export const ApplicationContext = createContext<Partial<ContextProps>>({});
+export const ApplicationContext = createContext<ContextProps>({
+  colorMode: "dark",
+  handleSetUserLocation: () => {},
+  handleToggleColorMode: () => {},
+  userAddress: null,
+  userLocation: null,
+  filtersOpen: false,
+  handleToggleFiltersMenu: () => {},
+});
 
 const ApplicationProvider: React.FC = ({ children }) => {
   const [userLocation, setUserLocation] = useState<POSITION_COORDS | null>(
     null
   );
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const { data: userAddress } = useGetUserAddress({
     lat: userLocation?.lat,
     lng: userLocation?.lng,
@@ -43,14 +48,15 @@ const ApplicationProvider: React.FC = ({ children }) => {
     // getInitialColorMode()
     "light"
   );
-  const theme = useMemo(() => createTheme(getDesignTokens(colorMode)), [
-    colorMode,
-  ]);
+
   function handleToggleColorMode() {
     setColorMode(colorMode === "dark" ? "light" : "dark");
   }
   const handleSetUserLocation = (position: POSITION_COORDS) => {
     setUserLocation(position);
+  };
+  const handleToggleFiltersMenu = () => {
+    setFiltersOpen(!filtersOpen);
   };
   const getCurrentLocation = useCallback(async () => {
     if (navigator.geolocation) {
@@ -76,12 +82,11 @@ const ApplicationProvider: React.FC = ({ children }) => {
         userLocation,
         userAddress,
         handleSetUserLocation,
+        filtersOpen,
+        handleToggleFiltersMenu,
       }}
     >
-      <ThemeProvider theme={responsiveFontSizes(theme)}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
+      {children}
     </ApplicationContext.Provider>
   );
 };
