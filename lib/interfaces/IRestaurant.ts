@@ -1,4 +1,4 @@
-export type IRestaurant = {
+export interface IRestaurant {
   id: number;
   name: string;
   ar_name: string;
@@ -63,7 +63,7 @@ export type IRestaurant = {
   distance: number;
   is_operational: boolean;
   order_ratings: IORDER_RATING;
-};
+}
 export type IORDER_RATING = {
   _count: number | null;
   _packaging: number | null;

@@ -8,7 +8,7 @@ interface IShopSliderCard {
   shop: IRestaurant;
 }
 
-const ShopSliderCard = ({ shop }: IShopSliderCard) => {
+const ShopCardWide = ({ shop }: IShopSliderCard) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -76,7 +76,7 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
   );
 };
 
-export default ShopSliderCard;
+export default ShopCardWide;
 const DeliveryTimeChip = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1),
   borderRadius: "12px",

@@ -15,6 +15,8 @@ import { ApplicationContext } from "../../contexts/ApplicationContext";
 import SearchBar from "../Searchbar";
 import WhiteLogo from "../../svgs/white-logo";
 import { useTranslation } from "react-i18next";
+import useGetSearchResults from "../../hooks/queryHooks/useGetSearchResults";
+import SearchResults from "./SearchResults";
 
 const SearchDrawer = () => {
   const { t } = useTranslation();
@@ -23,8 +25,13 @@ const SearchDrawer = () => {
     searchMenuOpen,
     handleToggleSearchMenu,
     globalSearchType,
+    globalSearchValue,
     handleSetGlobalSearchType,
   } = useContext(ApplicationContext);
+  const { data, status } = useGetSearchResults({
+    query: globalSearchValue,
+    type: globalSearchType,
+  });
   return (
     <Drawer
       anchor="bottom"
@@ -87,20 +94,24 @@ const SearchDrawer = () => {
               </Button>
             </ButtonGroup>
           </Stack>
-          <Box
-            alignItems="center"
-            justifyContent="center"
-            display="flex"
-            flexDirection="column"
-            py={4}
-            px={1}
-            m={4}
-          >
-            <WhiteLogo />
-            <Typography textAlign="center" variant="h6" my={2}>
-              Enter atleast 3 characters to search...
-            </Typography>
-          </Box>
+          {typeof data === "undefined" && status !== "loading" && (
+            <Box
+              alignItems="center"
+              justifyContent="center"
+              display="flex"
+              flexDirection="column"
+              py={4}
+              px={1}
+              m={4}
+            >
+              <WhiteLogo />
+              <Typography textAlign="center" variant="h6" my={2}>
+                Enter atleast 3 characters to search...
+              </Typography>
+            </Box>
+          )}
+          {status === "loading" && "Loading..."}
+          {data && <SearchResults results={data} type={globalSearchType} />}
         </Box>
       </Container>
     </Drawer>

@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import ShopSliderCard from "../ShopSliderCard";
+import ShopCardWide from "../ShopCardWide";
 import { Box } from "@mui/system";
 import { useGetRestaurants } from "../../hooks/queryHooks/useGetRestaurants";
 import { IconButton, Stack, Typography } from "@mui/material";
@@ -73,7 +73,7 @@ const FeaturedShopsSlider = () => {
       <Swiper breakpoints={breakpoints}>
         {shops?.map((shop) => (
           <SwiperSlide key={shop.id}>
-            <ShopSliderCard shop={shop} />
+            <ShopCardWide shop={shop} />
           </SwiperSlide>
         ))}
       </Swiper>

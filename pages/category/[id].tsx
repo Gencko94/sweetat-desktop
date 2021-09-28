@@ -10,7 +10,7 @@ import {
 } from "../../lib/queries/queries";
 import { useGetRestaurants } from "../../src/hooks/queryHooks/useGetRestaurants";
 import { Container, Grid, Typography } from "@mui/material";
-import ShopSliderCard from "../../src/components/ShopSliderCard";
+import ShopCardWide from "../../src/components/ShopCardWide";
 import { useGetRestaurantsCategories } from "../../src/hooks/queryHooks/useGetRestaurantsCategories";
 import { DEFAULT_LAT, DEFAULT_LNG } from "../../src/constants";
 import Navbar from "../../src/components/Header/Navbar";
@@ -44,7 +44,7 @@ const Category: NextPage<{ isMobileDevice: boolean }> = ({
         <Grid container spacing={2}>
           {restaurants?.map((shop) => (
             <Grid key={shop.id} item xs={12} sm={6} lg={4}>
-              <ShopSliderCard shop={shop} />
+              <ShopCardWide shop={shop} />
             </Grid>
           ))}
         </Grid>
