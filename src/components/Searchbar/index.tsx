@@ -1,8 +1,10 @@
 import { InputBase, Paper } from "@mui/material";
 import { alpha, styled } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = () => {
+  const { t } = useTranslation();
   return (
     <Search elevation={6}>
       <SearchIconWrapper>
@@ -11,7 +13,7 @@ const SearchBar = () => {
       <StyledInputBase
         // value={search}
         // onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search for a task…"
+        placeholder={t`search-input-placeholder`}
         inputProps={{ "aria-label": "search" }}
       />
     </Search>
@@ -30,7 +32,7 @@ const Search = styled(Paper)(({ theme }) => ({
 
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
+    // marginLeft: theme.spacing(3),
     width: "auto",
   },
 }));

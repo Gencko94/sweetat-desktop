@@ -1,14 +1,15 @@
 import { useQuery } from "react-query";
 import { IRestaurant } from "../../../lib/interfaces/IRestaurant";
 import { getRestaurants } from "../../../lib/queries/queries";
+import { DEFAULT_LAT, DEFAULT_LNG } from "../../constants";
 
 export interface IUseGetRestaurantsProps {
   latitude?: number;
   longitude?: number;
   filters: {
     category_ids: string[];
-    is_featured: boolean;
-    free_delivery: boolean;
+    is_featured?: boolean;
+    free_delivery?: boolean;
   };
   sort_by: "delivery_time";
   page: number;
@@ -16,8 +17,8 @@ export interface IUseGetRestaurantsProps {
 
 export const useGetRestaurants = ({
   filters,
-  latitude = 29.3352938,
-  longitude = 48.0715612,
+  latitude = DEFAULT_LAT,
+  longitude = DEFAULT_LNG,
   page,
   sort_by,
 }: IUseGetRestaurantsProps) => {

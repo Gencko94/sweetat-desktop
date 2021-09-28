@@ -23,7 +23,7 @@ const DeliverTo = () => {
           <Typography variant="h6" color="primary" fontWeight="bold">
             {userAddress ? userAddress.address : "Select your location"}
           </Typography>
-          <IconButton color="primary">
+          <IconButton color="primary" size="small">
             <KeyboardArrowDownIcon />
           </IconButton>
         </Stack>

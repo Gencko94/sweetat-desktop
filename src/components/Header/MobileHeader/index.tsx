@@ -10,7 +10,12 @@ const MobileHeader = () => {
     <Container sx={{ p: 1 }}>
       <MobileNavbar />
       <Divider sx={{ my: 1, mx: -2 }} />
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <SearchBar />
         <IconButton
           onClick={() => {

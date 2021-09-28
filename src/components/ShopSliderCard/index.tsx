@@ -15,7 +15,7 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
       borderRadius="6px"
       position="relative"
       overflow="hidden"
-      sx={{ minHeight: "200px" }}
+      sx={{ height: "300px" }}
     >
       <Box height="80%" position="relative">
         <Image
@@ -23,22 +23,24 @@ const ShopSliderCard = ({ shop }: IShopSliderCard) => {
           blurDataURL={`https://sweetat.co/${shop.placeholder_image}`}
           src={`https://sweetat.co/${shop.image}`}
           alt={`${shop.name} photo`}
-          layout="intrinsic"
+          layout="fill"
           objectFit="cover"
-          height={200}
-          width={350}
+          // height={200}
+          // width={350}
         />
         <Box
           sx={{
             position: "absolute",
             bottom: 12,
             left: 9,
-            bgcolor: "rgba(255,255,255,0.7)",
-            p: 1,
-            borderRadius: 12,
+            // bgcolor: "rgba(255,255,255,0.7)",
+            bgcolor: "secondary.main",
+
+            p: 0.5,
+            borderRadius: "6px",
           }}
         >
-          <Typography variant="subtitle2" fontWeight="bold">
+          <Typography variant="caption" fontWeight="bold">
             {shop.deliverable_by_sweetat ? "Delivered By Sweetat" : ""}
           </Typography>
         </Box>

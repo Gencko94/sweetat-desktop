@@ -1,7 +1,5 @@
 import axios from "axios";
 import { IUseGetRestaurantsProps } from "../../src/hooks/queryHooks/useGetRestaurants";
-import { ICategorySlide } from "../interfaces/ICategorySlide";
-import { IPromoSlide } from "../interfaces/IPromoSlide";
 
 const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
@@ -44,4 +42,8 @@ export const convertCoordinateToAddress = async ({
     lang: lang.toUpperCase(),
   });
   return res.data;
+};
+export const getRestaurantsCategories = async () => {
+  const res = await instance.post("/get-all-restaurants-categories");
+  return res.data.categories;
 };

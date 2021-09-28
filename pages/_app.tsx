@@ -7,7 +7,7 @@ import { appWithTranslation } from "next-i18next";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import Layout from "../src/components/Layout";
-
+import { ReactQueryDevtools } from "react-query/devtools";
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
@@ -30,6 +30,7 @@ function MyApp({
             <Layout>
               <Component {...pageProps} />
             </Layout>
+            <ReactQueryDevtools initialIsOpen={false} />
           </ApplicationProvider>
         </Hydrate>
       </QueryClientProvider>
