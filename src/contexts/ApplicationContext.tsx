@@ -8,6 +8,7 @@ import {
 import { IUSER_ADDRESS } from "../../lib/interfaces/IUserAddress";
 // import { getInitialColorMode } from "../helpers/getInitialColorMode";
 import { getDesignTokens } from "../../styles/globalTheme";
+import { IUseGetRestaurantsProps } from "../hooks/queryHooks/useGetRestaurants";
 import { useGetUserAddress } from "../hooks/queryHooks/useGetUserAddress";
 
 export type COLOR_MODES = "light" | "dark";
@@ -24,6 +25,8 @@ interface ContextProps {
   userLocation: POSITION_COORDS | null;
   filtersOpen: boolean;
   handleToggleFiltersMenu: () => void;
+  handleSetGlobalFilters: (filters: IUseGetRestaurantsProps) => void;
+  globalFilters: IUseGetRestaurantsProps;
 }
 export const ApplicationContext = createContext<ContextProps>({
   colorMode: "dark",
@@ -33,12 +36,23 @@ export const ApplicationContext = createContext<ContextProps>({
   userLocation: null,
   filtersOpen: false,
   handleToggleFiltersMenu: () => {},
+  handleSetGlobalFilters: () => {},
+  globalFilters: {
+    filters: { category_ids: [] },
+    page: 0,
+    sort_by: "delivery_time",
+  },
 });
 
 const ApplicationProvider: React.FC = ({ children }) => {
   const [userLocation, setUserLocation] = useState<POSITION_COORDS | null>(
     null
   );
+  const [globalFilters, setGlobalFilters] = useState<IUseGetRestaurantsProps>({
+    filters: { category_ids: ["3"] },
+    page: 0,
+    sort_by: "delivery_time",
+  });
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const { data: userAddress } = useGetUserAddress({
     lat: userLocation?.lat,
@@ -48,7 +62,9 @@ const ApplicationProvider: React.FC = ({ children }) => {
     // getInitialColorMode()
     "light"
   );
-
+  const handleSetGlobalFilters = (filters: IUseGetRestaurantsProps) => {
+    setGlobalFilters(filters);
+  };
   function handleToggleColorMode() {
     setColorMode(colorMode === "dark" ? "light" : "dark");
   }
@@ -84,6 +100,8 @@ const ApplicationProvider: React.FC = ({ children }) => {
         handleSetUserLocation,
         filtersOpen,
         handleToggleFiltersMenu,
+        globalFilters,
+        handleSetGlobalFilters,
       }}
     >
       {children}

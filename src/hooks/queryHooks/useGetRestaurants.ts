@@ -11,7 +11,7 @@ export interface IUseGetRestaurantsProps {
     is_featured?: boolean;
     free_delivery?: boolean;
   };
-  sort_by: "delivery_time";
+  sort_by: "delivery_time" | "asc" | "desc" | "ar_asc" | "ar_desc";
   page: number;
 }
 
