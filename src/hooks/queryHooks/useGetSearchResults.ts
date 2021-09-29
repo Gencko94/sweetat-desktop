@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { IItemsSearchResult } from "../../../lib/interfaces/IItem";
-import { IRestaurant } from "../../../lib/interfaces/IRestaurant";
+import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
 import { getSearchResults } from "../../../lib/queries/queries";
 import { DEFAULT_LAT, DEFAULT_LNG } from "../../constants";
 import { SEARCH_TYPE } from "../../contexts/ApplicationContext";
@@ -20,7 +20,7 @@ const useGetSearchResults = ({
   longitude = DEFAULT_LNG,
   page = 0,
 }: IUseGetSearchResultsProps) => {
-  return useQuery<IItemsSearchResult[] | IRestaurant[]>(
+  return useQuery<IItemsSearchResult[] | IRestaurantInfo[]>(
     ["search", query, type, latitude, longitude, page],
     () => getSearchResults(query, type, latitude, longitude, page),
     { enabled: query.length > 2 }

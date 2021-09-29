@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import "swiper/css";
 import { Typography } from "@mui/material";
 import { useGetCategoriesSlides } from "../../hooks/queryHooks/useGetCategoriesSlides";
-
+import Link from "next/link";
 const HomeCategoriesSlider = () => {
   const { data: categories } = useGetCategoriesSlides();
   const breakpoints = useMemo(
@@ -45,25 +45,30 @@ const HomeCategoriesSlider = () => {
       <Swiper freeMode breakpoints={breakpoints}>
         {categories?.map((category) => (
           <SwiperSlide key={category.id}>
-            <Box sx={{ position: "relative" }}>
-              <Typography
-                sx={{ position: "absolute", top: 2, left: 5, zIndex: 1 }}
-                variant="subtitle1"
-                fontWeight="bold"
-                color="white"
-              >
-                {category.categories_ids[0].label}
-              </Typography>
-              <Image
-                placeholder="blur"
-                blurDataURL={`https://sweetat.co/${category.image_placeholder}`}
-                src={`https://sweetat.co/${category.image}`}
-                alt={`${category.name} photo`}
-                layout="responsive"
-                width={130}
-                height={130}
-              />
-            </Box>
+            <Link
+              href={`/category/${category.categories_ids[0].value}`}
+              passHref
+            >
+              <Box sx={{ position: "relative" }}>
+                <Typography
+                  sx={{ position: "absolute", top: 2, left: 5, zIndex: 1 }}
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  color="white"
+                >
+                  {category.categories_ids[0].label}
+                </Typography>
+                <Image
+                  placeholder="blur"
+                  blurDataURL={`https://sweetat.co/${category.image_placeholder}`}
+                  src={`https://sweetat.co/${category.image}`}
+                  alt={`${category.name} photo`}
+                  layout="responsive"
+                  width={130}
+                  height={130}
+                />
+              </Box>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

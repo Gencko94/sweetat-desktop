@@ -1,8 +1,9 @@
-export interface IRestaurant {
+export interface IRestaurantInfo {
   id: number;
   name: string;
   ar_name: string;
   description: string;
+  ar_description: string;
   location_id: number | null;
   hashtag: string;
   logo: string;

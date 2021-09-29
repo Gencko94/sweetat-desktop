@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { IRestaurant } from "../../../lib/interfaces/IRestaurant";
+import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
 import { getRestaurants } from "../../../lib/queries/queries";
 import { DEFAULT_LAT, DEFAULT_LNG } from "../../constants";
 
@@ -22,7 +22,7 @@ export const useGetRestaurants = ({
   page,
   sort_by,
 }: IUseGetRestaurantsProps) => {
-  return useQuery<IRestaurant[]>(
+  return useQuery<IRestaurantInfo[]>(
     [filters, latitude, longitude, page, sort_by, "restaurants"],
     () => getRestaurants({ filters, latitude, longitude, page, sort_by })
   );

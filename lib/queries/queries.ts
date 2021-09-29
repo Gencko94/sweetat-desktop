@@ -1,8 +1,9 @@
 import axios from "axios";
 import { SEARCH_TYPE } from "../../src/contexts/ApplicationContext";
+import { IUseGetRestaurantInfoProps } from "../../src/hooks/queryHooks/useGetRestaurantInfo";
 import { IUseGetRestaurantsProps } from "../../src/hooks/queryHooks/useGetRestaurants";
 import { IItemsSearchResult } from "../interfaces/IItem";
-import { IRestaurant } from "../interfaces/IRestaurant";
+import { IRestaurantInfo } from "../interfaces/IRestaurantInfo";
 
 const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
@@ -27,6 +28,17 @@ export const getRestaurants = async ({
     filters,
     sort_by,
     page,
+  });
+  return res.data;
+};
+export const getRestaurantInfo = async ({
+  slug,
+  latitude,
+  longitude,
+}: IUseGetRestaurantInfoProps) => {
+  const res = await instance.post(`/get-restaurant-info/${slug}`, {
+    latitude,
+    longitude,
   });
   return res.data;
 };
@@ -66,7 +78,7 @@ export const getSearchResults = async (
     });
     return res.data;
   } else {
-    const res = await instance.post<IRestaurant[]>("/search-restaurants", {
+    const res = await instance.post<IRestaurantInfo[]>("/search-restaurants", {
       q: query,
       latitude,
       longitude,

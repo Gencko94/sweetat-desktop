@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useContext } from "react";
 import { IItemsSearchResult } from "../../../../lib/interfaces/IItem";
-import { IRestaurant } from "../../../../lib/interfaces/IRestaurant";
+import { IRestaurantInfo } from "../../../../lib/interfaces/IRestaurantInfo";
 import { ApplicationContext } from "../../../contexts/ApplicationContext";
 import WhiteLogo from "../../../svgs/white-logo";
 import ItemCard from "../../ItemCard";
@@ -11,7 +11,7 @@ import ShopCard from "../../ShopCard";
 import ShopCardWide from "../../ShopCardWide";
 
 interface ISearchResultsProps {
-  results: IItemsSearchResult[] | IRestaurant[];
+  results: IItemsSearchResult[] | IRestaurantInfo[];
 }
 
 const SearchResults = ({ results }: ISearchResultsProps) => {
@@ -40,13 +40,13 @@ const SearchResults = ({ results }: ISearchResultsProps) => {
         shopsView === "wide" ? (
           <Stack spacing={2} py={2} px={1}>
             {results.map((result) => (
-              <ShopCardWide key={result.id} shop={result as IRestaurant} />
+              <ShopCardWide key={result.id} shop={result as IRestaurantInfo} />
             ))}
           </Stack>
         ) : (
           <Stack spacing={2} py={2} px={1}>
             {results.map((result) => (
-              <ShopCard key={result.id} shop={result as IRestaurant} />
+              <ShopCard key={result.id} shop={result as IRestaurantInfo} />
             ))}
           </Stack>
         )

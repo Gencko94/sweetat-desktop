@@ -1,4 +1,4 @@
-import { IRestaurant } from "./IRestaurant";
+import { IRestaurantInfo } from "./IRestaurantInfo";
 
 export interface IItemsSearchResult {
   id: number;
@@ -21,5 +21,5 @@ export interface IItemsSearchResult {
   disable_cod: 0 | 1;
   in_stock: number | null;
   max_allowed: number | null;
-  restaurant: IRestaurant;
+  restaurant: IRestaurantInfo;
 }
