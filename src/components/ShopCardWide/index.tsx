@@ -1,4 +1,4 @@
-import { alpha, Box, styled } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { IRestaurant } from "../../../lib/interfaces/IRestaurant";
 import Image from "next/image";
 import { Typography } from "@mui/material";

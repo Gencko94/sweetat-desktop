@@ -17,6 +17,8 @@ import WhiteLogo from "../../svgs/white-logo";
 import { useTranslation } from "react-i18next";
 import useGetSearchResults from "../../hooks/queryHooks/useGetSearchResults";
 import SearchResults from "./SearchResults";
+import ShopsViewToggle from "../ShopsViewToggle";
+import ItemsViewToggle from "../ItemsViewToggle";
 
 const SearchDrawer = () => {
   const { t } = useTranslation();
@@ -93,6 +95,11 @@ const SearchDrawer = () => {
                 {t`items`}
               </Button>
             </ButtonGroup>
+            {globalSearchType === "stores" ? (
+              <ShopsViewToggle />
+            ) : (
+              <ItemsViewToggle />
+            )}
           </Stack>
           {typeof data === "undefined" && status !== "loading" && (
             <Box
