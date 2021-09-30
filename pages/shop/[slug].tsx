@@ -4,7 +4,10 @@ import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/dist/client/router";
 import { dehydrate, QueryClient } from "react-query";
-import { getRestaurantInfo } from "../../lib/queries/queries";
+import {
+  getRestaurantInfo,
+  getRestaurantItems,
+} from "../../lib/queries/queries";
 import Navbar from "../../src/components/Header/Navbar";
 import { DEFAULT_LAT, DEFAULT_LNG } from "../../src/constants";
 import { useGetRestaurantInfo } from "../../src/hooks/queryHooks/useGetRestaurantInfo";
@@ -14,6 +17,7 @@ import { Box } from "@mui/system";
 import ShopPageInfo from "../../src/components/ShopPageInfo";
 import { ClosedShopOverlay } from "../../src/components/ClosedShopOverlay";
 import { useTranslation } from "react-i18next";
+import ShopItems from "../../src/components/ShopItems";
 const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
   const { t } = useTranslation();
   const {
@@ -53,7 +57,8 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
           </Box>
           <ShopPageInfo shop={shop} />
           <Divider sx={{ my: 2 }} />
-          <Container></Container>
+
+          <ShopItems shop={shop} />
         </>
       )}
     </>
@@ -68,12 +73,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const latitude = DEFAULT_LAT;
   const longitude = DEFAULT_LNG;
   const isMobileDevice = isMobile(ctx.req);
-  queryClient.prefetchQuery([latitude, longitude, "restaurant", slug], () =>
-    getRestaurantInfo({ slug: slug as string, latitude, longitude })
+  const { locale } = ctx;
+  await queryClient.prefetchQuery(
+    [latitude, longitude, "restaurant", slug],
+    () => getRestaurantInfo({ slug: slug as string, latitude, longitude })
+  );
+  await queryClient.prefetchQuery(["restaurant-items", slug, locale], () =>
+    getRestaurantItems({ slug: slug as string, locale: locale ?? "en" })
   );
   return {
     props: {
-      ...(await serverSideTranslations(ctx.locale as string, ["common"])),
+      ...(await serverSideTranslations(locale as string, ["common"])),
       isMobileDevice,
       dehydratedState: dehydrate(queryClient),
     },

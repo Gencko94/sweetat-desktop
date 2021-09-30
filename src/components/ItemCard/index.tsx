@@ -3,9 +3,10 @@ import { Paper, Typography } from "@mui/material";
 import { IItemsSearchResult } from "../../../lib/interfaces/IItem";
 import Image from "next/image";
 import { useRouter } from "next/dist/client/router";
+import { ITEM } from "../../../lib/interfaces/IRestaurantItem";
 
 interface IItemCard {
-  item: IItemsSearchResult;
+  item: IItemsSearchResult | ITEM;
 }
 
 const ItemCard = ({ item }: IItemCard) => {
@@ -17,7 +18,7 @@ const ItemCard = ({ item }: IItemCard) => {
       overflow="hidden"
       component={Paper}
       elevation={2}
-      sx={{ minHeight: "250px" }}
+      sx={{ height: "250px" }}
     >
       <Box height="60%" position="relative">
         <Image
@@ -38,16 +39,18 @@ const ItemCard = ({ item }: IItemCard) => {
         <Typography variant="body1" fontWeight="medium" color="secondary">
           {item.price} KD
         </Typography>
-        <Typography
-          color="text.secondary"
-          variant="caption"
-          fontWeight="medium"
-        >
-          From :{" "}
-          <Typography color="primary" variant="caption" fontWeight="medium">
-            {locale === "ar" ? item.restaurant.ar_name : item.restaurant.name}
+        {item.restaurant! && (
+          <Typography
+            color="text.secondary"
+            variant="caption"
+            fontWeight="medium"
+          >
+            From :{" "}
+            <Typography color="primary" variant="caption" fontWeight="medium">
+              {locale === "ar" ? item.restaurant.ar_name : item.restaurant.name}
+            </Typography>
           </Typography>
-        </Typography>
+        )}
       </Box>
     </Box>
   );

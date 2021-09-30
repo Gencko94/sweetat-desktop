@@ -56,16 +56,18 @@ const ItemCardWide = ({ item }: IItemCardWide) => {
         <Typography variant="body1" fontWeight="medium" color="secondary">
           {item.price} KD
         </Typography>
-        <Typography
-          color="text.secondary"
-          variant="caption"
-          fontWeight="medium"
-        >
-          From :{" "}
-          <Typography color="primary" variant="caption" fontWeight="medium">
-            {locale === "ar" ? item.restaurant.ar_name : item.restaurant.name}
+        {item.restaurant && (
+          <Typography
+            color="text.secondary"
+            variant="caption"
+            fontWeight="medium"
+          >
+            From :{" "}
+            <Typography color="primary" variant="caption" fontWeight="medium">
+              {locale === "ar" ? item.restaurant.ar_name : item.restaurant.name}
+            </Typography>
           </Typography>
-        </Typography>
+        )}
       </Box>
     </Box>
   );

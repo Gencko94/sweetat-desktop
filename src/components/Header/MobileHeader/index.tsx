@@ -1,10 +1,10 @@
 import { Container, Divider, IconButton, Stack } from "@mui/material";
-import SearchBar from "../../Searchbar";
 import MobileNavbar from "../MobileNavbar";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../contexts/ApplicationContext";
 import SearchBox from "../../SearchBox";
+
 const MobileHeader = () => {
   const { handleToggleFiltersMenu } = useContext(ApplicationContext);
   return (
@@ -18,7 +18,7 @@ const MobileHeader = () => {
         alignItems="center"
       >
         <SearchBox />
-        {/* <SearchBar /> */}
+
         <IconButton
           onClick={() => {
             handleToggleFiltersMenu();

@@ -50,6 +50,7 @@ const ShopPageInfo = ({ shop }: IShopPageInfo) => {
           />
         </Box>
       </Stack>
+      {/* ⚡ Add Review Section */}
       {shop.is_active === 0 && shop.accept_preorder === 1 && (
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <AccessTimeIcon color="primary" />
