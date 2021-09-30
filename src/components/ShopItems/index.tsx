@@ -44,10 +44,20 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
           <br />
           <Container>
             {data!.top_selling.length > 0 && (
-              <ShopTopSellingSection topSellingItems={data.top_selling} />
+              <ShopTopSellingSection
+                index={0}
+                topSellingItems={data.top_selling}
+                setActiveTab={setActiveTab}
+              />
             )}
-            {Object.keys(data.items).map((key) => (
-              <ShopItemsSection key={key} items={data.items[key]} title={key} />
+            {Object.keys(data.items).map((key, i) => (
+              <ShopItemsSection
+                index={i + 1}
+                key={key}
+                items={data.items[key]}
+                title={key}
+                setActiveTab={setActiveTab}
+              />
             ))}
           </Container>
         </Box>

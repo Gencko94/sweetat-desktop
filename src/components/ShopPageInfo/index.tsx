@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Paper, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
@@ -15,7 +15,7 @@ const ShopPageInfo = ({ shop }: IShopPageInfo) => {
   const { t } = useTranslation();
   return (
     <Container>
-      <Stack direction="row" my={2} spacing={2}>
+      <Stack direction="row" py={2} spacing={2}>
         <Box
           sx={{
             border: "1px solid rgba(0,0,0,0.12)",

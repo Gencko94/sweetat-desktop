@@ -8,7 +8,7 @@ import SearchBox from "../../SearchBox";
 const MobileHeader = () => {
   const { handleToggleFiltersMenu } = useContext(ApplicationContext);
   return (
-    <Container sx={{ p: 1 }}>
+    <Container sx={{ py: 1 }}>
       <MobileNavbar />
       <Divider sx={{ my: 1, mx: -2 }} />
       <Stack

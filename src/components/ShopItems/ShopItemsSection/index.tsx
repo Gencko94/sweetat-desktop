@@ -9,52 +9,79 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import { styled } from "@mui/system";
-import { useContext, useState } from "react";
+import { Box, styled } from "@mui/system";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { ITEM } from "../../../../lib/interfaces/IRestaurantItem";
 import { ApplicationContext } from "../../../contexts/ApplicationContext";
 import ItemCard from "../../ItemCard";
 import ItemCardWide from "../../ItemCardWide";
-
+import { useInView } from "react-intersection-observer";
 interface IShopItemsSection {
   items: ITEM[];
   title: string;
+  setActiveTab: Dispatch<SetStateAction<number>>;
+  index: number;
 }
 
-const ShopItemsSection = ({ items, title }: IShopItemsSection) => {
+const ShopItemsSection = ({
+  items,
+  title,
+  index,
+  setActiveTab,
+}: IShopItemsSection) => {
   const { itemsView } = useContext(ApplicationContext);
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0.7,
+    // rootMargin: "calc(100vh- 48px)",
+  });
   const [expanded, setExpanded] = useState<boolean>(true);
 
   const handleExpandTab = () => {
     setExpanded(!expanded);
   };
+  useEffect(() => {
+    console.log(inView, index);
+    if (inView) {
+      setActiveTab(index);
+    }
+  }, [inView, index, setActiveTab]);
   return (
-    <Accordion
-      elevation={0}
-      expanded={expanded}
-      onChange={() => handleExpandTab()}
-    >
-      <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-        <Typography fontWeight="bold">
-          {title} ({items.length})
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        {itemsView === "wide" ? (
-          <Stack spacing={2} py={2}>
-            {items.map((item) => (
-              <ItemCardWide key={item.id} item={item as ITEM} />
-            ))}
-          </Stack>
-        ) : (
-          <ItemsGrid>
-            {items.map((item) => (
-              <ItemCard key={item.id} item={item as ITEM} />
-            ))}
-          </ItemsGrid>
-        )}
-      </AccordionDetails>
-    </Accordion>
+    <Box ref={ref}>
+      <Accordion
+        elevation={0}
+        expanded={expanded}
+        id={title}
+        onChange={() => handleExpandTab()}
+      >
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          <Typography fontWeight="bold">
+            {title} ({items.length})
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {itemsView === "wide" ? (
+            <Stack spacing={2} py={2}>
+              {items.map((item) => (
+                <ItemCardWide key={item.id} item={item as ITEM} />
+              ))}
+            </Stack>
+          ) : (
+            <ItemsGrid>
+              {items.map((item) => (
+                <ItemCard key={item.id} item={item as ITEM} />
+              ))}
+            </ItemsGrid>
+          )}
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   );
 };
 

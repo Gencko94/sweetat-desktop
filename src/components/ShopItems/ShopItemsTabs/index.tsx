@@ -1,7 +1,5 @@
-import { Tab, Tabs as MuiTabs } from "@mui/material";
+import { Tab, Tabs as MuiTabs, TabsProps } from "@mui/material";
 import { styled } from "@mui/system";
-import { IGetRestaurantItemsResponse } from "../../../hooks/queryHooks/useGetRestaurantItems";
-
 interface IShopItemsTabsProps {
   handleChangeTab: (e: React.SyntheticEvent, newValue: number) => void;
   activeTab: number;
@@ -22,17 +20,35 @@ const ShopItemsTabs = ({
       aria-label="Restaurant Categories"
     >
       {tabTitles.map((title) => (
-        <Tab key={title} label={title} />
+        <Tab
+          key={title}
+          onClick={() => {
+            const element = document.getElementById(title);
+            if (element) {
+              const y =
+                element.getBoundingClientRect().top + window.scrollY + -50;
+
+              scrollTo({
+                behavior: "smooth",
+                top: y,
+              });
+            }
+          }}
+          label={title}
+        />
+        // </Link>
       ))}
     </Tabs>
   );
 };
 
 export default ShopItemsTabs;
-const Tabs = styled(MuiTabs)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-  position: "sticky",
-  top: 0,
-  // @ts-ignore
-  zIndex: theme.zIndex.appBar,
-}));
+const Tabs = styled((props: TabsProps) => <MuiTabs {...props} />)(
+  ({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    position: "sticky",
+    top: 0,
+    // @ts-ignore
+    zIndex: theme.zIndex.appBar,
+  })
+);

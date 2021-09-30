@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import { ITEM } from "../../../../lib/interfaces/IRestaurantItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -6,14 +6,24 @@ import ItemCard from "../../ItemCard";
 import { Box } from "@mui/system";
 import { Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useInView } from "react-intersection-observer";
 interface IShopTopSellingSectionProps {
   topSellingItems: ITEM[];
+  setActiveTab: Dispatch<SetStateAction<number>>;
+  index: number;
 }
 
 const ShopTopSellingSection = ({
   topSellingItems,
+  setActiveTab,
+  index,
 }: IShopTopSellingSectionProps) => {
   const { t } = useTranslation();
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 1,
+    initialInView: true,
+  });
   const breakpoints = useMemo(
     () => ({
       // when window width is >= 320px
@@ -46,8 +56,13 @@ const ShopTopSellingSection = ({
     }),
     []
   );
+  useEffect(() => {
+    if (inView) {
+      setActiveTab(index);
+    }
+  }, [inView, index, setActiveTab]);
   return (
-    <Box my={1}>
+    <Box id="top-selling" my={1} ref={ref}>
       <Stack direction="row">
         <Typography fontWeight="bold">
           {t`top-selling`} ({topSellingItems.length})

@@ -1,4 +1,4 @@
-import { Container, Divider, Typography } from "@mui/material";
+import { Container, Divider, Paper, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -29,34 +29,36 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
       <Navbar isMobileDevice={isMobileDevice} />
       {shop && (
         <>
-          <Box height="200px" position="relative">
-            <Image
-              placeholder="blur"
-              blurDataURL={`https://sweetat.co/${shop.placeholder_image}`}
-              src={`https://sweetat.co/${shop.image}`}
-              alt={`${shop.name} photo`}
-              layout="fill"
-              objectFit="cover"
-              // height={200}
-              // width={350}
-            />
-            {shop.is_active === 0 && (
-              <ClosedShopOverlay>
-                <Typography
-                  variant="h6"
-                  fontWeight="medium"
-                >{t`closed`}</Typography>
-                {shop.accept_preorder === 1 && (
+          <Paper elevation={0}>
+            <Box height="200px" position="relative">
+              <Image
+                placeholder="blur"
+                blurDataURL={`https://sweetat.co/${shop.placeholder_image}`}
+                src={`https://sweetat.co/${shop.image}`}
+                alt={`${shop.name} photo`}
+                layout="fill"
+                objectFit="cover"
+                // height={200}
+                // width={350}
+              />
+              {shop.is_active === 0 && (
+                <ClosedShopOverlay>
                   <Typography
                     variant="h6"
                     fontWeight="medium"
-                  >{t`accepts-pre-order`}</Typography>
-                )}
-              </ClosedShopOverlay>
-            )}
-          </Box>
-          <ShopPageInfo shop={shop} />
-          <Divider sx={{ my: 2 }} />
+                  >{t`closed`}</Typography>
+                  {shop.accept_preorder === 1 && (
+                    <Typography
+                      variant="h6"
+                      fontWeight="medium"
+                    >{t`accepts-pre-order`}</Typography>
+                  )}
+                </ClosedShopOverlay>
+              )}
+            </Box>
+            <ShopPageInfo shop={shop} />
+          </Paper>
+          {/* <Divider sx={{ my: 2 }} /> */}
 
           <ShopItems shop={shop} />
         </>

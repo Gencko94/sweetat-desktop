@@ -1,5 +1,6 @@
 import { CssBaseline, Drawer } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Box } from "@mui/system";
 import { useContext, useMemo } from "react";
 import { getDesignTokens } from "../../../styles/globalTheme";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
@@ -17,6 +18,13 @@ const Layout: React.FC = ({ children }) => {
       <SearchDrawer />
       <CssBaseline />
       {children}
+      <style global jsx>
+        {`
+          html {
+            scroll-behavior: smooth;
+          }
+        `}
+      </style>
     </ThemeProvider>
   );
 };
