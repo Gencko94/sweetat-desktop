@@ -1,9 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import { useContext } from "react";
+
 import { IItemsSearchResult } from "../../../../lib/interfaces/IItem";
 import { IRestaurantInfo } from "../../../../lib/interfaces/IRestaurantInfo";
-import { ApplicationContext } from "../../../contexts/ApplicationContext";
+import { useApplicationState } from "../../../contexts/ApplicationContext";
 import WhiteLogo from "../../../svgs/white-logo";
 import ItemCard from "../../ItemCard";
 import ItemCardWide from "../../ItemCardWide";
@@ -15,9 +15,7 @@ interface ISearchResultsProps {
 }
 
 const SearchResults = ({ results }: ISearchResultsProps) => {
-  const { shopsView, globalSearchType, itemsView } = useContext(
-    ApplicationContext
-  );
+  const [state] = useApplicationState();
   return (
     <Box>
       {results.length === 0 && (
@@ -36,8 +34,8 @@ const SearchResults = ({ results }: ISearchResultsProps) => {
           </Typography>
         </Box>
       )}
-      {globalSearchType === "stores" ? (
-        shopsView === "wide" ? (
+      {state.globalSearchType === "stores" ? (
+        state.shopsView === "wide" ? (
           <Stack spacing={2} py={2} px={1}>
             {results.map((result) => (
               <ShopCardWide key={result.id} shop={result as IRestaurantInfo} />
@@ -53,8 +51,8 @@ const SearchResults = ({ results }: ISearchResultsProps) => {
       ) : (
         ""
       )}
-      {globalSearchType === "items" ? (
-        itemsView === "wide" ? (
+      {state.globalSearchType === "items" ? (
+        state.itemsView === "wide" ? (
           <Stack spacing={2} py={2} px={1}>
             {results.map((result) => (
               <ItemCardWide

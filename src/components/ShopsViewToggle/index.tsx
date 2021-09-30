@@ -1,24 +1,33 @@
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import ComputerIcon from "@mui/icons-material/Computer";
-import { Button, IconButton, Stack } from "@mui/material";
-import { useContext } from "react";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+import { Button, Stack } from "@mui/material";
+import { useApplicationState } from "../../contexts/ApplicationContext";
 
 const ShopsViewToggle = () => {
-  const { shopsView, handleSetShopsView } = useContext(ApplicationContext);
+  const [state, setState] = useApplicationState();
   return (
     <Stack direction="row" spacing={1}>
       <Button
-        variant={shopsView === "wide" ? "contained" : "outlined"}
+        variant={state.shopsView === "wide" ? "contained" : "outlined"}
         size="small"
-        onClick={() => handleSetShopsView("wide")}
+        onClick={() =>
+          setState((prev) => ({
+            ...prev,
+            shopsView: "wide",
+          }))
+        }
       >
         <ComputerIcon />
       </Button>
       <Button
-        variant={shopsView === "normal" ? "contained" : "outlined"}
+        variant={state.shopsView === "normal" ? "contained" : "outlined"}
         size="small"
-        onClick={() => handleSetShopsView("normal")}
+        onClick={() =>
+          setState((prev) => ({
+            ...prev,
+            shopsView: "normal",
+          }))
+        }
       >
         <ViewStreamIcon />
       </Button>

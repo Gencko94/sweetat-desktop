@@ -9,8 +9,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SpacerDot from "../SpacerDot";
 import ShopStatus from "../ShopStatus";
 import Link from "next/link";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
-import { useContext } from "react";
+import { useApplicationState } from "../../contexts/ApplicationContext";
+
 import { DarkImageOverlay } from "../DarkImageOverlay";
 interface IShopCard {
   shop: IRestaurantInfo;
@@ -18,8 +18,8 @@ interface IShopCard {
 
 const ShopCard = ({ shop }: IShopCard) => {
   const { t } = useTranslation();
-  const { handleToggleSearchMenu } = useContext(ApplicationContext);
 
+  const [_, setState] = useApplicationState();
   return (
     <Link href={`/shop/${shop.slug}`} passHref>
       <Box
@@ -28,7 +28,12 @@ const ShopCard = ({ shop }: IShopCard) => {
         overflow="hidden"
         display="flex"
         gap={1}
-        onClick={() => handleToggleSearchMenu()}
+        onClick={() =>
+          setState((prev) => ({
+            ...prev,
+            searchMenuOpen: prev.searchMenuOpen ? false : true,
+          }))
+        }
       >
         <Box
           sx={{

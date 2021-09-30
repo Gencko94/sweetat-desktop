@@ -10,15 +10,9 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { Box, styled } from "@mui/system";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, memo, SetStateAction, useEffect, useState } from "react";
 import { ITEM } from "../../../../lib/interfaces/IRestaurantItem";
-import { ApplicationContext } from "../../../contexts/ApplicationContext";
+import { ITEM_VIEW } from "../../../contexts/ApplicationContext";
 import ItemCard from "../../ItemCard";
 import ItemCardWide from "../../ItemCardWide";
 import { useInView } from "react-intersection-observer";
@@ -27,63 +21,59 @@ interface IShopItemsSection {
   title: string;
   setActiveTab: Dispatch<SetStateAction<number>>;
   index: number;
+  itemsView: ITEM_VIEW;
 }
 
-const ShopItemsSection = ({
-  items,
-  title,
-  index,
-  setActiveTab,
-}: IShopItemsSection) => {
-  const { itemsView } = useContext(ApplicationContext);
-  const { ref, inView, entry } = useInView({
-    /* Optional options */
-    threshold: 0.7,
-    // rootMargin: "calc(100vh- 48px)",
-  });
-  const [expanded, setExpanded] = useState<boolean>(true);
+const ShopItemsSection = memo(
+  ({ items, title, index, setActiveTab, itemsView }: IShopItemsSection) => {
+    const { ref, inView } = useInView({
+      /* Optional options */
+      threshold: 0.7,
+      // rootMargin: "calc(100vh- 48px)",
+    });
+    const [expanded, setExpanded] = useState<boolean>(true);
 
-  const handleExpandTab = () => {
-    setExpanded(!expanded);
-  };
-  useEffect(() => {
-    console.log(inView, index);
-    if (inView) {
-      setActiveTab(index);
-    }
-  }, [inView, index, setActiveTab]);
-  return (
-    <Box ref={ref}>
-      <Accordion
-        elevation={0}
-        expanded={expanded}
-        id={title}
-        onChange={() => handleExpandTab()}
-      >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography fontWeight="bold">
-            {title} ({items.length})
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {itemsView === "wide" ? (
-            <Stack spacing={2} py={2}>
-              {items.map((item) => (
-                <ItemCardWide key={item.id} item={item as ITEM} />
-              ))}
-            </Stack>
-          ) : (
-            <ItemsGrid>
-              {items.map((item) => (
-                <ItemCard key={item.id} item={item as ITEM} />
-              ))}
-            </ItemsGrid>
-          )}
-        </AccordionDetails>
-      </Accordion>
-    </Box>
-  );
-};
+    const handleExpandTab = () => {
+      setExpanded(!expanded);
+    };
+    useEffect(() => {
+      if (inView) {
+        setActiveTab(index);
+      }
+    }, [inView, index, setActiveTab]);
+    return (
+      <Box ref={ref}>
+        <Accordion
+          elevation={0}
+          expanded={expanded}
+          id={title}
+          onChange={() => handleExpandTab()}
+        >
+          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+            <Typography fontWeight="bold">
+              {title} ({items.length})
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            {itemsView === "wide" ? (
+              <Stack spacing={2} py={2}>
+                {items.map((item) => (
+                  <ItemCardWide key={item.id} item={item as ITEM} />
+                ))}
+              </Stack>
+            ) : (
+              <ItemsGrid>
+                {items.map((item) => (
+                  <ItemCard key={item.id} item={item as ITEM} />
+                ))}
+              </ItemsGrid>
+            )}
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+    );
+  }
+);
 
 export default ShopItemsSection;
 const ItemsGrid = styled("div")(({ theme }) => ({

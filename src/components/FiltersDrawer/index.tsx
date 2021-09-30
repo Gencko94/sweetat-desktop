@@ -15,8 +15,8 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Box, styled } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+import { useEffect, useState } from "react";
+import { useApplicationState } from "../../contexts/ApplicationContext";
 import { useRouter } from "next/dist/client/router";
 import { useTranslation } from "react-i18next";
 import { FILTER_TYPES } from "../../constants";
@@ -38,12 +38,8 @@ const FiltersDrawer = () => {
   const { data: categories } = useGetRestaurantsCategories();
   const { t } = useTranslation();
   const { locale } = useRouter();
-  const {
-    handleToggleFiltersMenu,
-    filtersMenuOpen,
-    globalFilters,
-    handleSetGlobalFilters,
-  } = useContext(ApplicationContext);
+
+  const [state, setState] = useApplicationState();
   const handleExpandFilterTabs = (tab: number) => {
     if (filterTabs.includes(tab)) {
       setFilterTabs((prev) => prev.filter((i) => i !== tab));
@@ -77,37 +73,51 @@ const FiltersDrawer = () => {
   };
   // ✨ Applying global filters handler.
   const handleApplyFilters = () => {
-    handleSetGlobalFilters({
-      ...globalFilters,
-      filters: {
-        ...globalFilters.filters,
-        category_ids: checkedFilters.categories.map((i) => i.toString()),
-        free_delivery: checkedFilters.filters.free_delivery,
-        is_featured: checkedFilters.filters.is_featured,
+    setState((prev) => ({
+      ...prev,
+      globalFilters: {
+        ...prev.globalFilters,
+        filters: {
+          ...state.globalFilters.filters,
+          category_ids: checkedFilters.categories.map((i) => i.toString()),
+          free_delivery: checkedFilters.filters.free_delivery,
+          is_featured: checkedFilters.filters.is_featured,
+        },
       },
-    });
-    // 👋 close the drawer
-    handleToggleFiltersMenu();
+      // 👋 close the drawer
+      filtersMenuOpen: !prev.filtersMenuOpen,
+    }));
   };
 
   useEffect(() => {
     // ✨ Update the local filter state whenever the global filter state changes.
     setCheckedFilters({
-      categories: globalFilters.filters.category_ids.map((i) => Number(i)),
+      categories: state.globalFilters.filters.category_ids.map((i) =>
+        Number(i)
+      ),
       filters: {
-        free_delivery: !!globalFilters.filters.free_delivery,
-        is_featured: !!globalFilters.filters.is_featured,
+        free_delivery: !!state.globalFilters.filters.free_delivery,
+        is_featured: !!state.globalFilters.filters.is_featured,
       },
     });
-  }, [globalFilters.filters, filtersMenuOpen]);
+  }, [
+    state.globalFilters.filters.category_ids,
+    state.globalFilters.filters.free_delivery,
+    state.globalFilters.filters.is_featured,
+  ]);
 
   // 🎈💣 ```filtersOpen``` dep is to reset the filter if the drawer is closed and not updated the global state.
 
   return (
     <Drawer
       anchor={locale === "en" ? "right" : "left"}
-      open={filtersMenuOpen}
-      onClose={() => handleToggleFiltersMenu()}
+      open={state.filtersMenuOpen}
+      onClose={() =>
+        setState((prev) => ({
+          ...prev,
+          filtersMenuOpen: !prev.filtersMenuOpen,
+        }))
+      }
       //   PaperProps={{ sx: { right: "100px" } }}
     >
       <Container sx={{ p: 2, minWidth: { md: "400px", xs: "300px" } }}>
@@ -122,7 +132,10 @@ const FiltersDrawer = () => {
           <IconButton
             sx={{ color: "primary.dark" }}
             onClick={() => {
-              handleToggleFiltersMenu();
+              setState((prev) => ({
+                ...prev,
+                filtersMenuOpen: !prev.filtersMenuOpen,
+              }));
             }}
           >
             <CloseIcon fontSize="large" />

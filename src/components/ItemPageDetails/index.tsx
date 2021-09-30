@@ -1,7 +1,6 @@
 import {
   Container,
   Fab,
-  IconButton,
   Paper,
   Stack,
   TextField,
@@ -9,13 +8,12 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/dist/client/router";
 import { ITEM } from "../../../lib/interfaces/IRestaurantItem";
-import Image from "next/image";
 import { Box } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import MessageIcon from "@mui/icons-material/Message";
-
 import { useTranslation } from "react-i18next";
+
 interface ItemPageDetailsProps {
   item: ITEM;
   handleAppendQuantity: () => void;
@@ -31,6 +29,7 @@ const ItemPageDetails = ({
 }: ItemPageDetailsProps) => {
   const { locale } = useRouter();
   const { t } = useTranslation();
+
   return (
     <Container component={Paper} sx={{ py: 2 }}>
       <Stack direction="row">

@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import ShopCardWide from "../ShopCardWide";
@@ -8,16 +8,16 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+import { useApplicationState } from "../../contexts/ApplicationContext";
 import { useRouter } from "next/dist/client/router";
 const FeaturedShopsSlider = () => {
-  const { userLocation } = useContext(ApplicationContext);
+  const [state] = useApplicationState();
   const { locale } = useRouter();
   const { t } = useTranslation();
   const { data: shops } = useGetRestaurants({
     filters: { category_ids: [], free_delivery: true, is_featured: true },
-    latitude: userLocation?.lat,
-    longitude: userLocation?.lng,
+    latitude: state.userLocation?.lat,
+    longitude: state.userLocation?.lng,
     page: 0,
     sort_by: "delivery_time",
   });

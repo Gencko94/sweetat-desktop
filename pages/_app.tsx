@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import ApplicationProvider from "../src/contexts/ApplicationContext";
+import { ApplicationProvider } from "../src/contexts/ApplicationContext";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import createEmotionCache from "../styles/createEmotionCache";
 import { appWithTranslation } from "next-i18next";

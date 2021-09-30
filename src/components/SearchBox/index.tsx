@@ -1,9 +1,9 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useContext } from "react";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+
+import { useApplicationState } from "../../contexts/ApplicationContext";
 const SearchBox = () => {
-  const { handleToggleSearchMenu } = useContext(ApplicationContext);
+  const [_, setState] = useApplicationState();
   return (
     <Button
       fullWidth
@@ -14,7 +14,10 @@ const SearchBox = () => {
       startIcon={<SearchIcon />}
       sx={{ textTransform: "none", justifyContent: "flex-start" }}
       onClick={() => {
-        handleToggleSearchMenu();
+        setState((prev) => ({
+          ...prev,
+          searchMenuOpen: !prev.searchMenuOpen,
+        }));
       }}
     >
       Click to search

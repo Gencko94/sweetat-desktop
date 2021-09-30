@@ -1,8 +1,7 @@
-import { createContext, useCallback, useEffect, useState } from "react";
-import { IApplicationContextProps } from "../../lib/interfaces/IApplicationContext";
+import { createContext, useState } from "react";
+import { INITIAL_STATE } from "../constants";
+import { createContainer } from "react-tracked";
 
-import { IUseGetRestaurantsProps } from "../hooks/queryHooks/useGetRestaurants";
-import { useGetUserAddress } from "../hooks/queryHooks/useGetUserAddress";
 // import { getInitialColorMode } from "../helpers/getInitialColorMode";
 
 export type COLOR_MODES = "light" | "dark";
@@ -14,152 +13,114 @@ export type POSITION_COORDS = {
 export type SEARCH_TYPE = "stores" | "items";
 export type SHOP_VIEW = "normal" | "wide";
 export type ITEM_VIEW = "normal" | "wide";
-export const ApplicationContext = createContext<IApplicationContextProps>({
-  colorMode: "dark",
-  handleSetUserLocation: () => {},
-  handleToggleColorMode: () => {},
-  userAddress: null,
-  userLocation: null,
-  filtersMenuOpen: false,
-  handleToggleFiltersMenu: () => {},
-  handleSetGlobalFilters: () => {},
-  globalFilters: {
-    filters: { category_ids: [] },
-    page: 0,
-    sort_by: "delivery_time",
-  },
-  handleToggleSearchMenu: () => {},
-  searchMenuOpen: false,
-  handleSetGlobalSearchValue: () => {},
-  globalSearchValue: "",
-  globalSearchType: "stores",
-  handleSetGlobalSearchType: () => {},
-  itemsView: "normal",
-  shopsView: "wide",
-  handleSetItemsView: () => {},
-  handleSetShopsView: () => {},
-});
 
-const ApplicationProvider: React.FC = ({ children }) => {
-  // 📳 🏬 🍴 Shops view state, basically how restaurants should look .
-  const [shopsView, setShopsView] = useState<SHOP_VIEW>("normal");
+const useMyState = () => useState(INITIAL_STATE);
+export const ApplicationContext = createContext<ReturnType<
+  typeof useMyState
+> | null>(null);
 
-  // 📳 🍔 Items view state, basically how Items should look .
-  const [itemsView, setItemsView] = useState<ITEM_VIEW>("wide");
+export const {
+  Provider: ApplicationProvider,
+  useTracked: useApplicationState,
+} = createContainer(useMyState);
+// const ApplicationProvider: React.FC = ({ children }) => {
+//   // 📳 🏬 🍴 Shops view state, basically how restaurants should look .
+//   const [shopsView, setShopsView] = useState<SHOP_VIEW>("normal");
 
-  // 📍 User coordinates state.
-  const [userLocation, setUserLocation] = useState<POSITION_COORDS | null>(
-    null
-  );
+//   // 📳 🍔 Items view state, basically how Items should look .
+//   const [itemsView, setItemsView] = useState<ITEM_VIEW>("wide");
 
-  // 🌎 Global shop filter state.
-  const [globalFilters, setGlobalFilters] = useState<IUseGetRestaurantsProps>({
-    filters: { category_ids: ["3"] },
-    page: 0,
-    sort_by: "delivery_time",
-  });
+//   // 📍 User coordinates state.
+//   const [userLocation, setUserLocation] = useState<POSITION_COORDS | null>(
+//     null
+//   );
 
-  // 🌎🔎 Global search value state.
-  const [globalSearchValue, setGlobalSearchValue] = useState<string>("");
+//   // 🌎 Global shop filter state.
+//   const [globalFilters, setGlobalFilters] = useState<IUseGetRestaurantsProps>({
+//     filters: { category_ids: ["3"] },
+//     page: 0,
+//     sort_by: "delivery_time",
+//   });
 
-  // 🌎 🔎 🌀 Global search type state.
-  const [globalSearchType, setGlobalSearchType] = useState<SEARCH_TYPE>(
-    "stores"
-  );
+//   // 🌎🔎 Global search value state.
+//   const [globalSearchValue, setGlobalSearchValue] = useState<string>("");
 
-  // 💫 filters menu (drawer) state.
-  const [filtersMenuOpen, setFiltersMenuOpen] = useState<boolean>(false);
+//   // 🌎 🔎 🌀 Global search type state.
+//   const [globalSearchType, setGlobalSearchType] = useState<SEARCH_TYPE>(
+//     "stores"
+//   );
 
-  // 🔎 Search menu (drawer) state.
-  const [searchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
+//   // 💫 filters menu (drawer) state.
+//   const [filtersMenuOpen, setFiltersMenuOpen] = useState<boolean>(false);
 
-  // 🍁 global application address
-  const { data: userAddress } = useGetUserAddress({
-    lat: userLocation?.lat,
-    lng: userLocation?.lng,
-  });
+//   // 🔎 Search menu (drawer) state.
+//   const [searchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
 
-  // 🎨 Application color mode (Dark or light).
-  const [colorMode, setColorMode] = useState<COLOR_MODES>(
-    // getInitialColorMode()
-    "light"
-  );
+//   // 🍁 global application address
+//   const { data: userAddress } = useGetUserAddress({
+//     lat: userLocation?.lat,
+//     lng: userLocation?.lng,
+//   });
 
-  // 🏭 🔥 state handlers...
-  const handleSetGlobalFilters = (filters: IUseGetRestaurantsProps) => {
-    setGlobalFilters(filters);
-  };
-  function handleToggleColorMode() {
-    setColorMode(colorMode === "dark" ? "light" : "dark");
-  }
-  const handleSetUserLocation = (position: POSITION_COORDS) => {
-    setUserLocation(position);
-  };
-  const handleToggleFiltersMenu = () => {
-    setFiltersMenuOpen(!filtersMenuOpen);
-  };
-  const handleToggleSearchMenu = () => {
-    setSearchMenuOpen(!searchMenuOpen);
-  };
-  const handleSetGlobalSearchValue = (value: string) => {
-    setGlobalSearchValue(value);
-  };
-  const handleSetGlobalSearchType = (type: SEARCH_TYPE) => {
-    setGlobalSearchType(type);
-  };
-  const handleSetShopsView = (view: SHOP_VIEW) => {
-    setShopsView(view);
-  };
-  const handleSetItemsView = (view: ITEM_VIEW) => {
-    setItemsView(view);
-  };
+//   // 🎨 Application color mode (Dark or light).
+//   const [colorMode, setColorMode] = useState<COLOR_MODES>(
+//     // getInitialColorMode()
+//     "light"
+//   );
 
-  // 📍 Geolocation getter function.
-  const getCurrentLocation = useCallback(async () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          handleSetUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (_err) => {}
-      );
-    }
-  }, []);
+//   // 🏭 🔥 state handlers...
+//   const handleSetGlobalFilters = (filters: IUseGetRestaurantsProps) => {
+//     setGlobalFilters(filters);
+//   };
+//   function handleToggleColorMode() {
+//     setColorMode(colorMode === "dark" ? "light" : "dark");
+//   }
+//   const handleSetUserLocation = (position: POSITION_COORDS) => {
+//     setUserLocation(position);
+//   };
+//   const handleToggleFiltersMenu = () => {
+//     setFiltersMenuOpen(!filtersMenuOpen);
+//   };
+//   const handleToggleSearchMenu = () => {
+//     setSearchMenuOpen(!searchMenuOpen);
+//   };
+//   const handleSetGlobalSearchValue = (value: string) => {
+//     setGlobalSearchValue(value);
+//   };
+//   const handleSetGlobalSearchType = (type: SEARCH_TYPE) => {
+//     setGlobalSearchType(type);
+//   };
+//   const handleSetShopsView = (view: SHOP_VIEW) => {
+//     setShopsView(view);
+//   };
+//   const handleSetItemsView = (view: ITEM_VIEW) => {
+//     setItemsView(view);
+//   };
 
-  useEffect(() => {
-    // 🔃 On App initialization, get user current location.
-    getCurrentLocation();
-  }, [getCurrentLocation]);
-  return (
-    <ApplicationContext.Provider
-      value={{
-        handleToggleColorMode,
-        colorMode,
-        userLocation,
-        userAddress,
-        handleSetUserLocation,
-        filtersMenuOpen,
-        handleToggleFiltersMenu,
-        globalFilters,
-        handleSetGlobalFilters,
-        handleToggleSearchMenu,
-        searchMenuOpen,
-        globalSearchValue,
-        handleSetGlobalSearchValue,
-        globalSearchType,
-        handleSetGlobalSearchType,
-        itemsView,
-        shopsView,
-        handleSetItemsView,
-        handleSetShopsView,
-      }}
-    >
-      {children}
-    </ApplicationContext.Provider>
-  );
-};
+//   // 📍 Geolocation getter function.
+//   const getCurrentLocation = useCallback(async () => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           handleSetUserLocation({
+//             lat: position.coords.latitude,
+//             lng: position.coords.longitude,
+//           });
+//         },
+//         (_err) => {}
+//       );
+//     }
+//   }, []);
 
-export default ApplicationProvider;
+//   useEffect(() => {
+//     // 🔃 On App initialization, get user current location.
+//     getCurrentLocation();
+//   }, [getCurrentLocation]);
+//   return (
+//     <ApplicationContext.Provider value={useMyState()}>
+//       {children}
+//     </ApplicationContext.Provider>
+//   );
+// };
+
+// export default ApplicationProvider;

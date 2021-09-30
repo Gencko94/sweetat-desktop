@@ -2,22 +2,25 @@ import { InputBase, Paper } from "@mui/material";
 import { alpha, styled } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
-import { useContext } from "react";
+import { useApplicationState } from "../../contexts/ApplicationContext";
 
 const SearchBar = () => {
   const { t } = useTranslation();
-  const { globalSearchValue, handleSetGlobalSearchValue } = useContext(
-    ApplicationContext
-  );
+
+  const [state, setState] = useApplicationState();
   return (
     <Search elevation={5} sx={{ flex: 1 }}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        value={globalSearchValue}
-        onChange={(e) => handleSetGlobalSearchValue(e.target.value)}
+        value={state.globalSearchValue}
+        onChange={(e) =>
+          setState((prev) => ({
+            ...prev,
+            globalSearchValue: e.target.value,
+          }))
+        }
         placeholder={t`search-input-placeholder`}
         inputProps={{ "aria-label": "search" }}
         fullWidth

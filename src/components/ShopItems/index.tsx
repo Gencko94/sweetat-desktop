@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
+import { useApplicationState } from "../../contexts/ApplicationContext";
 import { useGetRestaurantItems } from "../../hooks/queryHooks/useGetRestaurantItems";
 import ItemsViewToggle from "../ItemsViewToggle";
 import ShopItemsSection from "./ShopItemsSection";
@@ -15,6 +16,7 @@ interface IShopItemsProps {
 
 const ShopItems = ({ shop }: IShopItemsProps) => {
   const { t } = useTranslation();
+  const [state] = useApplicationState();
   const [activeTab, setActiveTab] = useState<number>(0);
   const { data } = useGetRestaurantItems({ slug: shop.slug });
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,6 +69,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
                 items={data.items[key]}
                 title={key}
                 setActiveTab={setActiveTab}
+                itemsView={state.itemsView}
               />
             ))}
           </Container>

@@ -9,9 +9,12 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+import {
+  ApplicationContext,
+  useApplicationState,
+} from "../../contexts/ApplicationContext";
 import SearchBar from "../Searchbar";
 import WhiteLogo from "../../svgs/white-logo";
 import { useTranslation } from "react-i18next";
@@ -23,22 +26,21 @@ import ItemsViewToggle from "../ItemsViewToggle";
 const SearchDrawer = () => {
   const { t } = useTranslation();
 
-  const {
-    searchMenuOpen,
-    handleToggleSearchMenu,
-    globalSearchType,
-    globalSearchValue,
-    handleSetGlobalSearchType,
-  } = useContext(ApplicationContext);
+  const [state, setState] = useApplicationState();
   const { data, status } = useGetSearchResults({
-    query: globalSearchValue,
-    type: globalSearchType,
+    query: state.globalSearchValue,
+    type: state.globalSearchType,
   });
   return (
     <Drawer
       anchor="bottom"
-      open={searchMenuOpen}
-      onClose={() => handleToggleSearchMenu()}
+      open={state.searchMenuOpen}
+      onClose={() =>
+        setState((prev) => ({
+          ...prev,
+          searchMenuOpen: !prev.searchMenuOpen,
+        }))
+      }
       //   PaperProps={{ sx: { right: "100px" } }}
     >
       <Container sx={{ py: 1 }}>
@@ -63,7 +65,10 @@ const SearchDrawer = () => {
               size="small"
               sx={{ color: "primary.dark" }}
               onClick={() => {
-                handleToggleSearchMenu();
+                setState((prev) => ({
+                  ...prev,
+                  searchMenuOpen: !prev.searchMenuOpen,
+                }));
               }}
             >
               <CloseIcon fontSize="large" />
@@ -80,22 +85,32 @@ const SearchDrawer = () => {
             <ButtonGroup>
               <Button
                 variant={
-                  globalSearchType === "stores" ? "contained" : "outlined"
+                  state.globalSearchType === "stores" ? "contained" : "outlined"
                 }
-                onClick={() => handleSetGlobalSearchType("stores")}
+                onClick={() =>
+                  setState((prev) => ({
+                    ...prev,
+                    globalSearchType: "stores",
+                  }))
+                }
               >
                 {t`stores`}
               </Button>
               <Button
                 variant={
-                  globalSearchType === "items" ? "contained" : "outlined"
+                  state.globalSearchType === "items" ? "contained" : "outlined"
                 }
-                onClick={() => handleSetGlobalSearchType("items")}
+                onClick={() =>
+                  setState((prev) => ({
+                    ...prev,
+                    globalSearchType: "items",
+                  }))
+                }
               >
                 {t`items`}
               </Button>
             </ButtonGroup>
-            {globalSearchType === "stores" ? (
+            {state.globalSearchType === "stores" ? (
               <ShopsViewToggle />
             ) : (
               <ItemsViewToggle />

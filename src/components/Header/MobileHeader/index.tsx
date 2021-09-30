@@ -1,12 +1,11 @@
 import { Container, Divider, IconButton, Stack } from "@mui/material";
 import MobileNavbar from "../MobileNavbar";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useContext } from "react";
-import { ApplicationContext } from "../../../contexts/ApplicationContext";
+import { useApplicationState } from "../../../contexts/ApplicationContext";
 import SearchBox from "../../SearchBox";
 
 const MobileHeader = () => {
-  const { handleToggleFiltersMenu } = useContext(ApplicationContext);
+  const [_, setState] = useApplicationState();
   return (
     <Container sx={{ py: 1 }}>
       <MobileNavbar />
@@ -21,7 +20,10 @@ const MobileHeader = () => {
 
         <IconButton
           onClick={() => {
-            handleToggleFiltersMenu();
+            setState((prev) => ({
+              ...prev,
+              filtersMenuOpen: !prev.filtersMenuOpen,
+            }));
           }}
         >
           <FilterListIcon />

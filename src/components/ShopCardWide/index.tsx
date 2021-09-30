@@ -4,15 +4,15 @@ import Image from "next/image";
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import { useContext } from "react";
-import { ApplicationContext } from "../../contexts/ApplicationContext";
+
+import { useApplicationState } from "../../contexts/ApplicationContext";
 interface IShopSliderCard {
   shop: IRestaurantInfo;
 }
 
 const ShopCardWide = ({ shop }: IShopSliderCard) => {
   const { t } = useTranslation();
-  const { handleToggleSearchMenu } = useContext(ApplicationContext);
+  const [_, setState] = useApplicationState();
   return (
     <Link href={`/shop/${shop.slug}`} passHref>
       <Box
@@ -20,7 +20,12 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
         position="relative"
         overflow="hidden"
         sx={{ height: "300px" }}
-        onClick={() => handleToggleSearchMenu()}
+        onClick={() =>
+          setState((prev) => ({
+            ...prev,
+            searchMenuOpen: prev.searchMenuOpen ? false : true,
+          }))
+        }
       >
         <Box height="80%" position="relative">
           <Image
