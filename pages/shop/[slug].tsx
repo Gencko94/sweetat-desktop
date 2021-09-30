@@ -15,7 +15,7 @@ import isMobile from "../../utils/isMobile";
 import Image from "next/image";
 import { Box } from "@mui/system";
 import ShopPageInfo from "../../src/components/ShopPageInfo";
-import { ClosedShopOverlay } from "../../src/components/ClosedShopOverlay";
+import { DarkImageOverlay } from "../../src/components/DarkImageOverlay";
 import { useTranslation } from "react-i18next";
 import ShopItems from "../../src/components/ShopItems";
 const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
@@ -42,7 +42,7 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
                 // width={350}
               />
               {shop.is_active === 0 && (
-                <ClosedShopOverlay>
+                <DarkImageOverlay>
                   <Typography
                     variant="h6"
                     fontWeight="medium"
@@ -53,7 +53,7 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
                       fontWeight="medium"
                     >{t`accepts-pre-order`}</Typography>
                   )}
-                </ClosedShopOverlay>
+                </DarkImageOverlay>
               )}
             </Box>
             <ShopPageInfo shop={shop} />

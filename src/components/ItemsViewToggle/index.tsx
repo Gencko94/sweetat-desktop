@@ -7,6 +7,7 @@ import { ApplicationContext } from "../../contexts/ApplicationContext";
 
 const ItemsViewToggle = () => {
   const { itemsView, handleSetItemsView } = useContext(ApplicationContext);
+  console.log("rerendered");
   return (
     <Stack direction="row" spacing={1}>
       <Button
@@ -14,14 +15,14 @@ const ItemsViewToggle = () => {
         size="small"
         onClick={() => handleSetItemsView("wide")}
       >
-        <ViewStreamIcon />
+        <ViewStreamIcon fontSize="small" />
       </Button>
       <Button
         variant={itemsView === "normal" ? "contained" : "outlined"}
         size="small"
         onClick={() => handleSetItemsView("normal")}
       >
-        <GridViewIcon />
+        <GridViewIcon fontSize="small" />
       </Button>
     </Stack>
   );

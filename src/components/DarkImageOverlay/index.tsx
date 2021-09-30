@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 
-export const ClosedShopOverlay = styled("div")(({ theme }) => ({
+export const DarkImageOverlay = styled("div")(({ theme }) => ({
   position: "absolute",
   inset: 0,
   display: "flex",

@@ -98,3 +98,7 @@ export const getSearchResults = async (
     return res.data;
   }
 };
+export const getSingleItem = async (id: number) => {
+  const res = await instance.post("/get-single-item", { id });
+  return res.data;
+};

@@ -1,9 +1,10 @@
-import { Container, Tab, Tabs } from "@mui/material";
+import { Container, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
 import { useGetRestaurantItems } from "../../hooks/queryHooks/useGetRestaurantItems";
+import ItemsViewToggle from "../ItemsViewToggle";
 import ShopItemsSection from "./ShopItemsSection";
 import ShopItemsTabs from "./ShopItemsTabs";
 import ShopTopSellingSection from "./ShopTopSellingSection";
@@ -43,6 +44,15 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
           />
           <br />
           <Container>
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              spacing={1}
+            >
+              <Typography>{t`items-view`}:</Typography>
+              <ItemsViewToggle />
+            </Stack>
             {data!.top_selling.length > 0 && (
               <ShopTopSellingSection
                 index={0}

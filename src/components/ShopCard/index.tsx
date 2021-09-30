@@ -11,7 +11,7 @@ import ShopStatus from "../ShopStatus";
 import Link from "next/link";
 import { ApplicationContext } from "../../contexts/ApplicationContext";
 import { useContext } from "react";
-import { ClosedShopOverlay } from "../ClosedShopOverlay";
+import { DarkImageOverlay } from "../DarkImageOverlay";
 interface IShopCard {
   shop: IRestaurantInfo;
 }
@@ -51,11 +51,11 @@ const ShopCard = ({ shop }: IShopCard) => {
             width="100%"
           />
           {shop.is_active === 0 && (
-            <ClosedShopOverlay>
+            <DarkImageOverlay>
               <Typography variant="body1" fontWeight="medium">
                 {t`closed`}
               </Typography>
-            </ClosedShopOverlay>
+            </DarkImageOverlay>
           )}
         </Box>
         <Box>
