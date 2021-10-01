@@ -12,69 +12,69 @@ import { DarkImageOverlay } from '../../src/components/DarkImageOverlay';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ItemPageDetails from '../../src/components/ItemPageDetails';
-import { useState } from 'react';
-const SingleItem: NextPage<{ isMobileDevice: boolean }> = ({
-  isMobileDevice,
-}) => {
-  const {
-    query: { id },
-  } = useRouter();
-  const { data } = useGetSingleItem({ id: Number(id) });
-  const { t } = useTranslation();
-  const [quantity, setQuantity] = useState<number>(1);
+import { memo, useState } from 'react';
+const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
+  ({ isMobileDevice }) => {
+    const {
+      query: { id },
+    } = useRouter();
+    const { data } = useGetSingleItem({ id: Number(id) });
+    const { t } = useTranslation();
+    const [quantity, setQuantity] = useState<number>(1);
 
-  const handleAppendQuantity = () => {
-    if (!data?.max_allowed) {
-      setQuantity(quantity + 1);
-    } else {
-      if (data.max_allowed === quantity) {
-        return;
+    const handleAppendQuantity = () => {
+      if (!data?.max_allowed) {
+        setQuantity(quantity + 1);
+      } else {
+        if (data.max_allowed === quantity) {
+          return;
+        }
       }
-    }
-  };
-  const handleSubstractQuantity = () => {
-    if (quantity === 1) {
-      return;
-    } else {
-      setQuantity(quantity - 1);
-    }
-  };
-  return (
-    <div>
-      <Navbar isMobileDevice={isMobileDevice} />
-      {data && (
-        <>
-          <Box height="200px" position="relative">
-            <Image
-              placeholder="blur"
-              blurDataURL={`https://sweetat.co/${data.placeholder_image}`}
-              src={`https://sweetat.co/${data.image}`}
-              alt={`${data.name} photo`}
-              layout="fill"
-              objectFit="cover"
-              // height={200}
-              // width={350}
+    };
+    const handleSubstractQuantity = () => {
+      if (quantity === 1) {
+        return;
+      } else {
+        setQuantity(quantity - 1);
+      }
+    };
+    return (
+      <div>
+        <Navbar isMobileDevice={isMobileDevice} />
+        {data && (
+          <>
+            <Box height="200px" position="relative">
+              <Image
+                placeholder="blur"
+                blurDataURL={`https://sweetat.co/${data.placeholder_image}`}
+                src={`https://sweetat.co/${data.image}`}
+                alt={`${data.name} photo`}
+                layout="fill"
+                objectFit="cover"
+                // height={200}
+                // width={350}
+              />
+              {data.in_stock === 0 && (
+                <DarkImageOverlay>
+                  <Typography
+                    variant="h6"
+                    fontWeight="medium"
+                  >{t`closed`}</Typography>
+                </DarkImageOverlay>
+              )}
+            </Box>
+            <ItemPageDetails
+              quantity={quantity}
+              handleAppendQuantity={handleAppendQuantity}
+              handleSubstractQuantity={handleSubstractQuantity}
+              item={data}
             />
-            {data.in_stock === 0 && (
-              <DarkImageOverlay>
-                <Typography
-                  variant="h6"
-                  fontWeight="medium"
-                >{t`closed`}</Typography>
-              </DarkImageOverlay>
-            )}
-          </Box>
-          <ItemPageDetails
-            quantity={quantity}
-            handleAppendQuantity={handleAppendQuantity}
-            handleSubstractQuantity={handleSubstractQuantity}
-            item={data}
-          />
-        </>
-      )}
-    </div>
-  );
-};
+          </>
+        )}
+      </div>
+    );
+  }
+);
 
 export default SingleItem;
 export const getServerSideProps: GetServerSideProps = async ctx => {

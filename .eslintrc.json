@@ -8,6 +8,7 @@
   "rules": {
     "@next/next/no-document-import-in-page": "off",
     "no-unused-vars": "off",
+    "react/display-name": "off",
     "@emotion/jsx-import": "error",
     "@emotion/no-vanilla": "error",
     "@emotion/import-from-emotion": "error",

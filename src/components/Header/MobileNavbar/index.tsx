@@ -1,8 +1,9 @@
-import { IconButton, Stack } from "@mui/material";
-import DeliverTo from "../../DeliverTo";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
-import PersonIcon from "@mui/icons-material/Person";
-const MobileNavbar = () => {
+import { IconButton, Stack } from '@mui/material';
+import DeliverTo from '../../DeliverTo';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import PersonIcon from '@mui/icons-material/Person';
+import { memo } from 'react';
+const MobileNavbar = memo(() => {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
       <DeliverTo />
@@ -16,6 +17,6 @@ const MobileNavbar = () => {
       </Stack>
     </Stack>
   );
-};
+});
 
 export default MobileNavbar;

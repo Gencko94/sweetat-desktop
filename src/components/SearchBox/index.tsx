@@ -1,9 +1,12 @@
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { memo } from 'react';
 
-import { useApplicationState } from '../../contexts/ApplicationContext';
-const SearchBox = () => {
-  const [{}, setState] = useApplicationState();
+interface ISearchBoxState {
+  handleToggleSearchMenu: () => void;
+}
+
+const SearchBox = memo(({ handleToggleSearchMenu }: ISearchBoxState) => {
   return (
     <Button
       fullWidth
@@ -13,16 +16,11 @@ const SearchBox = () => {
       disableElevation
       startIcon={<SearchIcon />}
       sx={{ textTransform: 'none', justifyContent: 'flex-start' }}
-      onClick={() => {
-        setState(prev => ({
-          ...prev,
-          searchMenuOpen: !prev.searchMenuOpen,
-        }));
-      }}
+      onClick={() => handleToggleSearchMenu()}
     >
       Click to search
     </Button>
   );
-};
+});
 
 export default SearchBox;

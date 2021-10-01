@@ -3,9 +3,17 @@ import MobileNavbar from '../MobileNavbar';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useApplicationState } from '../../../contexts/ApplicationContext';
 import SearchBox from '../../SearchBox';
+import { useCallback } from 'react';
 
 const MobileHeader = () => {
-  const [{}, setState] = useApplicationState();
+  const [state, setState] = useApplicationState();
+
+  const handleToggleSearchMenu = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      searchMenuOpen: !prev.searchMenuOpen,
+    }));
+  }, [setState]);
   return (
     <Container sx={{ py: 1 }}>
       <MobileNavbar />
@@ -16,7 +24,7 @@ const MobileHeader = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <SearchBox />
+        <SearchBox handleToggleSearchMenu={handleToggleSearchMenu} />
 
         <IconButton
           onClick={() => {
