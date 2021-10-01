@@ -16,7 +16,7 @@ const UserDrawerBody = () => {
         <Typography variant="h6" color="primary" fontWeight="bold">
           Personal
         </Typography>
-        <Link passHref href="/">
+        <Link passHref href="/login">
           <Stack my={2} direction="row" justifyContent="space-between">
             <Typography fontWeight="medium">{t`sign-in`}</Typography>
             {locale === 'ar' ? (
