@@ -1,11 +1,12 @@
-import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { useMemo } from "react";
-import { getDesignTokens } from "../../../styles/globalTheme";
-import { useApplicationState } from "../../contexts/ApplicationContext";
-import FiltersDrawer from "../FiltersDrawer";
-import SearchDrawer from "../SearchDrawer";
+import { useMemo } from 'react';
+import { getDesignTokens } from '../../../styles/globalTheme';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import FiltersDrawer from '../FiltersDrawer';
+import SearchDrawer from '../SearchDrawer';
+import UserDrawer from '../UserDrawer';
 
 const Layout: React.FC = ({ children }) => {
   const [state] = useApplicationState();
@@ -16,6 +17,7 @@ const Layout: React.FC = ({ children }) => {
     <ThemeProvider theme={theme}>
       <FiltersDrawer />
       <SearchDrawer />
+      <UserDrawer />
       <CssBaseline />
       {children}
       <style global jsx>

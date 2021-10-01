@@ -23,9 +23,9 @@ export const INITIAL_STATE: IApplicationContextProps = {
   searchMenuOpen: false,
   globalSearchValue: '',
   globalSearchType: 'stores',
-
   itemsView: 'normal',
   shopsView: 'wide',
+  userDrawerOpen: false,
 };
 export const FOOTER_LINKS: { href: string; label: string }[] = [
   {

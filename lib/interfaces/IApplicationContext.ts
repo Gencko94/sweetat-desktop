@@ -4,9 +4,9 @@ import {
   POSITION_COORDS,
   SEARCH_TYPE,
   SHOP_VIEW,
-} from "../../src/contexts/ApplicationContext";
-import { IUseGetRestaurantsProps } from "../../src/hooks/queryHooks/useGetRestaurants";
-import { IUSER_ADDRESS } from "./IUserAddress";
+} from '../../src/contexts/ApplicationContext';
+import { IUseGetRestaurantsProps } from '../../src/hooks/queryHooks/useGetRestaurants';
+import { IUSER_ADDRESS } from './IUserAddress';
 
 export interface IApplicationContextProps {
   colorMode: COLOR_MODES;
@@ -19,4 +19,5 @@ export interface IApplicationContextProps {
   globalSearchType: SEARCH_TYPE;
   shopsView: SHOP_VIEW;
   itemsView: ITEM_VIEW;
+  userDrawerOpen: boolean;
 }

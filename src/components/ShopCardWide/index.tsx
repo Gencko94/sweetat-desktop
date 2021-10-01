@@ -12,7 +12,7 @@ interface IShopSliderCard {
 
 const ShopCardWide = ({ shop }: IShopSliderCard) => {
   const { t } = useTranslation();
-  const [{}, setState] = useApplicationState();
+  const [state, setState] = useApplicationState();
   return (
     <Link href={`/shop/${shop.slug}`} passHref>
       <Box
@@ -20,12 +20,14 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
         position="relative"
         overflow="hidden"
         sx={{ height: '300px' }}
-        onClick={() =>
-          setState(prev => ({
-            ...prev,
-            searchMenuOpen: prev.searchMenuOpen ? false : true,
-          }))
-        }
+        onClick={() => {
+          if (state.searchMenuOpen) {
+            setState(prev => ({
+              ...prev,
+              searchMenuOpen: false,
+            }));
+          }
+        }}
       >
         <Box height="80%" position="relative">
           <Image
