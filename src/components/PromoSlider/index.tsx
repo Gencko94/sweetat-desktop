@@ -1,10 +1,9 @@
-import { useMemo } from "react";
-import { IPromoSlide } from "../../../lib/interfaces/IPromoSlide";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
-import "swiper/css";
-import { Box } from "@mui/system";
-import { useGetPromoSlides } from "../../hooks/queryHooks/useGetPromoSlides";
+import { useMemo } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Image from 'next/image';
+import 'swiper/css';
+import { Box } from '@mui/system';
+import { useGetPromoSlides } from '../../hooks/queryHooks/useGetPromoSlides';
 const PromoSlider = () => {
   const { data: promoSlides } = useGetPromoSlides();
   const breakpoints = useMemo(
@@ -42,7 +41,7 @@ const PromoSlider = () => {
   return (
     <Box my={3} mx={1}>
       <Swiper freeMode breakpoints={breakpoints}>
-        {promoSlides?.map((slide) => (
+        {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>
             <Box borderRadius={6} overflow="hidden">
               <Image

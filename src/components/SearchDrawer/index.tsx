@@ -6,22 +6,18 @@ import {
   IconButton,
   ButtonGroup,
   Button,
-} from "@mui/material";
-import { Box } from "@mui/system";
+} from '@mui/material';
+import { Box } from '@mui/system';
 
-import { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  ApplicationContext,
-  useApplicationState,
-} from "../../contexts/ApplicationContext";
-import SearchBar from "../Searchbar";
-import WhiteLogo from "../../svgs/white-logo";
-import { useTranslation } from "react-i18next";
-import useGetSearchResults from "../../hooks/queryHooks/useGetSearchResults";
-import SearchResults from "./SearchResults";
-import ShopsViewToggle from "../ShopsViewToggle";
-import ItemsViewToggle from "../ItemsViewToggle";
+import CloseIcon from '@mui/icons-material/Close';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import SearchBar from '../Searchbar';
+import WhiteLogo from '../../svgs/white-logo';
+import { useTranslation } from 'react-i18next';
+import useGetSearchResults from '../../hooks/queryHooks/useGetSearchResults';
+import SearchResults from './SearchResults';
+import ShopsViewToggle from '../ShopsViewToggle';
+import ItemsViewToggle from '../ItemsViewToggle';
 
 const SearchDrawer = () => {
   const { t } = useTranslation();
@@ -36,7 +32,7 @@ const SearchDrawer = () => {
       anchor="bottom"
       open={state.searchMenuOpen}
       onClose={() =>
-        setState((prev) => ({
+        setState(prev => ({
           ...prev,
           searchMenuOpen: !prev.searchMenuOpen,
         }))
@@ -48,8 +44,8 @@ const SearchDrawer = () => {
           sx={{
             maxHeight: `calc(100vh - 245px )`,
             minHeight: `calc(100vh - 245px )`,
-            overflowY: "auto",
-            overflowX: "hidden",
+            overflowY: 'auto',
+            overflowX: 'hidden',
             my: 1,
           }}
         >
@@ -63,9 +59,9 @@ const SearchDrawer = () => {
             <SearchBar />
             <IconButton
               size="small"
-              sx={{ color: "primary.dark" }}
+              sx={{ color: 'primary.dark' }}
               onClick={() => {
-                setState((prev) => ({
+                setState(prev => ({
                   ...prev,
                   searchMenuOpen: !prev.searchMenuOpen,
                 }));
@@ -85,12 +81,12 @@ const SearchDrawer = () => {
             <ButtonGroup>
               <Button
                 variant={
-                  state.globalSearchType === "stores" ? "contained" : "outlined"
+                  state.globalSearchType === 'stores' ? 'contained' : 'outlined'
                 }
                 onClick={() =>
-                  setState((prev) => ({
+                  setState(prev => ({
                     ...prev,
-                    globalSearchType: "stores",
+                    globalSearchType: 'stores',
                   }))
                 }
               >
@@ -98,25 +94,25 @@ const SearchDrawer = () => {
               </Button>
               <Button
                 variant={
-                  state.globalSearchType === "items" ? "contained" : "outlined"
+                  state.globalSearchType === 'items' ? 'contained' : 'outlined'
                 }
                 onClick={() =>
-                  setState((prev) => ({
+                  setState(prev => ({
                     ...prev,
-                    globalSearchType: "items",
+                    globalSearchType: 'items',
                   }))
                 }
               >
                 {t`items`}
               </Button>
             </ButtonGroup>
-            {state.globalSearchType === "stores" ? (
+            {state.globalSearchType === 'stores' ? (
               <ShopsViewToggle />
             ) : (
               <ItemsViewToggle />
             )}
           </Stack>
-          {typeof data === "undefined" && status !== "loading" && (
+          {typeof data === 'undefined' && status !== 'loading' && (
             <Box
               alignItems="center"
               justifyContent="center"
@@ -133,7 +129,7 @@ const SearchDrawer = () => {
             </Box>
           )}
           {/* 💀⚡ TODO : Add a Skeleton loading screen... */}
-          {status === "loading" && "Loading..."}
+          {status === 'loading' && 'Loading...'}
           {data && <SearchResults results={data} />}
         </Box>
       </Container>

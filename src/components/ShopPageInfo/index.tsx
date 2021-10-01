@@ -1,11 +1,11 @@
-import { Container, Paper, Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { useRouter } from "next/dist/client/router";
-import Image from "next/image";
-import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
-import ShopStatus from "../ShopStatus";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useTranslation } from "react-i18next";
+import { Container, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useRouter } from 'next/dist/client/router';
+import Image from 'next/image';
+import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
+import ShopStatus from '../ShopStatus';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { useTranslation } from 'react-i18next';
 interface IShopPageInfo {
   shop: IRestaurantInfo;
 }
@@ -18,9 +18,9 @@ const ShopPageInfo = ({ shop }: IShopPageInfo) => {
       <Stack direction="row" py={2} spacing={2}>
         <Box
           sx={{
-            border: "1px solid rgba(0,0,0,0.12)",
-            borderRadius: "6px",
-            overflow: "hidden",
+            border: '1px solid rgba(0,0,0,0.12)',
+            borderRadius: '6px',
+            overflow: 'hidden',
             p: 0.5,
           }}
           width="20%"
@@ -39,10 +39,10 @@ const ShopPageInfo = ({ shop }: IShopPageInfo) => {
         </Box>
         <Box>
           <Typography variant="subtitle1" fontWeight="bold">
-            {locale === "ar" ? shop.ar_name : shop.name}
+            {locale === 'ar' ? shop.ar_name : shop.name}
           </Typography>
           <Typography variant="subtitle2" color="primary" fontWeight="medium">
-            {locale === "ar" ? shop.ar_description : shop.description}
+            {locale === 'ar' ? shop.ar_description : shop.description}
           </Typography>
           <ShopStatus
             is_active={shop.is_active}

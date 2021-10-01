@@ -1,17 +1,17 @@
-import { Box, styled } from "@mui/system";
-import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
-import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
-import Image from "next/image";
-import { Stack, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import { Box } from '@mui/system';
+import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import Image from 'next/image';
+import { Stack, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import SpacerDot from "../SpacerDot";
-import ShopStatus from "../ShopStatus";
-import Link from "next/link";
-import { useApplicationState } from "../../contexts/ApplicationContext";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import SpacerDot from '../SpacerDot';
+import ShopStatus from '../ShopStatus';
+import Link from 'next/link';
+import { useApplicationState } from '../../contexts/ApplicationContext';
 
-import { DarkImageOverlay } from "../DarkImageOverlay";
+import { DarkImageOverlay } from '../DarkImageOverlay';
 interface IShopCard {
   shop: IRestaurantInfo;
 }
@@ -19,7 +19,7 @@ interface IShopCard {
 const ShopCard = ({ shop }: IShopCard) => {
   const { t } = useTranslation();
 
-  const [_, setState] = useApplicationState();
+  const [{}, setState] = useApplicationState();
   return (
     <Link href={`/shop/${shop.slug}`} passHref>
       <Box
@@ -29,7 +29,7 @@ const ShopCard = ({ shop }: IShopCard) => {
         display="flex"
         gap={1}
         onClick={() =>
-          setState((prev) => ({
+          setState(prev => ({
             ...prev,
             searchMenuOpen: prev.searchMenuOpen ? false : true,
           }))
@@ -37,9 +37,9 @@ const ShopCard = ({ shop }: IShopCard) => {
       >
         <Box
           sx={{
-            border: "1px solid rgba(0,0,0,0.12)",
-            borderRadius: "6px",
-            overflow: "hidden",
+            border: '1px solid rgba(0,0,0,0.12)',
+            borderRadius: '6px',
+            overflow: 'hidden',
             p: 0.5,
           }}
           width="20%"
@@ -92,7 +92,7 @@ const ShopCard = ({ shop }: IShopCard) => {
                 variant="body2"
                 fontWeight="medium"
               >
-                {shop.delivery_charges === "0"
+                {shop.delivery_charges === '0'
                   ? t`free-delivery`
                   : `${shop.delivery_charges} KD Delivery cost`}
               </Typography>

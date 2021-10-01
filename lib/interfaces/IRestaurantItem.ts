@@ -1,5 +1,3 @@
-import { IItemsSearchResult } from "./IItem";
-
 export type RESTAURANT_SECTION = {
   [key: string]: ITEM[];
 };
@@ -33,7 +31,7 @@ export interface ADDON_CATEGORY {
   id: number;
   name: string;
   ar_name: string;
-  type: "MULTI" | "SINGLE";
+  type: 'MULTI' | 'SINGLE';
   required_choices: number;
   max_allowed: number;
   user_id: number;

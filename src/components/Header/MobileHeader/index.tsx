@@ -1,11 +1,11 @@
-import { Container, Divider, IconButton, Stack } from "@mui/material";
-import MobileNavbar from "../MobileNavbar";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { useApplicationState } from "../../../contexts/ApplicationContext";
-import SearchBox from "../../SearchBox";
+import { Container, Divider, IconButton, Stack } from '@mui/material';
+import MobileNavbar from '../MobileNavbar';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { useApplicationState } from '../../../contexts/ApplicationContext';
+import SearchBox from '../../SearchBox';
 
 const MobileHeader = () => {
-  const [_, setState] = useApplicationState();
+  const [{}, setState] = useApplicationState();
   return (
     <Container sx={{ py: 1 }}>
       <MobileNavbar />
@@ -20,7 +20,7 @@ const MobileHeader = () => {
 
         <IconButton
           onClick={() => {
-            setState((prev) => ({
+            setState(prev => ({
               ...prev,
               filtersMenuOpen: !prev.filtersMenuOpen,
             }));

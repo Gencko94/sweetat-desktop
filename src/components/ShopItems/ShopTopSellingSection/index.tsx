@@ -1,12 +1,12 @@
-import { Dispatch, memo, SetStateAction, useEffect, useMemo } from "react";
-import { ITEM } from "../../../../lib/interfaces/IRestaurantItem";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import ItemCard from "../../ItemCard";
-import { Box } from "@mui/system";
-import { Stack, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useInView } from "react-intersection-observer";
+import { Dispatch, memo, SetStateAction, useEffect, useMemo } from 'react';
+import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import ItemCard from '../../ItemCard';
+import { Box } from '@mui/system';
+import { Stack, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useInView } from 'react-intersection-observer';
 interface IShopTopSellingSectionProps {
   topSellingItems: ITEM[];
   setActiveTab: Dispatch<SetStateAction<number>>;
@@ -16,7 +16,7 @@ interface IShopTopSellingSectionProps {
 const ShopTopSellingSection = memo(
   ({ topSellingItems, setActiveTab, index }: IShopTopSellingSectionProps) => {
     const { t } = useTranslation();
-    const { ref, inView, entry } = useInView({
+    const { ref, inView } = useInView({
       /* Optional options */
       threshold: 1,
       initialInView: true,
@@ -66,8 +66,8 @@ const ShopTopSellingSection = memo(
           </Typography>
         </Stack>
         <Swiper freeMode breakpoints={breakpoints}>
-          {topSellingItems?.map((item) => (
-            <SwiperSlide style={{ padding: "1rem 0" }} key={item.id}>
+          {topSellingItems?.map(item => (
+            <SwiperSlide style={{ padding: '1rem 0' }} key={item.id}>
               <ItemCard item={item} />
             </SwiperSlide>
           ))}

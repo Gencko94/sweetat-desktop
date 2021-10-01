@@ -1,9 +1,9 @@
-import { Button } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-import { useApplicationState } from "../../contexts/ApplicationContext";
+import { useApplicationState } from '../../contexts/ApplicationContext';
 const SearchBox = () => {
-  const [_, setState] = useApplicationState();
+  const [{}, setState] = useApplicationState();
   return (
     <Button
       fullWidth
@@ -12,9 +12,9 @@ const SearchBox = () => {
       disableRipple
       disableElevation
       startIcon={<SearchIcon />}
-      sx={{ textTransform: "none", justifyContent: "flex-start" }}
+      sx={{ textTransform: 'none', justifyContent: 'flex-start' }}
       onClick={() => {
-        setState((prev) => ({
+        setState(prev => ({
           ...prev,
           searchMenuOpen: !prev.searchMenuOpen,
         }));

@@ -5,14 +5,14 @@ import {
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import { useRouter } from "next/dist/client/router";
-import { ITEM } from "../../../lib/interfaces/IRestaurantItem";
-import { Box } from "@mui/system";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import MessageIcon from "@mui/icons-material/Message";
-import { useTranslation } from "react-i18next";
+} from '@mui/material';
+import { useRouter } from 'next/dist/client/router';
+import { ITEM } from '../../../lib/interfaces/IRestaurantItem';
+import { Box } from '@mui/system';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import MessageIcon from '@mui/icons-material/Message';
+import { useTranslation } from 'react-i18next';
 
 interface ItemPageDetailsProps {
   item: ITEM;
@@ -34,7 +34,7 @@ const ItemPageDetails = ({
     <Container component={Paper} sx={{ py: 2 }}>
       <Stack direction="row">
         <Typography variant="h5" fontWeight="bold">
-          {locale === "ar" ? item.ar_name : item.name}
+          {locale === 'ar' ? item.ar_name : item.name}
         </Typography>
       </Stack>
       <Typography variant="h6" fontWeight="medium" color="secondary">
@@ -43,8 +43,7 @@ const ItemPageDetails = ({
       {item.ar_desc !== null && item.desc !== null && (
         <div
           dangerouslySetInnerHTML={{
-            __html:
-              locale === "ar" ? (item.ar_desc as any) : (item.desc as any),
+            __html: locale === 'ar' ? item.ar_desc : item.desc,
           }}
         ></div>
       )}

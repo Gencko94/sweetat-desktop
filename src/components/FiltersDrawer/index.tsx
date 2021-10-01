@@ -11,16 +11,16 @@ import {
   Container,
   Checkbox,
   Button,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Box, styled } from "@mui/system";
-import { useEffect, useState } from "react";
-import { useApplicationState } from "../../contexts/ApplicationContext";
-import { useRouter } from "next/dist/client/router";
-import { useTranslation } from "react-i18next";
-import { FILTER_TYPES } from "../../constants";
-import { useGetRestaurantsCategories } from "../../hooks/queryHooks/useGetRestaurantsCategories";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Box, styled } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import { useRouter } from 'next/dist/client/router';
+import { useTranslation } from 'react-i18next';
+import { FILTER_TYPES } from '../../constants';
+import { useGetRestaurantsCategories } from '../../hooks/queryHooks/useGetRestaurantsCategories';
 
 interface CHECKED_FILTERS {
   filters: {
@@ -42,28 +42,28 @@ const FiltersDrawer = () => {
   const [state, setState] = useApplicationState();
   const handleExpandFilterTabs = (tab: number) => {
     if (filterTabs.includes(tab)) {
-      setFilterTabs((prev) => prev.filter((i) => i !== tab));
+      setFilterTabs(prev => prev.filter(i => i !== tab));
     } else {
-      setFilterTabs((prev) => [...prev, tab]);
+      setFilterTabs(prev => [...prev, tab]);
     }
   };
   const handleCheckCategories = (id: number) => {
     //  if the category is available in the local state
     if (checkedFilters.categories.includes(id)) {
-      setCheckedFilters((prev) => ({
+      setCheckedFilters(prev => ({
         ...prev,
-        categories: prev.categories.filter((cat) => cat !== id),
+        categories: prev.categories.filter(cat => cat !== id),
       }));
       // else append the category to the local state
     } else {
-      setCheckedFilters((prev) => ({
+      setCheckedFilters(prev => ({
         ...prev,
         categories: [...prev.categories, id],
       }));
     }
   };
   const handleCheckFilters = (key: string) => {
-    setCheckedFilters((prev) => ({
+    setCheckedFilters(prev => ({
       ...prev,
       filters: {
         ...prev.filters,
@@ -73,13 +73,13 @@ const FiltersDrawer = () => {
   };
   // ✨ Applying global filters handler.
   const handleApplyFilters = () => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       globalFilters: {
         ...prev.globalFilters,
         filters: {
           ...state.globalFilters.filters,
-          category_ids: checkedFilters.categories.map((i) => i.toString()),
+          category_ids: checkedFilters.categories.map(i => i.toString()),
           free_delivery: checkedFilters.filters.free_delivery,
           is_featured: checkedFilters.filters.is_featured,
         },
@@ -92,9 +92,7 @@ const FiltersDrawer = () => {
   useEffect(() => {
     // ✨ Update the local filter state whenever the global filter state changes.
     setCheckedFilters({
-      categories: state.globalFilters.filters.category_ids.map((i) =>
-        Number(i)
-      ),
+      categories: state.globalFilters.filters.category_ids.map(i => Number(i)),
       filters: {
         free_delivery: !!state.globalFilters.filters.free_delivery,
         is_featured: !!state.globalFilters.filters.is_featured,
@@ -110,17 +108,17 @@ const FiltersDrawer = () => {
 
   return (
     <Drawer
-      anchor={locale === "en" ? "right" : "left"}
+      anchor={locale === 'en' ? 'right' : 'left'}
       open={state.filtersMenuOpen}
       onClose={() =>
-        setState((prev) => ({
+        setState(prev => ({
           ...prev,
           filtersMenuOpen: !prev.filtersMenuOpen,
         }))
       }
       //   PaperProps={{ sx: { right: "100px" } }}
     >
-      <Container sx={{ p: 2, minWidth: { md: "400px", xs: "300px" } }}>
+      <Container sx={{ p: 2, minWidth: { md: '400px', xs: '300px' } }}>
         <Stack
           direction="row"
           alignItems="center"
@@ -130,9 +128,9 @@ const FiltersDrawer = () => {
             Filters
           </Typography>
           <IconButton
-            sx={{ color: "primary.dark" }}
+            sx={{ color: 'primary.dark' }}
             onClick={() => {
-              setState((prev) => ({
+              setState(prev => ({
                 ...prev,
                 filtersMenuOpen: !prev.filtersMenuOpen,
               }));
@@ -145,8 +143,8 @@ const FiltersDrawer = () => {
           sx={{
             maxHeight: `calc(100vh - 245px )`,
             minHeight: `calc(100vh - 245px )`,
-            overflowY: "auto",
-            overflowX: "hidden",
+            overflowY: 'auto',
+            overflowX: 'hidden',
             my: 1,
           }}
         >
@@ -165,7 +163,7 @@ const FiltersDrawer = () => {
               >{t`filter-by`}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {FILTER_TYPES.map((type) => (
+              {FILTER_TYPES.map(type => (
                 <Stack
                   key={type.key}
                   direction="row"
@@ -176,7 +174,7 @@ const FiltersDrawer = () => {
                     component="label"
                     htmlFor={type.key}
                     fontWeight="medium"
-                    sx={{ cursor: "pointer" }}
+                    sx={{ cursor: 'pointer' }}
                   >
                     {t(type.label)}
                   </Typography>
@@ -204,7 +202,7 @@ const FiltersDrawer = () => {
               >{t`categories`}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {categories?.map((category) => (
+              {categories?.map(category => (
                 <Stack
                   key={category.id}
                   direction="row"
@@ -215,9 +213,9 @@ const FiltersDrawer = () => {
                     component="label"
                     htmlFor={category.id.toString()}
                     fontWeight="medium"
-                    sx={{ cursor: "pointer" }}
+                    sx={{ cursor: 'pointer' }}
                   >
-                    {locale === "ar" ? category.ar_name : category.name}
+                    {locale === 'ar' ? category.ar_name : category.name}
                   </Typography>
                   <Checkbox
                     checked={checkedFilters.categories.includes(category.id)}
@@ -253,21 +251,21 @@ const FiltersDrawer = () => {
 export default FiltersDrawer;
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  "&:not(:last-child)": {
+))(() => ({
+  '&:not(:last-child)': {
     borderBottom: 0,
   },
-  "&:before": {
-    display: "none",
+  '&:before': {
+    display: 'none',
   },
 }));
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />
-))(({ theme }) => ({
+))(() => ({
   padding: 0,
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(180deg)",
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(180deg)',
   },
 }));
 

@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const latitude = DEFAULT_LAT;
   const longitude = DEFAULT_LNG;
   const page = 0;
-  const sort_by = "delivery_time" as "delivery_time";
+  const sort_by = "delivery_time" as const;
 
   const filters = { category_ids: [id as string], is_featured: true };
   await queryClient.prefetchQuery(

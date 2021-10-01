@@ -1,10 +1,10 @@
-import { Box } from "@mui/system";
-import { Paper, Typography } from "@mui/material";
-import { IItemsSearchResult } from "../../../lib/interfaces/IItem";
-import Image from "next/image";
-import { useRouter } from "next/dist/client/router";
-import { ITEM } from "../../../lib/interfaces/IRestaurantItem";
-import Link from "next/link";
+import { Box } from '@mui/system';
+import { Paper, Typography } from '@mui/material';
+import { IItemsSearchResult } from '../../../lib/interfaces/IItem';
+import Image from 'next/image';
+import { useRouter } from 'next/dist/client/router';
+import { ITEM } from '../../../lib/interfaces/IRestaurantItem';
+import Link from 'next/link';
 interface IItemCard {
   item: IItemsSearchResult | ITEM;
 }
@@ -19,7 +19,7 @@ const ItemCard = ({ item }: IItemCard) => {
         overflow="hidden"
         component={Paper}
         elevation={2}
-        sx={{ height: "250px" }}
+        sx={{ height: '250px' }}
       >
         <Box height="60%" position="relative">
           <Image
@@ -40,15 +40,15 @@ const ItemCard = ({ item }: IItemCard) => {
           <Typography variant="body1" fontWeight="medium" color="secondary">
             {item.price} KD
           </Typography>
-          {item.restaurant! && (
+          {item.restaurant && (
             <Typography
               color="text.secondary"
               variant="caption"
               fontWeight="medium"
             >
-              From :{" "}
+              From :{' '}
               <Typography color="primary" variant="caption" fontWeight="medium">
-                {locale === "ar"
+                {locale === 'ar'
                   ? item.restaurant.ar_name
                   : item.restaurant.name}
               </Typography>

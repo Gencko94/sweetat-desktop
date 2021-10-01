@@ -1,14 +1,14 @@
-import { Container, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
-import { useApplicationState } from "../../contexts/ApplicationContext";
-import { useGetRestaurantItems } from "../../hooks/queryHooks/useGetRestaurantItems";
-import ItemsViewToggle from "../ItemsViewToggle";
-import ShopItemsSection from "./ShopItemsSection";
-import ShopItemsTabs from "./ShopItemsTabs";
-import ShopTopSellingSection from "./ShopTopSellingSection";
+import { Container, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import { useGetRestaurantItems } from '../../hooks/queryHooks/useGetRestaurantItems';
+import ItemsViewToggle from '../ItemsViewToggle';
+import ShopItemsSection from './ShopItemsSection';
+import ShopItemsTabs from './ShopItemsTabs';
+import ShopTopSellingSection from './ShopTopSellingSection';
 
 interface IShopItemsProps {
   shop: IRestaurantInfo;
@@ -25,7 +25,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
   const tabTitles = useMemo(() => {
     if (data) {
       let titles: string[] = [];
-      const itemsTitles = Object.keys(data.items).map((key) => key);
+      const itemsTitles = Object.keys(data.items).map(key => key);
       if (data.top_selling.length > 0) {
         titles.push(t`top-selling`);
       }
@@ -55,7 +55,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
               <Typography>{t`items-view`}:</Typography>
               <ItemsViewToggle />
             </Stack>
-            {data!.top_selling.length > 0 && (
+            {data.top_selling.length > 0 && (
               <ShopTopSellingSection
                 index={0}
                 topSellingItems={data.top_selling}

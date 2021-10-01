@@ -1,11 +1,12 @@
-import { Box, styled } from "@mui/system";
-import { IItemsSearchResult } from "../../../lib/interfaces/IItem";
+import { Box } from '@mui/system';
+import { IItemsSearchResult } from '../../../lib/interfaces/IItem';
 
-import Image from "next/image";
-import { Paper, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
+import Image from 'next/image';
+import { Paper, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
+import { DarkImageOverlay } from '../DarkImageOverlay';
 interface IItemCardWide {
   item: IItemsSearchResult;
 }
@@ -27,7 +28,7 @@ const ItemCardWide = ({ item }: IItemCardWide) => {
       >
         <Box
           sx={{
-            overflow: "hidden",
+            overflow: 'hidden',
           }}
           width="30%"
           position="relative"
@@ -43,11 +44,11 @@ const ItemCardWide = ({ item }: IItemCardWide) => {
             width="100%"
           />
           {item.in_stock === 0 && (
-            <ClosedOverlay>
+            <DarkImageOverlay>
               <Typography variant="body1" fontWeight="medium">
                 {t`out-of-stock`}
               </Typography>
-            </ClosedOverlay>
+            </DarkImageOverlay>
           )}
         </Box>
         <Box p={1}>
@@ -63,9 +64,9 @@ const ItemCardWide = ({ item }: IItemCardWide) => {
               variant="caption"
               fontWeight="medium"
             >
-              From :{" "}
+              From :{' '}
               <Typography color="primary" variant="caption" fontWeight="medium">
-                {locale === "ar"
+                {locale === 'ar'
                   ? item.restaurant.ar_name
                   : item.restaurant.name}
               </Typography>
@@ -78,20 +79,3 @@ const ItemCardWide = ({ item }: IItemCardWide) => {
 };
 
 export default ItemCardWide;
-
-const Dot = styled("span")<{ color: string }>(({ theme, color }) => ({
-  height: "10px",
-  width: "10px",
-  borderRadius: "50%",
-  backgroundColor: theme.palette[color].main,
-  display: "inline",
-}));
-const ClosedOverlay = styled("div")(({ theme }) => ({
-  position: "absolute",
-  inset: 0,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "#fff",
-  backgroundColor: `rgba(0,0,0,0.5)`,
-}));

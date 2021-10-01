@@ -6,16 +6,16 @@ import {
   Typography,
   AccordionProps,
   AccordionSummaryProps,
-} from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+} from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { Box, styled } from "@mui/system";
-import { Dispatch, memo, SetStateAction, useEffect, useState } from "react";
-import { ITEM } from "../../../../lib/interfaces/IRestaurantItem";
-import { ITEM_VIEW } from "../../../contexts/ApplicationContext";
-import ItemCard from "../../ItemCard";
-import ItemCardWide from "../../ItemCardWide";
-import { useInView } from "react-intersection-observer";
+import { Box, styled } from '@mui/system';
+import { Dispatch, memo, SetStateAction, useEffect, useState } from 'react';
+import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
+import { ITEM_VIEW } from '../../../contexts/ApplicationContext';
+import ItemCard from '../../ItemCard';
+import ItemCardWide from '../../ItemCardWide';
+import { useInView } from 'react-intersection-observer';
 interface IShopItemsSection {
   items: ITEM[];
   title: string;
@@ -55,15 +55,15 @@ const ShopItemsSection = memo(
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {itemsView === "wide" ? (
+            {itemsView === 'wide' ? (
               <Stack spacing={2} py={2}>
-                {items.map((item) => (
+                {items.map(item => (
                   <ItemCardWide key={item.id} item={item as ITEM} />
                 ))}
               </Stack>
             ) : (
               <ItemsGrid>
-                {items.map((item) => (
+                {items.map(item => (
                   <ItemCard key={item.id} item={item as ITEM} />
                 ))}
               </ItemsGrid>
@@ -76,21 +76,21 @@ const ShopItemsSection = memo(
 );
 
 export default ShopItemsSection;
-const ItemsGrid = styled("div")(({ theme }) => ({
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill,minmax(170px,1fr))",
+const ItemsGrid = styled('div')(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill,minmax(170px,1fr))',
   gap: theme.spacing(2),
-  padding: "1rem 0.5rem",
+  padding: '1rem 0.5rem',
 }));
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  backgroundColor: "transparent",
-  "&:not(:last-child)": {
+))(() => ({
+  backgroundColor: 'transparent',
+  '&:not(:last-child)': {
     borderBottom: 0,
   },
-  "&:before": {
-    display: "none",
+  '&:before': {
+    display: 'none',
   },
 }));
 
@@ -98,8 +98,8 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />
 ))(() => ({
   padding: 0,
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(180deg)",
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(180deg)',
   },
 }));
 

@@ -1,18 +1,18 @@
-import { GetServerSideProps, NextPage } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/dist/client/router";
-import { dehydrate, QueryClient } from "react-query";
-import { getSingleItem } from "../../lib/queries/queries";
-import Navbar from "../../src/components/Header/Navbar";
-import { useGetSingleItem } from "../../src/hooks/queryHooks/useGetSingleItem";
-import isMobile from "../../utils/isMobile";
-import Image from "next/image";
-import { Box } from "@mui/system";
-import { DarkImageOverlay } from "../../src/components/DarkImageOverlay";
-import { Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import ItemPageDetails from "../../src/components/ItemPageDetails";
-import { useState } from "react";
+import { GetServerSideProps, NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/dist/client/router';
+import { dehydrate, QueryClient } from 'react-query';
+import { getSingleItem } from '../../lib/queries/queries';
+import Navbar from '../../src/components/Header/Navbar';
+import { useGetSingleItem } from '../../src/hooks/queryHooks/useGetSingleItem';
+import isMobile from '../../utils/isMobile';
+import Image from 'next/image';
+import { Box } from '@mui/system';
+import { DarkImageOverlay } from '../../src/components/DarkImageOverlay';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import ItemPageDetails from '../../src/components/ItemPageDetails';
+import { useState } from 'react';
 const SingleItem: NextPage<{ isMobileDevice: boolean }> = ({
   isMobileDevice,
 }) => {
@@ -77,19 +77,20 @@ const SingleItem: NextPage<{ isMobileDevice: boolean }> = ({
 };
 
 export default SingleItem;
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const { id } = ctx.query;
+  const f = ctx.req;
   const queryClient = new QueryClient();
 
   const isMobileDevice = isMobile(ctx.req);
   const { locale } = ctx;
-  await queryClient.prefetchQuery(["single-item", id], () =>
+  await queryClient.prefetchQuery(['single-item', id], () =>
     getSingleItem(Number(id))
   );
 
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, ["common"])),
+      ...(await serverSideTranslations(locale as string, ['common'])),
       isMobileDevice,
       dehydratedState: dehydrate(queryClient),
     },

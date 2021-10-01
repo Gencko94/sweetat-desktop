@@ -1,27 +1,27 @@
-import { Box, styled } from "@mui/system";
-import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
-import Image from "next/image";
-import { Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import Link from "next/link";
+import { Box, styled } from '@mui/system';
+import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
+import Image from 'next/image';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 
-import { useApplicationState } from "../../contexts/ApplicationContext";
+import { useApplicationState } from '../../contexts/ApplicationContext';
 interface IShopSliderCard {
   shop: IRestaurantInfo;
 }
 
 const ShopCardWide = ({ shop }: IShopSliderCard) => {
   const { t } = useTranslation();
-  const [_, setState] = useApplicationState();
+  const [{}, setState] = useApplicationState();
   return (
     <Link href={`/shop/${shop.slug}`} passHref>
       <Box
         borderRadius="6px"
         position="relative"
         overflow="hidden"
-        sx={{ height: "300px" }}
+        sx={{ height: '300px' }}
         onClick={() =>
-          setState((prev) => ({
+          setState(prev => ({
             ...prev,
             searchMenuOpen: prev.searchMenuOpen ? false : true,
           }))
@@ -40,24 +40,24 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
           />
           <Box
             sx={{
-              position: "absolute",
+              position: 'absolute',
               bottom: 12,
               left: 9,
-              bgcolor: "secondary.main",
+              bgcolor: 'secondary.main',
               p: 0.5,
-              borderRadius: "6px",
+              borderRadius: '6px',
             }}
           >
             <Typography variant="caption" fontWeight="bold">
-              {shop.deliverable_by_sweetat ? "Delivered By Sweetat" : ""}
+              {shop.deliverable_by_sweetat ? 'Delivered By Sweetat' : ''}
             </Typography>
           </Box>
           <Box
             sx={{
-              position: "absolute",
+              position: 'absolute',
               bottom: -30,
               right: 9,
-              bgcolor: "rgba(255,255,255,0.7)",
+              bgcolor: 'rgba(255,255,255,0.7)',
 
               borderRadius: 12,
             }}
@@ -79,7 +79,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
             variant="body2"
             fontWeight="medium"
           >
-            {shop.delivery_charges === "0"
+            {shop.delivery_charges === '0'
               ? t`free-delivery`
               : `${shop.delivery_charges} KD Delivery cost`}
           </Typography>
@@ -92,10 +92,10 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
 export default ShopCardWide;
 const DeliveryTimeChip = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1),
-  borderRadius: "12px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flexDirection: "column",
+  borderRadius: '12px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
   // backgroundColor: alpha(theme.palette.primary.main, 0.8),
 }));
