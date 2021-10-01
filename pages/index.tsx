@@ -5,6 +5,7 @@ import { dehydrate, QueryClient } from 'react-query';
 import { getCategorySlides, getPromoSlides } from '../lib/queries/queries';
 
 import FeaturedShopsSlider from '../src/components/FeaturedShopsSlider';
+import Footer from '../src/components/Footer';
 import Navbar from '../src/components/Header/Navbar';
 import HomeCategoriesSlider from '../src/components/HomeCategoriesSlider';
 import PromoSlider from '../src/components/PromoSlider';
@@ -35,6 +36,7 @@ const Home: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
       <HomeCategoriesSlider />
       <PromoSlider />
       <FeaturedShopsSlider />
+      <Footer />
     </>
   );
 };
