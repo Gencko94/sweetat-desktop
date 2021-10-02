@@ -7,35 +7,62 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import ColorModeToggle from '../ColorModeToggle';
 import LanguageToggle from '../LanguageToggle';
+import { useSession, signOut } from 'next-auth/react';
 const UserDrawerBody = () => {
   const { locale } = useRouter();
   const { t } = useTranslation();
+  const { data: session, status } = useSession();
+  const handleSignout = () => {
+    signOut({
+      redirect: false,
+    });
+  };
+  console.log(session);
+  console.log(status);
   return (
     <>
       <Box my={1}>
         <Typography variant="h6" color="primary" fontWeight="bold">
           Personal
         </Typography>
-        <Link passHref href="/login">
-          <Stack my={2} direction="row" justifyContent="space-between">
-            <Typography fontWeight="medium">{t`sign-in`}</Typography>
-            {locale === 'ar' ? (
-              <KeyboardArrowLeftIcon />
-            ) : (
-              <KeyboardArrowRightIcon />
-            )}
-          </Stack>
-        </Link>
-        <Link passHref href="/">
-          <Stack my={2} direction="row" justifyContent="space-between">
-            <Typography fontWeight="medium">{t`sign-up`}</Typography>
-            {locale === 'ar' ? (
-              <KeyboardArrowLeftIcon />
-            ) : (
-              <KeyboardArrowRightIcon />
-            )}
-          </Stack>
-        </Link>
+        {status === 'authenticated' && (
+          <Link passHref href="/login">
+            <Stack my={2} direction="row" justifyContent="space-between">
+              <Typography fontWeight="medium">
+                {session?.user?.email}
+              </Typography>
+              {locale === 'ar' ? (
+                <KeyboardArrowLeftIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Stack>
+          </Link>
+        )}
+        {status === 'unauthenticated' && (
+          <Link passHref href="/login">
+            <Stack my={2} direction="row" justifyContent="space-between">
+              <Typography fontWeight="medium">{t`sign-in`}</Typography>
+              {locale === 'ar' ? (
+                <KeyboardArrowLeftIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Stack>
+          </Link>
+        )}
+        {status === 'unauthenticated' && (
+          <Link passHref href="/">
+            <Stack my={2} direction="row" justifyContent="space-between">
+              <Typography fontWeight="medium">{t`sign-up`}</Typography>
+              {locale === 'ar' ? (
+                <KeyboardArrowLeftIcon />
+              ) : (
+                <KeyboardArrowRightIcon />
+              )}
+            </Stack>
+          </Link>
+        )}
         <Link passHref href="/">
           <Stack my={2} direction="row" justifyContent="space-between">
             <Typography fontWeight="medium">{t`favourate-shops`}</Typography>
@@ -56,6 +83,22 @@ const UserDrawerBody = () => {
             )}
           </Stack>
         </Link>
+
+        {status === 'authenticated' && (
+          <Stack
+            onClick={() => handleSignout()}
+            my={2}
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Typography fontWeight="medium">{t`signout`}</Typography>
+            {locale === 'ar' ? (
+              <KeyboardArrowLeftIcon />
+            ) : (
+              <KeyboardArrowRightIcon />
+            )}
+          </Stack>
+        )}
       </Box>
       <Box my={1}>
         <Typography variant="h5" color="primary" fontWeight="bold">

@@ -1,9 +1,32 @@
-import { Container, Divider, Stack } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import { Box } from '@mui/system';
 import LoginForm from '../../src/components/LoginForm';
 import Image from 'next/image';
 import SocialSection from '../../src/components/LoginForm/SocialSection';
+import {
+  useSession,
+  getProviders,
+  signOut,
+  ClientSafeProvider,
+  LiteralUnion,
+} from 'next-auth/react';
+import { BuiltInProviderType } from 'next-auth/providers';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 const Login = () => {
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null>(null);
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    const setTheProviders = async () => {
+      const setupProviders = await getProviders();
+      setProviders(setupProviders);
+    };
+    setTheProviders();
+  }, []);
+
   return (
     <Container sx={{ maxWidth: { xs: 'md', md: 'lg' } }}>
       <Box
@@ -14,12 +37,14 @@ const Login = () => {
         display="flex"
         flexDirection="column"
       >
-        <Image
-          src="/assets/logo.png"
-          alt="Sweetat logo"
-          height={100}
-          width={250}
-        />
+        <Link href="/" passHref>
+          <Image
+            src="/assets/logo.png"
+            alt="Sweetat logo"
+            height={100}
+            width={250}
+          />
+        </Link>
         <LoginForm />
       </Box>
       <Divider />

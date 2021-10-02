@@ -1,19 +1,19 @@
-import axios from "axios";
-import { SEARCH_TYPE } from "../../src/contexts/ApplicationContext";
-import { IUseGetRestaurantInfoProps } from "../../src/hooks/queryHooks/useGetRestaurantInfo";
-import { IUseGetRestaurantItemsProps } from "../../src/hooks/queryHooks/useGetRestaurantItems";
-import { IUseGetRestaurantsProps } from "../../src/hooks/queryHooks/useGetRestaurants";
-import { IItemsSearchResult } from "../interfaces/IItem";
-import { IRestaurantInfo } from "../interfaces/IRestaurantInfo";
-
+import axios from 'axios';
+import { SEARCH_TYPE } from '../../src/contexts/ApplicationContext';
+import { IUseGetRestaurantInfoProps } from '../../src/hooks/queryHooks/useGetRestaurantInfo';
+import { IUseGetRestaurantItemsProps } from '../../src/hooks/queryHooks/useGetRestaurantItems';
+import { IUseGetRestaurantsProps } from '../../src/hooks/queryHooks/useGetRestaurants';
+import { IItemsSearchResult } from '../interfaces/IItem';
+import { IRestaurantInfo } from '../interfaces/IRestaurantInfo';
+import { getSession } from 'next-auth/react';
 const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 
 export const getCategorySlides = async () => {
-  const res = await instance.post("/get-restaurant-category-slides");
+  const res = await instance.post('/get-restaurant-category-slides');
   return res.data;
 };
 export const getPromoSlides = async () => {
-  const res = await instance.post("/promo-slider");
+  const res = await instance.post('/promo-slider');
   return res.data.otherSlides;
 };
 export const getRestaurants = async ({
@@ -23,7 +23,7 @@ export const getRestaurants = async ({
   latitude,
   longitude,
 }: IUseGetRestaurantsProps) => {
-  const res = await instance.post("/get-filtered-restaurants", {
+  const res = await instance.post('/get-filtered-restaurants', {
     latitude,
     longitude,
     filters,
@@ -62,7 +62,7 @@ export const convertCoordinateToAddress = async ({
   lat?: number;
   lng?: number;
 }) => {
-  const res = await instance.post("/coordinate-to-address", {
+  const res = await instance.post('/coordinate-to-address', {
     lat,
     lng,
     lang: lang.toUpperCase(),
@@ -70,7 +70,7 @@ export const convertCoordinateToAddress = async ({
   return res.data;
 };
 export const getRestaurantsCategories = async () => {
-  const res = await instance.post("/get-all-restaurants-categories");
+  const res = await instance.post('/get-all-restaurants-categories');
   return res.data.categories;
 };
 export const getSearchResults = async (
@@ -80,8 +80,8 @@ export const getSearchResults = async (
   longitude: number,
   page: number
 ) => {
-  if (type === "items") {
-    const res = await instance.post<IItemsSearchResult[]>("/search-items", {
+  if (type === 'items') {
+    const res = await instance.post<IItemsSearchResult[]>('/search-items', {
       q: query,
       latitude,
       longitude,
@@ -89,7 +89,7 @@ export const getSearchResults = async (
     });
     return res.data;
   } else {
-    const res = await instance.post<IRestaurantInfo[]>("/search-restaurants", {
+    const res = await instance.post<IRestaurantInfo[]>('/search-restaurants', {
       q: query,
       latitude,
       longitude,
@@ -99,6 +99,8 @@ export const getSearchResults = async (
   }
 };
 export const getSingleItem = async (id: number) => {
-  const res = await instance.post("/get-single-item", { id });
+  const session = await getSession();
+  console.log(session);
+  const res = await instance.post('/get-single-item', { id });
   return res.data;
 };
