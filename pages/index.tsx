@@ -7,6 +7,7 @@ import { getCategorySlides, getPromoSlides } from '../lib/queries/queries';
 import FeaturedShopsSlider from '../src/components/FeaturedShopsSlider';
 import Footer from '../src/components/Footer';
 import Navbar from '../src/components/Header/Navbar';
+import HomePageHero from '../src/components/HomePageHero';
 import HomeCategoriesSlider from '../src/components/HomeCategoriesSlider';
 import PromoSlider from '../src/components/PromoSlider';
 import isMobile from '../utils/isMobile';
@@ -31,12 +32,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 const Home: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
   return (
     <>
-      <Navbar isMobileDevice={isMobileDevice} />
-
-      <HomeCategoriesSlider />
+      {/* <Navbar isMobileDevice={isMobileDevice} /> */}
+      <HomePageHero />
+      {/* <HomeCategoriesSlider />
       <PromoSlider />
-      <FeaturedShopsSlider />
-      <Footer />
+      <FeaturedShopsSlider /> */}
+      {/* <Footer /> */}
     </>
   );
 };

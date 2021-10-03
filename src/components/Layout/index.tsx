@@ -1,5 +1,9 @@
 import { CssBaseline } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+  createTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from '@mui/material/styles';
 
 import { useMemo } from 'react';
 import { getDesignTokens } from '../../../styles/globalTheme';
@@ -14,7 +18,7 @@ const Layout: React.FC = ({ children }) => {
     state.colorMode,
   ]);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={responsiveFontSizes(theme)}>
       <FiltersDrawer />
       <SearchDrawer />
       <UserDrawer />

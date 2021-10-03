@@ -16,7 +16,7 @@ const UserDrawer = () => {
   }, [setState]);
   return (
     <Drawer
-      anchor="bottom"
+      anchor={locale === 'en' ? 'right' : 'left'}
       open={state.userDrawerOpen}
       onClose={() => handleCloseUserDrawer()}
       //   PaperProps={{ sx: { right: "100px" } }}
