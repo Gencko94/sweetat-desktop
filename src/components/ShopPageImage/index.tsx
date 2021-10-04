@@ -21,7 +21,13 @@ const ShopPageImage = ({
 }: IShopPageImageProps) => {
   const { t } = useTranslation();
   return (
-    <Box sx={{ height: '160px', width: '100%', position: 'relative' }}>
+    <Box
+      sx={{
+        height: { md: '160px', xs: '230px' },
+        width: '100%',
+        position: 'relative',
+      }}
+    >
       <Image
         placeholder="blur"
         blurDataURL={`https://sweetat.co/${placeholder}`}

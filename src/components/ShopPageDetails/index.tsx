@@ -1,11 +1,8 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/dist/client/router';
-import Image from 'next/image';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import ShopStatus from '../ShopStatus';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { useTranslation } from 'react-i18next';
 import ShopPageDescription from '../ShopPageDescription';
 interface IShopPageDetails {
   shop: IRestaurantInfo;
@@ -13,7 +10,6 @@ interface IShopPageDetails {
 
 const ShopPageDetails = ({ shop }: IShopPageDetails) => {
   const { locale } = useRouter();
-  const { t } = useTranslation();
 
   return (
     <>
@@ -29,18 +25,6 @@ const ShopPageDetails = ({ shop }: IShopPageDetails) => {
       </Box>
 
       {/* ⚡ Add Review Section */}
-      {shop.is_active === 0 && shop.accept_preorder === 1 && (
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <AccessTimeIcon color="primary" />
-          <Typography
-            variant="body2"
-            fontWeight="bold"
-          >{t`accepts-pre-order`}</Typography>
-          <Typography variant="body2">
-            ({t`delivery-cost`} : {t`free`})
-          </Typography>
-        </Stack>
-      )}
       <ShopPageDescription shop={shop} />
     </>
   );

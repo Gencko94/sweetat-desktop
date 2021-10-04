@@ -1,5 +1,4 @@
-import { Container, Paper, Grid, Divider } from '@mui/material';
-
+import { Container, Paper, Grid, Divider, Hidden } from '@mui/material';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import ShopPageImage from '../ShopPageImage';
 import ShopPageDetails from '../ShopPageDetails';
@@ -13,25 +12,50 @@ const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
   return (
     <Paper elevation={0}>
       <Divider />
-      <Container sx={{ maxWidth: { xl: 'xl', lg: 'lg', md: 'md' }, py: 4 }}>
+      <Hidden mdUp>
+        <ShopPageImage
+          src={shop.image}
+          placeholder={shop.placeholder_image}
+          alt={`${shop.name} photo`}
+          is_active={shop.is_active === 1}
+          accept_preorder={shop.accept_preorder === 1}
+        />
+      </Hidden>
+      <Container
+        sx={{
+          maxWidth: { xl: 'xl', lg: 'lg', md: 'md' },
+          py: { md: 4, xs: 2 },
+        }}
+      >
         <Grid container spacing={4}>
           <Grid item xs={12} md={8}>
             <ShopPageDetails shop={shop} />
           </Grid>
-          <Grid item md={4}>
-            <ShopPageImage
-              src={shop.image}
-              placeholder={shop.placeholder_image}
-              alt={`${shop.name} photo`}
-              is_active={shop.is_active === 1}
-              accept_preorder={shop.accept_preorder === 1}
-            />
-            <Divider />
-            <ShopPageDeliveryStatus
-              delivery_time_label={shop.delivery_time_label}
-            />
-          </Grid>
+          <Hidden mdDown>
+            <Grid item md={4}>
+              <ShopPageImage
+                src={shop.image}
+                placeholder={shop.placeholder_image}
+                alt={`${shop.name} photo`}
+                is_active={shop.is_active === 1}
+                accept_preorder={shop.accept_preorder === 1}
+              />
+              <Divider />
+              <ShopPageDeliveryStatus
+                is_active={shop.is_active === 1}
+                accept_preorder={shop.accept_preorder === 1}
+                delivery_time_label={shop.delivery_time_label}
+              />
+            </Grid>
+          </Hidden>
         </Grid>
+        <Hidden mdUp>
+          <ShopPageDeliveryStatus
+            delivery_time_label={shop.delivery_time_label}
+            is_active={shop.is_active === 1}
+            accept_preorder={shop.accept_preorder === 1}
+          />
+        </Hidden>
       </Container>
       <Divider />
     </Paper>
