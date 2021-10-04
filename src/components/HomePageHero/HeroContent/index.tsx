@@ -59,10 +59,10 @@ export default HeroContent;
 const Wrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     width: '50%',
-    margin: theme.spacing(1, 0),
+    margin: theme.spacing(18, 0),
   },
   [theme.breakpoints.down('lg')]: {
     width: '100%',
-    margin: theme.spacing(3, 0),
+    margin: theme.spacing(10, 0),
   },
 }));

@@ -1,10 +1,11 @@
-import { Container, Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Container, Hidden, Paper, Stack, Typography } from '@mui/material';
+import { Box, BoxProps, styled } from '@mui/system';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useGetRestaurantItems } from '../../hooks/queryHooks/useGetRestaurantItems';
+import DesktopCartCard from '../DesktopCartCard';
 import ItemsViewToggle from '../ItemsViewToggle';
 import ShopItemsSection from './ShopItemsSection';
 import ShopItemsTabs from './ShopItemsTabs';
@@ -38,45 +39,70 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
   return (
     <>
       {data && (
-        <Box position="relative">
-          <ShopItemsTabs
-            handleChangeTab={handleChangeTab}
-            activeTab={activeTab}
-            tabTitles={tabTitles}
-          />
-          <br />
-          <Container>
-            <Stack
-              direction="row"
-              justifyContent="flex-end"
-              alignItems="center"
-              spacing={1}
+        <>
+          <CategoriesWrapper>
+            <Container
+              sx={{
+                maxWidth: { xl: 'xl', lg: 'lg', md: 'md' },
+              }}
             >
-              <Typography>{t`items-view`}:</Typography>
-              <ItemsViewToggle />
-            </Stack>
-            {data.top_selling.length > 0 && (
-              <ShopTopSellingSection
-                index={0}
-                topSellingItems={data.top_selling}
-                setActiveTab={setActiveTab}
-              />
-            )}
-            {Object.keys(data.items).map((key, i) => (
-              <ShopItemsSection
-                index={i + 1}
-                key={key}
-                items={data.items[key]}
-                title={key}
-                setActiveTab={setActiveTab}
-                itemsView={state.itemsView}
-              />
-            ))}
-          </Container>
-        </Box>
+              <Stack direction="row" spacing={4}>
+                <ShopItemsTabs
+                  handleChangeTab={handleChangeTab}
+                  activeTab={activeTab}
+                  tabTitles={tabTitles}
+                />
+                <Hidden mdDown>
+                  <DesktopCartCard />
+                </Hidden>
+              </Stack>
+            </Container>
+          </CategoriesWrapper>
+          <Box position="relative">
+            <Container>
+              <br />
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+                alignItems="center"
+                spacing={1}
+              >
+                <Typography>{t`items-view`}:</Typography>
+                <ItemsViewToggle />
+              </Stack>
+              {data.top_selling.length > 0 && (
+                <ShopTopSellingSection
+                  index={0}
+                  topSellingItems={data.top_selling}
+                  setActiveTab={setActiveTab}
+                />
+              )}
+              {Object.keys(data.items).map((key, i) => (
+                <ShopItemsSection
+                  index={i + 1}
+                  key={key}
+                  items={data.items[key]}
+                  title={key}
+                  setActiveTab={setActiveTab}
+                  itemsView={state.itemsView}
+                />
+              ))}
+            </Container>
+          </Box>
+        </>
       )}
     </>
   );
 };
 
 export default ShopItems;
+const CategoriesWrapper = styled((props: BoxProps) => (
+  <Box component={Paper} elevation={0} {...props} />
+))(({ theme }) => ({
+  // backgroundColor: theme.palette.background.paper,
+  position: 'sticky',
+  top: 0,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  zIndex: theme.zIndex.appBar,
+}));

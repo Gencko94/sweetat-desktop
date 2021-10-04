@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 import { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -12,16 +12,12 @@ import Navbar from '../../src/components/Header/Navbar';
 import { DEFAULT_LAT, DEFAULT_LNG } from '../../src/constants';
 import { useGetRestaurantInfo } from '../../src/hooks/queryHooks/useGetRestaurantInfo';
 import isMobile from '../../utils/isMobile';
-import Image from 'next/image';
-import { Box } from '@mui/system';
-import ShopPageInfo from '../../src/components/ShopPageInfo';
-import { DarkImageOverlay } from '../../src/components/DarkImageOverlay';
-import { useTranslation } from 'react-i18next';
+
 import ShopItems from '../../src/components/ShopItems';
 import { memo } from 'react';
+import ShopPageHeader from '../../src/components/ShopPageHeader';
 const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
   ({ isMobileDevice }) => {
-    const { t } = useTranslation();
     const {
       query: { slug },
     } = useRouter();
@@ -32,37 +28,7 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
         <Navbar isMobileDevice={isMobileDevice} />
         {shop && (
           <>
-            <Paper elevation={0}>
-              <Box height="200px" position="relative">
-                <Image
-                  placeholder="blur"
-                  blurDataURL={`https://sweetat.co/${shop.placeholder_image}`}
-                  src={`https://sweetat.co/${shop.image}`}
-                  alt={`${shop.name} photo`}
-                  layout="fill"
-                  objectFit="cover"
-                  // height={200}
-                  // width={350}
-                />
-                {shop.is_active === 0 && (
-                  <DarkImageOverlay>
-                    <Typography
-                      variant="h6"
-                      fontWeight="medium"
-                    >{t`closed`}</Typography>
-                    {shop.accept_preorder === 1 && (
-                      <Typography
-                        variant="h6"
-                        fontWeight="medium"
-                      >{t`accepts-pre-order`}</Typography>
-                    )}
-                  </DarkImageOverlay>
-                )}
-              </Box>
-              <ShopPageInfo shop={shop} />
-            </Paper>
-            {/* <Divider sx={{ my: 2 }} /> */}
-
+            <ShopPageHeader shop={shop} />
             <ShopItems shop={shop} />
           </>
         )}

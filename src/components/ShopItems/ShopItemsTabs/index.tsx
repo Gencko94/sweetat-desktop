@@ -36,7 +36,6 @@ const ShopItemsTabs = ({
           }}
           label={title}
         />
-        // </Link>
       ))}
     </Tabs>
   );
@@ -45,11 +44,13 @@ const ShopItemsTabs = ({
 export default ShopItemsTabs;
 const Tabs = styled((props: TabsProps) => <MuiTabs {...props} />)(
   ({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    position: 'sticky',
-    top: 0,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    zIndex: theme.zIndex.appBar,
+    [theme.breakpoints.down('md')]: {
+      backgroundPosition: 'bottom',
+      flex: 1,
+    },
+    [theme.breakpoints.up('md')]: {
+      backgroundPosition: 'bottom',
+      flexBasis: '67%',
+    },
   })
 );
