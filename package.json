@@ -18,6 +18,7 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.1",
+    "@react-google-maps/api": "^2.4.1",
     "axios": "^0.21.4",
     "next": "11.1.2",
     "next-auth": "^4.0.0-beta.2",
@@ -29,7 +30,8 @@
     "react-query": "^3.24.4",
     "react-tracked": "^1.7.4",
     "swiper": "^7.0.6",
-    "ua-parser-js": "^0.7.28"
+    "ua-parser-js": "^0.7.28",
+    "use-places-autocomplete": "^1.9.4"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
@@ -37,6 +39,7 @@
     "@testing-library/dom": "^8.6.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
+    "@types/googlemaps": "^3.43.3",
     "@types/jest": "^27.0.2",
     "@types/react": "17.0.24",
     "@types/ua-parser-js": "^0.7.36",

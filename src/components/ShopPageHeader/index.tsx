@@ -3,6 +3,7 @@ import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import ShopPageImage from '../ShopPageImage';
 import ShopPageDetails from '../ShopPageDetails';
 import ShopPageDeliveryStatus from '../ShopPageDeliveryStatus';
+import DeliverTo from '../DeliverTo';
 
 interface IShopPageHeaderProps {
   shop: IRestaurantInfo;
@@ -41,6 +42,7 @@ const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
                 accept_preorder={shop.accept_preorder === 1}
               />
               <Divider />
+              <DeliverTo />
               <ShopPageDeliveryStatus
                 is_active={shop.is_active === 1}
                 accept_preorder={shop.accept_preorder === 1}
