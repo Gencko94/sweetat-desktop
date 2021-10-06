@@ -28,7 +28,11 @@ const ShopPageCategoriesSection = ({
             tabTitles={tabTitles}
           />
           <Hidden mdDown>
-            <DesktopCartCard />
+            <Box sx={{ flexBasis: '33%', flexShrink: 0, position: 'relative' }}>
+              <Box sx={{ position: 'absolute', top: '5px', width: '100%' }}>
+                <DesktopCartCard />
+              </Box>
+            </Box>
           </Hidden>
         </Stack>
       </Container>

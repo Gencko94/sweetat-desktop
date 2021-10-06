@@ -1,4 +1,4 @@
-import { Container, Paper } from '@mui/material';
+import { Hidden } from '@mui/material';
 import { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -16,6 +16,7 @@ import isMobile from '../../utils/isMobile';
 import ShopItems from '../../src/components/ShopItems';
 import { memo } from 'react';
 import ShopPageHeader from '../../src/components/ShopPageHeader';
+import CartMenu from '../../src/components/CartMenu';
 const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
   ({ isMobileDevice }) => {
     const {
@@ -30,6 +31,9 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
           <>
             <ShopPageHeader shop={shop} />
             <ShopItems shop={shop} />
+            <Hidden mdUp>
+              <CartMenu />
+            </Hidden>
           </>
         )}
       </>

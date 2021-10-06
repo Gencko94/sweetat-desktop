@@ -11,7 +11,7 @@ export type ITEM = {
   price: string;
   old_price: string;
   image: string | null;
-  preperation_time: unknown | null;
+  preparation_time: number | null;
   is_recommended: 0 | 1;
   is_popular: 0 | 1;
   is_new: 0 | 1;
@@ -24,7 +24,8 @@ export type ITEM = {
   in_stock: number | null;
   max_allowed: number | null;
   addon_categories: ADDON_CATEGORY[];
-  restaurant: never;
+  restaurant?: never;
+  category_name: string;
 };
 
 export interface ADDON_CATEGORY {
@@ -40,15 +41,15 @@ export interface ADDON_CATEGORY {
   description: string | null;
   ar_description: string | null;
   pivot: {
-    item_id: string;
-    addon_category_id: string;
+    item_id: number;
+    addon_category_id: number;
   };
   addons: ADDON[];
 }
 export type ADDON = {
   id: number;
   name: string;
-  ar_name: string;
+  ar_name: string | null;
   price: string;
   addon_category_id: number;
   user_id: number;

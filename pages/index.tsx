@@ -32,6 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 const Home: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
   return (
     <>
+      {/* 🍪 TODO : ADD COOKIES🍪 */}
       {/* <Navbar isMobileDevice={isMobileDevice} /> */}
       <HomePageHero />
       {/* <HomeCategoriesSlider />
