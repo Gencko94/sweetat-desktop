@@ -39,3 +39,40 @@ export const getDarkTheme = (): ThemeOptions => ({
     background: { paper: '#35182B', default: '#251520' },
   },
 });
+// declare module '@mui/material/styles' {
+// interface Theme {
+//   breakpoints: {
+//     keys: ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+//     values: {
+//       xs: 0;
+//       sm: 600;
+//       md: 900;
+//       lg: 1200;
+//       xl: 1536;
+//       xxl: 1920;
+//     };
+//   };
+// }
+// // allow configuration using `createTheme`
+// interface ThemeOptions {
+//   breakpoints?: {
+//     keys: ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+//     values: {
+//       xs: 0;
+//       sm: 600;
+//       md: 900;
+//       lg: 1200;
+//       xl: 1536;
+//       xxl: 1920;
+//     };
+//   };
+// }
+// interface BreakpointOverrides {
+//   xs: true;
+//   sm: true;
+//   md: true;
+//   lg: true;
+//   xl: true;
+//   xxl: true;
+// }
+// }

@@ -1,11 +1,11 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
-import { Box } from "@mui/system";
-import { useMemo } from "react";
-import "swiper/css";
-import { Typography } from "@mui/material";
-import { useGetCategoriesSlides } from "../../hooks/queryHooks/useGetCategoriesSlides";
-import Link from "next/link";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Image from 'next/image';
+import { Box } from '@mui/system';
+import { useMemo } from 'react';
+import 'swiper/css';
+import { Typography } from '@mui/material';
+import { useGetCategoriesSlides } from '../../hooks/queryHooks/useGetCategoriesSlides';
+import Link from 'next/link';
 const HomeCategoriesSlider = () => {
   const { data: categories } = useGetCategoriesSlides();
   const breakpoints = useMemo(
@@ -41,17 +41,17 @@ const HomeCategoriesSlider = () => {
     []
   );
   return (
-    <Box my={3} mx={1}>
+    <Box mb={5}>
       <Swiper freeMode breakpoints={breakpoints}>
-        {categories?.map((category) => (
+        {categories?.map(category => (
           <SwiperSlide key={category.id}>
             <Link
               href={`/category/${category.categories_ids[0].value}`}
               passHref
             >
-              <Box sx={{ position: "relative" }}>
+              <Box sx={{ position: 'relative' }}>
                 <Typography
-                  sx={{ position: "absolute", top: 2, left: 5, zIndex: 1 }}
+                  sx={{ position: 'absolute', top: 2, left: 10, zIndex: 1 }}
                   variant="subtitle1"
                   fontWeight="bold"
                   color="white"

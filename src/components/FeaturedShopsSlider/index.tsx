@@ -1,15 +1,15 @@
-import { useMemo } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import ShopCardWide from "../ShopCardWide";
-import { Box } from "@mui/system";
-import { useGetRestaurants } from "../../hooks/queryHooks/useGetRestaurants";
-import { IconButton, Stack, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useApplicationState } from "../../contexts/ApplicationContext";
-import { useRouter } from "next/dist/client/router";
+import { useMemo } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import ShopCardWide from '../ShopCardWide';
+import { Box } from '@mui/system';
+import { useGetRestaurants } from '../../hooks/queryHooks/useGetRestaurants';
+import { IconButton, Stack, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import { useRouter } from 'next/dist/client/router';
 const FeaturedShopsSlider = () => {
   const [state] = useApplicationState();
   const { locale } = useRouter();
@@ -19,7 +19,7 @@ const FeaturedShopsSlider = () => {
     latitude: state.userLocation?.lat,
     longitude: state.userLocation?.lng,
     page: 0,
-    sort_by: "delivery_time",
+    sort_by: 'delivery_time',
   });
   const breakpoints = useMemo(
     () => ({
@@ -54,7 +54,7 @@ const FeaturedShopsSlider = () => {
     []
   );
   return (
-    <Box my={3} mx={1}>
+    <Box my={5}>
       <Stack
         mb={3}
         direction="row"
@@ -67,11 +67,11 @@ const FeaturedShopsSlider = () => {
           fontWeight="bold"
         >{t`featured-shops`}</Typography>
         <IconButton color="primary">
-          {locale === "ar" ? <ArrowBackIcon /> : <ArrowForwardIcon />}
+          {locale === 'ar' ? <ArrowBackIcon /> : <ArrowForwardIcon />}
         </IconButton>
       </Stack>
       <Swiper breakpoints={breakpoints}>
-        {shops?.map((shop) => (
+        {shops?.map(shop => (
           <SwiperSlide key={shop.id}>
             <ShopCardWide shop={shop} />
           </SwiperSlide>

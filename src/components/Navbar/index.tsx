@@ -53,7 +53,7 @@ const Navbar = ({
               : { xs: '100%' },
         }}
       >
-        <Toolbar disableGutters sx={{ py: 2 }}>
+        <Toolbar disableGutters sx={{ py: 2, px: 0 }}>
           <Box flex="1">
             <Image
               src={`/assets/${

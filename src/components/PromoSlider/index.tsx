@@ -39,7 +39,7 @@ const PromoSlider = () => {
     []
   );
   return (
-    <Box my={3} mx={1}>
+    <Box mb={5}>
       <Swiper freeMode breakpoints={breakpoints}>
         {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>
