@@ -26,8 +26,8 @@ const HomeCategoriesSlider = () => {
         spaceBetween: 5,
       },
       768: {
-        slidesPerView: 5.75,
-        spaceBetween: 5,
+        slidesPerView: 4.75,
+        spaceBetween: 10,
       },
       1100: {
         slidesPerView: 6.25,

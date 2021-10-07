@@ -5,7 +5,7 @@ import OrderMode from '../OrderMode';
 
 const ShopsFeedFilters = () => {
   return (
-    <Box sx={{ width: '300px' }}>
+    <Box sx={{ width: '250px' }}>
       <DeliverTo />
       <Divider />
       <OrderMode />

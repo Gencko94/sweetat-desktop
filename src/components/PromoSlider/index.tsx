@@ -4,8 +4,11 @@ import Image from 'next/image';
 import 'swiper/css';
 import { Box } from '@mui/system';
 import { useGetPromoSlides } from '../../hooks/queryHooks/useGetPromoSlides';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 const PromoSlider = () => {
   const { data: promoSlides } = useGetPromoSlides();
+  const { t } = useTranslation();
   const breakpoints = useMemo(
     () => ({
       // when window width is >= 320px
@@ -21,25 +24,26 @@ const PromoSlider = () => {
       // when window width is >= 640px
       640: {
         slidesPerView: 2.25,
-        spaceBetween: 5,
+        spaceBetween: 15,
       },
       768: {
-        slidesPerView: 2.75,
-        spaceBetween: 5,
+        slidesPerView: 2.25,
+        spaceBetween: 15,
       },
       1100: {
         slidesPerView: 3.25,
-        spaceBetween: 5,
+        spaceBetween: 20,
       },
       1440: {
         slidesPerView: 3.75,
-        spaceBetween: 5,
+        spaceBetween: 20,
       },
     }),
     []
   );
   return (
-    <Box mb={5}>
+    <Box my={5}>
+      <Typography mb={3} variant="h5" fontWeight="bold">{t`promos`}</Typography>
       <Swiper freeMode breakpoints={breakpoints}>
         {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>

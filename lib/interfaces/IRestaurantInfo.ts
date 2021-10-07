@@ -13,7 +13,7 @@ export interface IRestaurantInfo {
   delivery_time: string;
   delivery_time_label: string;
   pickup_time_label: string;
-  price_range: number | null;
+  price_range: string | null;
   is_pureveg: 0 | 1;
   slug: string;
   latitude: string;

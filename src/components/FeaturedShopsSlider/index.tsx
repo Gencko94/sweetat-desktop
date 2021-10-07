@@ -10,6 +10,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useRouter } from 'next/dist/client/router';
+import ShopCard from '../ShopCard';
 const FeaturedShopsSlider = () => {
   const [state] = useApplicationState();
   const { locale } = useRouter();
@@ -30,25 +31,25 @@ const FeaturedShopsSlider = () => {
       },
       // when window width is >= 480px
       480: {
-        slidesPerView: 2.25,
+        slidesPerView: 1.75,
         spaceBetween: 5,
       },
       // when window width is >= 640px
       640: {
-        slidesPerView: 2.75,
-        spaceBetween: 5,
+        slidesPerView: 2.25,
+        spaceBetween: 15,
       },
       768: {
-        slidesPerView: 3.25,
-        spaceBetween: 5,
+        slidesPerView: 2.25,
+        spaceBetween: 15,
       },
       1100: {
         slidesPerView: 3.75,
-        spaceBetween: 5,
+        spaceBetween: 20,
       },
       1440: {
         slidesPerView: 4.25,
-        spaceBetween: 5,
+        spaceBetween: 20,
       },
     }),
     []
@@ -72,7 +73,7 @@ const FeaturedShopsSlider = () => {
       </Stack>
       <Swiper breakpoints={breakpoints}>
         {shops?.map(shop => (
-          <SwiperSlide key={shop.id}>
+          <SwiperSlide style={{ padding: '10px 0' }} key={shop.id}>
             <ShopCardWide shop={shop} />
           </SwiperSlide>
         ))}
