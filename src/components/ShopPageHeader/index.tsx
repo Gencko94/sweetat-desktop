@@ -12,7 +12,6 @@ interface IShopPageHeaderProps {
 const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
   return (
     <Paper elevation={0}>
-      <Divider />
       <Hidden mdUp>
         <ShopPageImage
           src={shop.image}

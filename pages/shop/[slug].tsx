@@ -8,7 +8,6 @@ import {
   getRestaurantInfo,
   getRestaurantItems,
 } from '../../lib/queries/queries';
-import Navbar from '../../src/components/Header/Navbar';
 import { DEFAULT_LAT, DEFAULT_LNG } from '../../src/constants';
 import { useGetRestaurantInfo } from '../../src/hooks/queryHooks/useGetRestaurantInfo';
 import isMobile from '../../utils/isMobile';
@@ -17,6 +16,7 @@ import ShopItems from '../../src/components/ShopItems';
 import { memo } from 'react';
 import ShopPageHeader from '../../src/components/ShopPageHeader';
 import CartMenu from '../../src/components/CartMenu';
+import Navbar from '../../src/components/Navbar';
 const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
   ({ isMobileDevice }) => {
     const {
@@ -26,7 +26,12 @@ const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
     const { data: shop } = useGetRestaurantInfo({ slug: slug as string });
     return (
       <>
-        <Navbar isMobileDevice={isMobileDevice} />
+        <Navbar
+          logoVariant="colored"
+          variant="contained"
+          withBorderBottom
+          withMenu
+        />
         {shop && (
           <>
             <ShopPageHeader shop={shop} />

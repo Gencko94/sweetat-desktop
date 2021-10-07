@@ -1,12 +1,12 @@
 import { Container } from '@mui/material';
 import { Box, styled } from '@mui/system';
-import HomePageNavbar from '../HomepageNavbar';
+import Navbar from '../Navbar';
 import HeroContent from './HeroContent';
 const HomePageHero = () => {
   return (
     <Wrapper>
+      <Navbar variant="contained" logoVariant="white" withAuth withJoinus />
       <Container sx={{ maxWidth: { xl: 'xl', lg: 'lg', md: 'md' } }}>
-        <HomePageNavbar />
         <Box>
           <HeroContent />
         </Box>

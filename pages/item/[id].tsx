@@ -3,7 +3,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/dist/client/router';
 import { dehydrate, QueryClient } from 'react-query';
 import { getSingleItem } from '../../lib/queries/queries';
-import Navbar from '../../src/components/Header/Navbar';
 import { useGetSingleItem } from '../../src/hooks/queryHooks/useGetSingleItem';
 import isMobile from '../../utils/isMobile';
 import Image from 'next/image';
@@ -13,6 +12,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ItemPageDetails from '../../src/components/ItemPageDetails';
 import { memo, useState } from 'react';
+import Navbar from '../../src/components/Navbar';
 const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
   ({ isMobileDevice }) => {
     const {
@@ -40,7 +40,7 @@ const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
     };
     return (
       <div>
-        <Navbar isMobileDevice={isMobileDevice} />
+        <Navbar variant="normal" logoVariant="colored" withBorderBottom />
         {data && (
           <>
             <Box height="200px" position="relative">

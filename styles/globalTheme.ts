@@ -28,7 +28,7 @@ export const getLightTheme = (): ThemeOptions => ({
     primary: { main: PRIMARY_COLOR, light: '#fb81d0', dark: '#ff008c' },
     secondary: { main: '#ffbb0e' },
     mode: 'light',
-    background: { default: '#f1f1f1' },
+    // background: { default: '#f1f1f1' },
   },
 });
 export const getDarkTheme = (): ThemeOptions => ({
