@@ -1,11 +1,11 @@
 import { Box, BoxProps } from '@mui/system';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import Image from 'next/image';
-import { Paper, Rating, Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
-
+import StarIcon from '@mui/icons-material/Star';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import ShopPageDescription from '../ShopPageDescription';
 interface IShopSliderCard {
@@ -79,16 +79,40 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
         </Box>
         <Box p={1} pt={3}>
           <Typography fontWeight="bold">{shop.name}</Typography>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <StyledRating
+          <Stack direction="row" spacing={1} alignItems="center">
+            <StarIcon
+              fontSize="small"
+              color={
+                parseFloat(shop.rating) > 4.5
+                  ? 'success'
+                  : parseFloat(shop.rating) > 4.0
+                  ? 'success'
+                  : 'disabled'
+              }
+            />
+            {/* <StyledRating
               size="small"
               color="primary"
               name="read-only"
               value={Number(shop.rating)}
               readOnly
-            />
-            <Typography variant="body2" color="success.light">
-              Excellent
+            /> */}
+            <Typography
+              variant="body2"
+              color={
+                parseFloat(shop.rating) > 4.5
+                  ? 'success.dark'
+                  : parseFloat(shop.rating) > 4.0
+                  ? 'success.main'
+                  : 'inherit'
+              }
+            >
+              ({parseFloat(shop.rating).toFixed(1)}){' '}
+              {parseFloat(shop.rating) > 4.5
+                ? 'Excellent'
+                : parseFloat(shop.rating) > 4.0
+                ? 'Very Good'
+                : ''}
             </Typography>
             {shop.price_range && shop.price_range !== '0' && (
               <Typography variant="subtitle2" color="primary" fontWeight="bold">
@@ -97,7 +121,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
             )}
           </Stack>
           <ShopPageDescription shop={shop} />
-          <Typography color="success.main" variant="body2" fontWeight="bold">
+          <Typography color="secondary" variant="body2" fontWeight="bold">
             {shop.delivery_charges === '0'
               ? t`free-delivery`
               : `${shop.delivery_charges} KD Delivery cost`}
@@ -119,11 +143,11 @@ const DeliveryTimeChip = styled((props: BoxProps) => (
   justifyContent: 'center',
   flexDirection: 'column',
 }));
-const StyledRating = styled(Rating)(({ theme }) => ({
-  '& .MuiRating-iconFilled': {
-    color: theme.palette.secondary.main,
-  },
-  '& .MuiRating-iconHover': {
-    color: theme.palette.secondary.dark,
-  },
-}));
+// const StyledRating = styled(Rating)(({ theme }) => ({
+//   '& .MuiRating-iconFilled': {
+//     color: theme.palette.secondary.main,
+//   },
+//   '& .MuiRating-iconHover': {
+//     color: theme.palette.secondary.dark,
+//   },
+// }));

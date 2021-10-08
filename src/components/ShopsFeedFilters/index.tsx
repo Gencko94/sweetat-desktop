@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Divider, Hidden } from '@mui/material';
 import { Box } from '@mui/system';
 import { useCallback } from 'react';
 import { useApplicationState } from '../../contexts/ApplicationContext';
@@ -6,8 +6,8 @@ import CategoriesFilter from '../CategoriesFilter';
 import DeliverTo from '../DeliverTo';
 import FilterBy from '../FilterBy';
 import { FILTER_BY_TYPES } from '../FiltersDrawer/FiltersDrawerBody';
-import MobileHeader from '../Header/MobileHeader';
 import OrderMode from '../OrderMode';
+import SearchBox from '../SearchBox';
 
 const ShopsFeedFilters = () => {
   const [state, setState] = useApplicationState();
@@ -25,7 +25,7 @@ const ShopsFeedFilters = () => {
   );
   const handleCheckCategories = useCallback(
     (id: number) => {
-      //  if the category is available in the local state
+      // In Desktop mode, set the global query restaurants directly without a confirm button
       if (state.restaurantsQuery.category_ids.includes(id)) {
         setState(prev => ({
           ...prev,
@@ -36,7 +36,6 @@ const ShopsFeedFilters = () => {
             ),
           },
         }));
-        // else append the category to the local state
       } else {
         setState(prev => ({
           ...prev,
@@ -50,34 +49,42 @@ const ShopsFeedFilters = () => {
     [setState, state.restaurantsQuery.category_ids]
   );
   return (
-    <Box sx={{ width: '250px' }}>
-      <DeliverTo />
-      {/* <MobileHeader /> */}
-      <Divider />
-      <OrderMode />
-      <Divider />
-      <Box
-        sx={{
-          maxHeight: `calc(100vh - 245px )`,
-          minHeight: `calc(100vh - 245px )`,
-          overflowY: 'auto',
-          overflowX: 'hidden',
-          // my: 1,
-        }}
-      >
-        <FilterBy
-          checkedFilterBy={{
-            free_delivery: state.restaurantsQuery.free_delivery,
-            is_featured: state.restaurantsQuery.is_featured,
-          }}
-          handleChangeFilterByFilters={handleChangeFilterByFilters}
-        />
-        <Divider />
-        <CategoriesFilter
-          checkedCategories={state.restaurantsQuery.category_ids}
-          handleCheckCategories={handleCheckCategories}
-        />
+    <Box sx={{ width: { md: '250px', xs: 'auto' } }}>
+      <Box pr={{ md: 2 }}>
+        <DeliverTo />
+        <Hidden mdUp>
+          <SearchBox withFilters />
+        </Hidden>
       </Box>
+      <Hidden mdDown>
+        <Box pr={2}>
+          <Divider />
+          <OrderMode />
+          <Divider />
+        </Box>
+        <Box
+          pr={2}
+          sx={{
+            maxHeight: `calc(100vh - 245px )`,
+            minHeight: `calc(100vh - 245px )`,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }}
+        >
+          <FilterBy
+            checkedFilterBy={{
+              free_delivery: state.restaurantsQuery.free_delivery,
+              is_featured: state.restaurantsQuery.is_featured,
+            }}
+            handleChangeFilterByFilters={handleChangeFilterByFilters}
+          />
+          <Divider />
+          <CategoriesFilter
+            checkedCategories={state.restaurantsQuery.category_ids}
+            handleCheckCategories={handleCheckCategories}
+          />
+        </Box>
+      </Hidden>
     </Box>
   );
 };

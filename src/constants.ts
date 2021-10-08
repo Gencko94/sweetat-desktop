@@ -15,11 +15,6 @@ export const INITIAL_STATE: IApplicationContextProps = {
   userAddress: null,
   userLocation: null,
   filtersMenuOpen: false,
-  // globalFilters: {
-  //   filters: { category_ids: [] },
-  //   page: 0,
-  //   sort_by: 'delivery_time',
-  // },
   searchMenuOpen: false,
   globalSearchValue: '',
   globalSearchType: 'stores',
@@ -51,3 +46,10 @@ export const FOOTER_LINKS: { href: string; label: string }[] = [
     label: 'contact-us',
   },
 ];
+// 📏 MaxWidth for screens (++XL).
+export const XL_MAX_WIDTH = '1820px';
+
+// 🌌 Spacing between home feed components.
+// --- Applies in (categories,promos,features) slides + DeliverTo + SearchBox
+export const HOME_FEED_SPACING_XS = 3;
+export const HOME_FEED_SPACING_MD = 4;

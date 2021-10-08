@@ -6,6 +6,7 @@ import { Box } from '@mui/system';
 import { useGetPromoSlides } from '../../hooks/queryHooks/useGetPromoSlides';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
 const PromoSlider = () => {
   const { data: promoSlides } = useGetPromoSlides();
   const { t } = useTranslation();
@@ -14,36 +15,35 @@ const PromoSlider = () => {
       // when window width is >= 320px
       320: {
         slidesPerView: 1.5,
-        spaceBetween: 5,
+        spaceBetween: 10,
       },
       // when window width is >= 480px
       480: {
         slidesPerView: 1.75,
-        spaceBetween: 5,
+        spaceBetween: 10,
       },
       // when window width is >= 640px
-      640: {
-        slidesPerView: 2.25,
+      600: {
+        slidesPerView: 2.75,
         spaceBetween: 15,
       },
-      768: {
-        slidesPerView: 2.25,
+      900: {
+        slidesPerView: 3.25,
         spaceBetween: 15,
       },
-      1100: {
+      1200: {
         slidesPerView: 3.25,
         spaceBetween: 20,
       },
-      1440: {
-        slidesPerView: 3.75,
+      1536: {
+        slidesPerView: 4.75,
         spaceBetween: 20,
       },
     }),
     []
   );
   return (
-    <Box my={5}>
-      <Typography mb={3} variant="h5" fontWeight="bold">{t`promos`}</Typography>
+    <Box my={{ md: HOME_FEED_SPACING_MD, xs: HOME_FEED_SPACING_XS }}>
       <Swiper freeMode breakpoints={breakpoints}>
         {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>

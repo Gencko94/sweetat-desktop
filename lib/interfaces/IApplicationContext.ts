@@ -6,7 +6,6 @@ import {
   SEARCH_TYPE,
   SHOP_VIEW,
 } from '../../src/contexts/ApplicationContext';
-import { IUseGetRestaurantsProps } from '../../src/hooks/queryHooks/useGetRestaurants';
 import { IUSER_ADDRESS } from './IUserAddress';
 
 export interface IApplicationContextProps {
@@ -14,7 +13,6 @@ export interface IApplicationContextProps {
   userAddress: IUSER_ADDRESS | null | undefined;
   userLocation: POSITION_COORDS | null;
   filtersMenuOpen: boolean;
-  // globalFilters: IUseGetRestaurantsProps;
   searchMenuOpen: boolean;
   globalSearchValue: string;
   globalSearchType: SEARCH_TYPE;

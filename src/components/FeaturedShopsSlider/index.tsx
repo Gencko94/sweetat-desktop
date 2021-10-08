@@ -11,6 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useRouter } from 'next/dist/client/router';
 import ShopCard from '../ShopCard';
+import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
 const FeaturedShopsSlider = () => {
   const [state] = useApplicationState();
   const { locale } = useRouter();
@@ -26,7 +27,7 @@ const FeaturedShopsSlider = () => {
     () => ({
       // when window width is >= 320px
       320: {
-        slidesPerView: 1.2,
+        slidesPerView: 1.5,
         spaceBetween: 5,
       },
       // when window width is >= 480px
@@ -34,37 +35,37 @@ const FeaturedShopsSlider = () => {
         slidesPerView: 1.75,
         spaceBetween: 5,
       },
-      // when window width is >= 640px
-      640: {
+      // when window width is >= 600px
+      600: {
         slidesPerView: 2.25,
         spaceBetween: 15,
       },
-      768: {
+      900: {
         slidesPerView: 2.25,
         spaceBetween: 15,
       },
-      1100: {
-        slidesPerView: 3.75,
+      1200: {
+        slidesPerView: 3.25,
         spaceBetween: 20,
       },
-      1440: {
-        slidesPerView: 4.25,
+      1536: {
+        slidesPerView: 5.25,
         spaceBetween: 20,
       },
     }),
     []
   );
   return (
-    <Box my={5}>
+    <Box my={{ md: HOME_FEED_SPACING_MD, xs: HOME_FEED_SPACING_XS }}>
       <Stack
-        mb={3}
+        mb={{ md: 3, xs: 2 }}
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         spacing={1}
       >
         <Typography
-          variant="h5"
+          variant="h6"
           fontWeight="bold"
         >{t`featured-shops`}</Typography>
         <IconButton color="primary">
@@ -73,7 +74,7 @@ const FeaturedShopsSlider = () => {
       </Stack>
       <Swiper breakpoints={breakpoints}>
         {shops?.map(shop => (
-          <SwiperSlide style={{ padding: '10px 0' }} key={shop.id}>
+          <SwiperSlide key={shop.id}>
             <ShopCardWide shop={shop} />
           </SwiperSlide>
         ))}

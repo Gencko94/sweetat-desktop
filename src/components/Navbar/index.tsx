@@ -4,13 +4,17 @@ import {
   Container,
   Hidden,
   Stack,
+  Theme,
   Toolbar,
+  useMediaQuery,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Image from 'next/image';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useToggleUserDrawer } from '../../hooks/useToggleUserDrawer';
+import { XL_MAX_WIDTH } from '../../constants';
+import SearchBox from '../SearchBox';
 
 interface INavBarProps {
   withBorderBottom?: boolean;
@@ -32,6 +36,7 @@ const Navbar = ({
   variant,
 }: INavBarProps) => {
   const toggleUserDrawer = useToggleUserDrawer();
+  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
   return (
     <AppBar
       color="transparent"
@@ -49,12 +54,19 @@ const Navbar = ({
         sx={{
           maxWidth:
             variant === 'contained'
-              ? { xl: 'xl', lg: 'lg', md: 'md' }
+              ? { xl: XL_MAX_WIDTH, lg: 'lg' }
               : { xs: '100%' },
         }}
       >
-        <Toolbar disableGutters sx={{ py: 2, px: 0 }}>
-          <Box flex="1">
+        <Toolbar
+          disableGutters
+          sx={{
+            py: 2,
+            px: 0,
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box>
             <Image
               src={`/assets/${
                 logoVariant === 'white'
@@ -62,14 +74,25 @@ const Navbar = ({
                   : 'colored-logo.png'
               }`}
               alt="Sweetat logo"
-              height="55px"
-              width="187px"
+              height={isDesktop ? '45px' : '45px'}
+              width={isDesktop ? '150px' : '150px'}
             />
           </Box>
+          {withSearch && (
+            <Hidden mdDown>
+              <Box flexBasis="40%">
+                <SearchBox />
+              </Box>
+            </Hidden>
+          )}
           <Stack direction="row" spacing={2}>
             {withJoinus && (
               <Hidden mdDown>
-                <Button variant="outlined" endIcon={<KeyboardArrowDownIcon />}>
+                <Button
+                  size="large"
+                  variant="outlined"
+                  endIcon={<KeyboardArrowDownIcon />}
+                >
                   Partner with us
                 </Button>
               </Hidden>
@@ -86,7 +109,7 @@ const Navbar = ({
                 onClick={toggleUserDrawer}
                 endIcon={<MenuIcon />}
                 disableElevation
-                variant="contained"
+                variant="outlined"
               >
                 Menu
               </Button>

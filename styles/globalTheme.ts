@@ -46,18 +46,21 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
         },
       },
     },
-    MuiAccordionDetails: {
+    MuiButton: {
       styleOverrides: {
-        root: {
-          // padding: theme => theme.spacing(0, 1.5),
-          // backgroundColor: theme.palette.background.paper,
+        containedInherit: {
+          backgroundColor: mode === 'dark' ? '#35182B' : '#f0f0f0',
+          '&:hover': {
+            backgroundColor: mode === 'dark' && '#441b36',
+          },
         },
       },
     },
+
     MuiCssBaseline: {
       styleOverrides: {
         '*::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.3)',
+          WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
           boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
           borderRadius: '10px',
           backgroundColor: '#777',
@@ -69,7 +72,7 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
         },
         '*::-webkit-scrollbar-thumb': {
           borderRadius: '10px',
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,.3)',
+          WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
           boxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
           backgroundColor: PRIMARY_COLOR,
           transition: 'background 150ms ease',

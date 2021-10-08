@@ -6,6 +6,7 @@ import 'swiper/css';
 import { Typography } from '@mui/material';
 import { useGetCategoriesSlides } from '../../hooks/queryHooks/useGetCategoriesSlides';
 import Link from 'next/link';
+import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
 const HomeCategoriesSlider = () => {
   const { data: categories } = useGetCategoriesSlides();
   const breakpoints = useMemo(
@@ -21,27 +22,27 @@ const HomeCategoriesSlider = () => {
         spaceBetween: 5,
       },
       // when window width is >= 640px
-      640: {
+      600: {
         slidesPerView: 4.25,
         spaceBetween: 5,
       },
-      768: {
-        slidesPerView: 4.75,
+      900: {
+        slidesPerView: 5.75,
         spaceBetween: 10,
       },
-      1100: {
-        slidesPerView: 6.25,
+      1200: {
+        slidesPerView: 7.25,
         spaceBetween: 5,
       },
-      1440: {
-        slidesPerView: 7.25,
+      1536: {
+        slidesPerView: 10.25,
         spaceBetween: 5,
       },
     }),
     []
   );
   return (
-    <Box mb={5}>
+    <Box mb={{ md: HOME_FEED_SPACING_MD, xs: HOME_FEED_SPACING_XS }}>
       <Swiper freeMode breakpoints={breakpoints}>
         {categories?.map(category => (
           <SwiperSlide key={category.id}>

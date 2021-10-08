@@ -41,7 +41,8 @@ const ShopPageDescription = ({ shop }: IShopPageDescription) => {
             key={i}
             sx={{ display: 'inline' }}
             color="text.secondary"
-            variant="subtitle2"
+            variant="body2"
+            // fontWeight="medium"
           >
             {i}
           </Typography>

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { HOME_FEED_SPACING_XS } from '../../constants';
 const DeliverTo = () => {
   const { t } = useTranslation();
   const [state] = useApplicationState();
@@ -14,7 +15,8 @@ const DeliverTo = () => {
       display="flex"
       alignItems="center"
       spacing={1}
-      py={2}
+      my={{ xs: HOME_FEED_SPACING_XS - 1 }}
+      mt={{ md: 0 }}
     >
       <Image
         src="/assets/kuwait.svg"
