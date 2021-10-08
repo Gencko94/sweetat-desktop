@@ -11,13 +11,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/dist/client/router';
 import { useGetRestaurantsCategories } from '../../hooks/queryHooks/useGetRestaurantsCategories';
-import { CHECKED_FILTERS } from '../FiltersDrawer/FiltersDrawerBody';
 interface ICategoriesFilterProps {
   handleCheckCategories: (key: number) => void;
-  checkedFilters: CHECKED_FILTERS;
+  checkedCategories: number[];
 }
 const CategoriesFilter = ({
-  checkedFilters,
+  checkedCategories,
   handleCheckCategories,
 }: ICategoriesFilterProps) => {
   const { data: categories } = useGetRestaurantsCategories();
@@ -25,10 +24,13 @@ const CategoriesFilter = ({
   const [expanded, setExpanded] = useState(true);
   const { locale } = useRouter();
   return (
-    <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+    <Accordion
+      sx={{ py: 1 }}
+      expanded={expanded}
+      onChange={() => setExpanded(!expanded)}
+    >
       <AccordionSummary expandIcon={<KeyboardArrowDownIcon />}>
         <Typography
-          color="primary.main"
           fontWeight="bold"
           variant="subtitle1"
         >{t`categories`}</Typography>
@@ -55,7 +57,7 @@ const CategoriesFilter = ({
               {locale === 'ar' ? category.ar_name : category.name}
             </Typography>
             <Checkbox
-              checked={checkedFilters.categories.includes(category.id)}
+              checked={checkedCategories.includes(category.id)}
               onChange={() => handleCheckCategories(category.id)}
               id={category.id.toString()}
             />

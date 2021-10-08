@@ -24,7 +24,7 @@ const Shops = () => {
           py: { md: 4, xs: 2 },
         }}
       >
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={4}>
           <Hidden mdDown>
             <ShopsFeedFilters />
           </Hidden>

@@ -1,3 +1,4 @@
+import { SORT_BY_OPTIONS } from '../../src/components/FiltersDrawer/FiltersDrawerBody';
 import {
   COLOR_MODES,
   ITEM_VIEW,
@@ -21,9 +22,9 @@ export interface IApplicationContextProps {
   itemsView: ITEM_VIEW;
   userDrawerOpen: boolean;
   restaurantsQuery: {
-    category_ids: string[];
-    is_featured?: boolean;
-    free_delivery?: boolean;
-    sort_by: 'delivery_time' | 'asc' | 'desc' | 'ar_asc' | 'ar_desc';
+    category_ids: number[];
+    is_featured: boolean;
+    free_delivery: boolean;
+    sort_by: SORT_BY_OPTIONS;
   };
 }

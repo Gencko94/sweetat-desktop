@@ -9,7 +9,13 @@ const DeliverTo = () => {
   const { t } = useTranslation();
   const [state] = useApplicationState();
   return (
-    <Stack direction="row" display="flex" alignItems="center" spacing={1}>
+    <Stack
+      direction="row"
+      display="flex"
+      alignItems="center"
+      spacing={1}
+      py={2}
+    >
       <Image
         src="/assets/kuwait.svg"
         alt="Kuwait flag"
@@ -19,7 +25,7 @@ const DeliverTo = () => {
       <Stack spacing={0}>
         <Typography variant="subtitle2">{t('deliver-to')}</Typography>
         <Stack direction="row" alignItems="center">
-          <Typography variant="h6" color="primary" fontWeight="bold">
+          <Typography variant="subtitle1" color="primary" fontWeight="bold">
             {state.userAddress
               ? state.userAddress.address
               : 'Select your location'}

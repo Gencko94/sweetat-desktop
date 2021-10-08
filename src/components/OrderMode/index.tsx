@@ -2,7 +2,7 @@ import { FormControlLabel, Radio, RadioGroup, Stack } from '@mui/material';
 
 const OrderMode = () => {
   return (
-    <Stack spacing={1} px={1} py={2}>
+    <Stack spacing={1} py={2}>
       <RadioGroup>
         <FormControlLabel
           sx={{ fontSize: theme => theme.typography.subtitle2 }}

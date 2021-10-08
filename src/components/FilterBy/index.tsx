@@ -10,24 +10,30 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FILTER_TYPES } from '../../constants';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { CHECKED_FILTERS } from '../FiltersDrawer/FiltersDrawerBody';
+import { FILTER_BY_TYPES } from '../FiltersDrawer/FiltersDrawerBody';
 
 interface IFilterByProps {
-  handleChangeSortByFilters: (key: string) => void;
-  checkedFilters: CHECKED_FILTERS;
+  handleChangeFilterByFilters: (key: FILTER_BY_TYPES) => void;
+  checkedFilterBy: {
+    free_delivery: boolean;
+    is_featured: boolean;
+  };
 }
 
 const FilterBy = ({
-  checkedFilters,
-  handleChangeSortByFilters,
+  checkedFilterBy,
+  handleChangeFilterByFilters,
 }: IFilterByProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);
   return (
-    <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+    <Accordion
+      expanded={expanded}
+      sx={{ py: 1 }}
+      onChange={() => setExpanded(!expanded)}
+    >
       <AccordionSummary expandIcon={<KeyboardArrowDownIcon />}>
         <Typography
-          color="primary.main"
           fontWeight="bold"
           variant="subtitle1"
         >{t`filter-by`}</Typography>
@@ -55,8 +61,8 @@ const FilterBy = ({
             </Typography>
             <Checkbox
               id={type.key}
-              checked={checkedFilters.sort_by[type.key] === true}
-              onChange={() => handleChangeSortByFilters(type.key)}
+              checked={checkedFilterBy[type.key] === true}
+              onChange={() => handleChangeFilterByFilters(type.key)}
             />
           </Stack>
         ))}

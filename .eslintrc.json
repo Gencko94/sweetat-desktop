@@ -13,7 +13,13 @@
     "@emotion/no-vanilla": "error",
     "@emotion/import-from-emotion": "error",
     "@emotion/styled-import": "error",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ]
   },
   "env": {
     "browser": true,

@@ -54,6 +54,31 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
         },
       },
     },
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*::-webkit-scrollbar-track': {
+          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.3)',
+          boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
+          borderRadius: '10px',
+          backgroundColor: '#777',
+        },
+        '*::-webkit-scrollbar': {
+          width: '6px',
+          height: '6px',
+          backgroundColor: PRIMARY_COLOR,
+        },
+        '*::-webkit-scrollbar-thumb': {
+          borderRadius: '10px',
+          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,.3)',
+          boxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+          backgroundColor: PRIMARY_COLOR,
+          transition: 'background 150ms ease',
+        },
+        '*::-webkit-scrollbar-thumb:hover': {
+          backgroundColor: PRIMARY_COLOR,
+        },
+      },
+    },
   },
   shape: { borderRadius: 6 },
   ...(mode === 'light' ? getLightTheme() : getDarkTheme()),
