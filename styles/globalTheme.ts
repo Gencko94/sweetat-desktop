@@ -19,6 +19,41 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
         enableColorOnDark: false,
       },
     },
+    MuiAccordion: {
+      defaultProps: {
+        disableGutters: true,
+        elevation: 0,
+        square: true,
+      },
+      styleOverrides: {
+        root: {
+          '&:not(:last-child)': {
+            borderBottom: 0,
+          },
+          '&:before': {
+            display: 'none',
+          },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+            transform: 'rotate(180deg)',
+          },
+        },
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          // padding: theme => theme.spacing(0, 1.5),
+          // backgroundColor: theme.palette.background.paper,
+        },
+      },
+    },
   },
   shape: { borderRadius: 6 },
   ...(mode === 'light' ? getLightTheme() : getDarkTheme()),

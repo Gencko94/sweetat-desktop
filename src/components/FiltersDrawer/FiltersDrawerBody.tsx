@@ -1,148 +1,134 @@
-import { styled } from '@mui/system';
-import { memo, useCallback, useState } from 'react';
-import { FILTER_TYPES } from '../../constants';
-import {
-  AccordionSummaryProps,
-  AccordionSummary as MuiAccordionSummary,
-  AccordionDetails as MuiAccordionDetails,
-  Accordion as MuiAccordion,
-  AccordionProps,
-  Typography,
-  Stack,
-  Checkbox,
-} from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { CHECKED_FILTERS } from '.';
-import { useRouter } from 'next/dist/client/router';
+import { memo, useCallback, useEffect, useState } from 'react';
+import FilterBy from '../FilterBy';
+import CategoriesFilter from '../CategoriesFilter';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import { Box } from '@mui/system';
+import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useGetRestaurantsCategories } from '../../hooks/queryHooks/useGetRestaurantsCategories';
 
-interface IFiltersDrawerBodyProps {
-  handleCheckFilters: (key: string) => void;
-  checkedFilters: CHECKED_FILTERS;
-  handleCheckCategories: (id: number) => void;
+export interface CHECKED_FILTERS {
+  sort_by: {
+    [key: string]: boolean;
+  };
+  categories: number[];
 }
-const FiltersDrawerBody = ({
-  handleCheckFilters,
-  checkedFilters,
-  handleCheckCategories,
-}: IFiltersDrawerBodyProps) => {
-  const { locale } = useRouter();
+
+const FiltersDrawerBody = () => {
   const { t } = useTranslation();
-  const { data: categories } = useGetRestaurantsCategories();
-  const [filterTabs, setFilterTabs] = useState<number[]>([0, 1]);
-  const handleExpandFilterTabs = useCallback(
-    (tab: number) => {
-      if (filterTabs.includes(tab)) {
-        setFilterTabs(prev => prev.filter(i => i !== tab));
+  const [checkedFilters, setCheckedFilters] = useState<CHECKED_FILTERS>({
+    sort_by: { featured: false, free_delivery: false },
+    categories: [],
+  });
+  const [state, setState] = useApplicationState();
+  const handleChangeSortByFilters = useCallback((key: string) => {
+    setCheckedFilters(prev => ({
+      ...prev,
+      sort_by: {
+        ...prev.sort_by,
+        [key]: !prev.sort_by[key],
+      },
+    }));
+  }, []);
+  const handleCheckCategories = useCallback(
+    (id: number) => {
+      //  if the category is available in the local state
+      if (checkedFilters.categories.includes(id)) {
+        setCheckedFilters(prev => ({
+          ...prev,
+          categories: prev.categories.filter(cat => cat !== id),
+        }));
+        // else append the category to the local state
       } else {
-        setFilterTabs(prev => [...prev, tab]);
+        setCheckedFilters(prev => ({
+          ...prev,
+          categories: [...prev.categories, id],
+        }));
       }
     },
-    [filterTabs]
+    [checkedFilters.categories]
   );
+  // ✨ Applying global filters handler.
+  const handleApplyFilters = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      restaurantsQuery: {
+        ...prev.restaurantsQuery,
+        category_ids: checkedFilters.categories.map(i => i.toString()),
+        free_delivery: checkedFilters.sort_by.free_delivery,
+        is_featured: checkedFilters.sort_by.is_featured,
+      },
+      // 👋 close the drawer
+      filtersMenuOpen: !prev.filtersMenuOpen,
+    }));
+  }, [
+    checkedFilters.categories,
+    checkedFilters.sort_by.free_delivery,
+    checkedFilters.sort_by.is_featured,
+    setState,
+  ]);
+
+  const handleCloseFiltersMenu = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      filtersMenuOpen: !prev.filtersMenuOpen,
+    }));
+  }, [setState]);
+
+  useEffect(() => {
+    // ✨ Update the local filter state whenever the global filter state changes.
+    setCheckedFilters({
+      categories: state.restaurantsQuery.category_ids.map(i => Number(i)),
+      sort_by: {
+        free_delivery: !!state.restaurantsQuery.free_delivery,
+        is_featured: !!state.restaurantsQuery.is_featured,
+      },
+    });
+  }, [
+    state.restaurantsQuery.category_ids,
+    state.restaurantsQuery.free_delivery,
+    state.restaurantsQuery.is_featured,
+  ]);
+
+  // 🎈💣 ```filtersOpen``` dep is to reset the filter if the drawer is closed and not updated the global state.
 
   return (
     <>
-      <Accordion
-        expanded={filterTabs.includes(0)}
-        onChange={() => handleExpandFilterTabs(0)}
+      <Box
+        sx={{
+          maxHeight: `calc(100vh - 245px )`,
+          minHeight: `calc(100vh - 245px )`,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          my: 1,
+        }}
       >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography
-            color="primary.main"
-            fontWeight="bold"
-            variant="subtitle1"
-          >{t`filter-by`}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {FILTER_TYPES.map(type => (
-            <Stack
-              key={type.key}
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography
-                component="label"
-                htmlFor={type.key}
-                fontWeight="medium"
-                sx={{ cursor: 'pointer' }}
-              >
-                {t(type.label)}
-              </Typography>
-              <Checkbox
-                id={type.key}
-                checked={checkedFilters.filters[type.key] === true}
-                onChange={() => handleCheckFilters(type.key)}
-              />
-            </Stack>
-          ))}
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={filterTabs.includes(1)}
-        onChange={() => handleExpandFilterTabs(1)}
-      >
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography
-            color="primary.main"
-            fontWeight="bold"
-            variant="subtitle1"
-          >{t`categories`}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {categories?.map(category => (
-            <Stack
-              key={category.id}
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Typography
-                component="label"
-                htmlFor={category.id.toString()}
-                fontWeight="medium"
-                sx={{ cursor: 'pointer' }}
-              >
-                {locale === 'ar' ? category.ar_name : category.name}
-              </Typography>
-              <Checkbox
-                checked={checkedFilters.categories.includes(category.id)}
-                onChange={() => handleCheckCategories(category.id)}
-                id={category.id.toString()}
-              />
-            </Stack>
-          ))}
-        </AccordionDetails>
-      </Accordion>
+        <FilterBy
+          checkedFilters={checkedFilters}
+          handleChangeSortByFilters={handleChangeSortByFilters}
+        />
+        <CategoriesFilter
+          checkedFilters={checkedFilters}
+          handleCheckCategories={handleCheckCategories}
+        />
+      </Box>
+      <Box>
+        <Button
+          color="primary"
+          variant="contained"
+          fullWidth
+          size="large"
+          sx={{ mb: 1 }}
+          onClick={handleApplyFilters}
+        >{t`apply-filters`}</Button>
+        <Button
+          fullWidth
+          variant="contained"
+          color="inherit"
+          size="large"
+        >{t`clear-filters`}</Button>
+      </Box>
     </>
   );
 };
 
 export default memo(FiltersDrawerBody);
-const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(() => ({
-  '&:not(:last-child)': {
-    borderBottom: 0,
-  },
-  '&:before': {
-    display: 'none',
-  },
-}));
-
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-  <MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />
-))(() => ({
-  padding: 0,
-  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-    transform: 'rotate(180deg)',
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(0, 1.5),
-  backgroundColor: theme.palette.background.paper,
-  //   borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));

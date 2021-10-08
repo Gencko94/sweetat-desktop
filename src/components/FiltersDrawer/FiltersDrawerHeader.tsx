@@ -2,13 +2,10 @@ import { IconButton, Stack, Typography } from '@mui/material';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
-interface IFiltersDrawerHeaderProps {
-  handleCloseFiltersMenu: () => void;
-}
+import { useApplicationState } from '../../contexts/ApplicationContext';
 
-const FiltersDrawerHeader = ({
-  handleCloseFiltersMenu,
-}: IFiltersDrawerHeaderProps) => {
+const FiltersDrawerHeader = () => {
+  const [state, setState] = useApplicationState();
   const { t } = useTranslation();
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -17,7 +14,12 @@ const FiltersDrawerHeader = ({
       </Typography>
       <IconButton
         sx={{ color: 'primary.dark' }}
-        onClick={() => handleCloseFiltersMenu()}
+        onClick={() =>
+          setState(prev => ({
+            ...prev,
+            filtersMenuOpen: !state.filtersMenuOpen,
+          }))
+        }
       >
         <CloseIcon fontSize="large" />
       </IconButton>

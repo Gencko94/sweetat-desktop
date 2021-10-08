@@ -13,11 +13,17 @@ export interface IApplicationContextProps {
   userAddress: IUSER_ADDRESS | null | undefined;
   userLocation: POSITION_COORDS | null;
   filtersMenuOpen: boolean;
-  globalFilters: IUseGetRestaurantsProps;
+  // globalFilters: IUseGetRestaurantsProps;
   searchMenuOpen: boolean;
   globalSearchValue: string;
   globalSearchType: SEARCH_TYPE;
   shopsView: SHOP_VIEW;
   itemsView: ITEM_VIEW;
   userDrawerOpen: boolean;
+  restaurantsQuery: {
+    category_ids: string[];
+    is_featured?: boolean;
+    free_delivery?: boolean;
+    sort_by: 'delivery_time' | 'asc' | 'desc' | 'ar_asc' | 'ar_desc';
+  };
 }
