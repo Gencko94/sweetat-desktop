@@ -1,51 +1,14 @@
 import { Box, styled } from '@mui/system';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
-import {
-  Autocomplete,
-  Button,
-  CircularProgress,
-  IconButton,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
-
+import { Paper, Typography } from '@mui/material';
 import { useRouter } from 'next/dist/client/router';
-
-import { Fragment, useState } from 'react';
 import { useApplicationState } from '../../../contexts/ApplicationContext';
+import { getGeocode, getLatLng } from 'use-places-autocomplete';
+import PlacesAutoCompleteInput from '../../PlacesAutoCompleteInput';
 import { convertCoordinateToAddress } from '../../../../lib/queries/queries';
-import { LoadingButton } from '@mui/lab';
 
 const HeroContent = () => {
-  const { locale, push } = useRouter();
-  const [open, setOpen] = useState(false);
   const [state, setState] = useApplicationState();
-
-  const {
-    ready,
-    value,
-    suggestions: { data, loading },
-    setValue,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      /* Define search scope here */
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore-next-line
-      location: {
-        lat: () => 29.3759,
-        lng: () => 47.9774,
-      },
-      radius: 60 * 1000,
-    },
-    debounce: 300,
-  });
-
+  const { locale, push } = useRouter();
   const handleAutoCompleteValueChange = async (value: string) => {
     try {
       const geoCodeResults = await getGeocode({ address: value });
@@ -66,6 +29,14 @@ const HeroContent = () => {
       console.log(error);
     }
   };
+
+  const getGeoLocationSuccessCb: PositionCallback = position => {
+    console.log(position);
+  };
+  const getGeoLocationFailureCb: PositionErrorCallback = error => {
+    console.error(error);
+  };
+
   return (
     <Wrapper>
       <Typography
@@ -85,64 +56,11 @@ const HeroContent = () => {
         >
           Enter your address to find local restaurants
         </Typography>
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          spacing={{ xs: 2, md: 3 }}
-        >
-          <Autocomplete
-            fullWidth
-            disabled={!ready}
-            open={open}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            isOptionEqualToValue={(option, value) =>
-              option.description === value.description
-            }
-            getOptionLabel={option => {
-              return option.description;
-            }}
-            onChange={(event, newInputValue) => {
-              if (newInputValue) {
-                handleAutoCompleteValueChange(newInputValue?.description);
-              }
-            }}
-            options={data}
-            loading={loading}
-            size="small"
-            renderInput={params => (
-              <TextField
-                onChange={e => {
-                  setValue(e.target.value);
-                }}
-                value={value}
-                {...params}
-                size="small"
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <Fragment>
-                      {loading ? (
-                        <CircularProgress color="inherit" size={20} />
-                      ) : (
-                        <IconButton color="primary">
-                          <MyLocationIcon />
-                        </IconButton>
-                      )}
-                    </Fragment>
-                  ),
-                }}
-              />
-            )}
-          />
-
-          <LoadingButton loading={loading} size="medium" variant="contained">
-            Search
-          </LoadingButton>
-        </Stack>
+        <PlacesAutoCompleteInput
+          onChange={handleAutoCompleteValueChange}
+          getGeoLocationSuccessCb={getGeoLocationSuccessCb}
+          getGeoLocationFailureCb={getGeoLocationFailureCb}
+        />
       </Box>
     </Wrapper>
   );

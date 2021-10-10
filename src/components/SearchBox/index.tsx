@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { memo } from 'react';
 import { useApplicationState } from '../../contexts/ApplicationContext';

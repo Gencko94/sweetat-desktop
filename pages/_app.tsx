@@ -21,7 +21,14 @@ function MyApp({
   pageProps,
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: { refetchOnWindowFocus: false },
+        },
+      })
+  );
   const { locale } = useRouter();
   //🌎 Initialize google maps script loader.
   // const { isLoaded } = useLoadScript({
