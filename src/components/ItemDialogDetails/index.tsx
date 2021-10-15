@@ -7,32 +7,46 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import MessageIcon from '@mui/icons-material/Message';
 import { useTranslation } from 'react-i18next';
 import ItemAddons from '../ItemAddons';
+import { useFormContext } from 'react-hook-form';
+import { ILocalCartItem } from '../../../lib/interfaces/cart/ILocalCart';
 
 interface IItemDialogDetailsProps {
   item: ITEM;
-  handleAppendQuantity: () => void;
-  handleSubstractQuantity: () => void;
-  quantity: number;
 }
 
-const ItemDialogDetails = ({
-  item,
-  handleAppendQuantity,
-  handleSubstractQuantity,
-  quantity,
-}: IItemDialogDetailsProps) => {
+const ItemDialogDetails = ({ item }: IItemDialogDetailsProps) => {
   const { locale } = useRouter();
   const { t } = useTranslation();
+  const { setValue, watch } = useFormContext<ILocalCartItem>();
+  const quantity = watch('quantity', 1);
 
+  const handleAppendQuantity = () => {
+    if (!item?.max_allowed) {
+      setValue('quantity', quantity + 1);
+    } else {
+      if (item.max_allowed === quantity) {
+        return;
+      }
+    }
+  };
+  const handleSubstractQuantity = () => {
+    if (quantity === 1) {
+      return;
+    } else {
+      setValue('quantity', quantity - 1);
+    }
+  };
   return (
-    <Box>
+    <div>
       <Stack spacing={2} mb={2}>
         <Typography variant="h5" fontWeight="bold">
           {locale === 'ar' ? item.ar_name : item.name}
         </Typography>
-        <Typography variant="h6" fontWeight="medium" color="secondary">
-          {item.price === '0.00' ? 'Price on Selection' : item.price + 'KD'}
-        </Typography>
+        {item.price !== '0.00' && (
+          <Typography variant="h6" fontWeight="medium" color="secondary">
+            {item.price} KD
+          </Typography>
+        )}
         {item.ar_desc !== null && item.desc !== null && (
           <div
             dangerouslySetInnerHTML={{
@@ -94,7 +108,7 @@ const ItemDialogDetails = ({
         </Stack>
         <TextField fullWidth rows={4} multiline></TextField>
       </Box>
-    </Box>
+    </div>
   );
 };
 

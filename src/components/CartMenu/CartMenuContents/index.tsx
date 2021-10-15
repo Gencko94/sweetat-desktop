@@ -1,10 +1,10 @@
 import { Divider, IconButton, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
-import { product1 } from '../../../../lib/fakeData/fakeProducts';
 import CartItem from '../../CartItem';
 import CartCardOrderSummary from '../../DesktopCartCard/CartCardOrderSummary';
-import { Box } from '@mui/system';
+import useGetCartItems from '../../../hooks/queryHooks/useGetCartItems';
+import useManipulateCart from '../../../hooks/useManipulateCart';
 
 interface ICartMenuContentsProps {
   handleToggleCartMenu: () => void;
@@ -12,6 +12,8 @@ interface ICartMenuContentsProps {
 
 const CartMenuContents = ({ handleToggleCartMenu }: ICartMenuContentsProps) => {
   const { t } = useTranslation();
+  const { data: cart, isLoading } = useGetCartItems();
+  const { incrementQuantity, decrementQuantity } = useManipulateCart();
   return (
     <>
       <Stack
@@ -26,17 +28,26 @@ const CartMenuContents = ({ handleToggleCartMenu }: ICartMenuContentsProps) => {
         </IconButton>
       </Stack>
       <Divider />
-      <Stack spacing={1} my={1} p={2}>
-        <CartItem item={product1} />
-      </Stack>
-      <Divider />
-      <Box p={2}>
-        <CartCardOrderSummary
-          delivery_fee={43.4}
-          service_fee={20.1}
-          subtotal={63.5}
-        />
-      </Box>
+      {cart && cart.items.length > 0 && (
+        <>
+          <Stack spacing={1} my={2}>
+            {cart.items.map(cartItem => (
+              <CartItem
+                key={cartItem.id}
+                item={cartItem}
+                incrementQuantity={incrementQuantity}
+                decrementQuantity={decrementQuantity}
+              />
+            ))}
+          </Stack>
+          <Divider />
+          <CartCardOrderSummary
+            delivery_fee={43.4}
+            service_fee={20.1}
+            subtotal={cart.total}
+          />
+        </>
+      )}
     </>
   );
 };

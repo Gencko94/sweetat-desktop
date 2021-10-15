@@ -14,7 +14,6 @@ export default NextAuth({
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       async authorize(credentials: any) {
-        console.log(credentials, 'credentials');
         const res = await axios.post('https://sweetat.co/public/api/login', {
           email: credentials.email,
           password: credentials.password,

@@ -5,13 +5,14 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../styles/createEmotionCache';
 import { appWithTranslation } from 'next-i18next';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../src/components/Layout';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SessionProvider } from 'next-auth/react';
 const clientSideEmotionCache = createEmotionCache();
-import { useLoadScript } from '@react-google-maps/api';
 import { useRouter } from 'next/dist/client/router';
+import { getCartItems } from '../lib/queries/cartService';
+import { LOCAL_STORAGE_CART_KEY, NEW_CART_VALUE } from '../src/constants';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -36,6 +37,21 @@ function MyApp({
   //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
   //   libraries: ['places'],
   // });
+  useEffect(() => {
+    // if (typeof window !== 'undefined') {
+    const initialLocalCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+    if (!initialLocalCart) {
+      localStorage.setItem(
+        LOCAL_STORAGE_CART_KEY,
+        JSON.stringify(NEW_CART_VALUE)
+      );
+      queryClient.prefetchQuery('/validate-cart-items', getCartItems);
+    } else {
+      queryClient.prefetchQuery('/validate-cart-items', getCartItems);
+    }
+
+    // }
+  }, [queryClient]);
   return (
     <CacheProvider value={emotionCache}>
       <Head>

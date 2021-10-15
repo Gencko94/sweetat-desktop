@@ -1,12 +1,13 @@
-import { Drawer, Paper } from '@mui/material';
-import { Box } from '@mui/system';
+import { Drawer, Paper, Box } from '@mui/material';
 import { useCallback, useState } from 'react';
+import useGetCartItems from '../../hooks/queryHooks/useGetCartItems';
 import CartMenuActions from './CartMenuActions';
 import CartMenuContents from './CartMenuContents';
 import CartMenuOpenButton from './CartMenuOpenButton';
 
 const CartMenu = () => {
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
+  const { data: cart, isLoading } = useGetCartItems();
   const handleToggleCartMenu = useCallback(() => {
     setCartMenuOpen(!cartMenuOpen);
   }, [cartMenuOpen]);
@@ -22,8 +23,7 @@ const CartMenu = () => {
           left: 0,
           right: 0,
           borderRadius: 0,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
+
           zIndex: theme => theme.zIndex?.drawer,
         }}
       >

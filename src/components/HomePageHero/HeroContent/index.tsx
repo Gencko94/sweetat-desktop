@@ -12,7 +12,6 @@ const HeroContent = () => {
   const handleAutoCompleteValueChange = async (value: string) => {
     try {
       const geoCodeResults = await getGeocode({ address: value });
-      console.log(geoCodeResults, 'geo code results');
       const { lat, lng } = await getLatLng(geoCodeResults[0]);
       const userAddress = await convertCoordinateToAddress({
         lat,

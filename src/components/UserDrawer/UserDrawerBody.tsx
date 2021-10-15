@@ -17,8 +17,7 @@ const UserDrawerBody = () => {
       redirect: false,
     });
   };
-  console.log(session);
-  console.log(status);
+
   return (
     <>
       <Box my={1}>

@@ -15,17 +15,24 @@ const CartCardOrderSummary = ({
   const { t } = useTranslation();
   return (
     <Stack spacing={1} my={2}>
-      <Stack direction="row" justifyContent="space-between" spacing={1}>
+      {/* <Stack direction="row" justifyContent="space-between" spacing={1}>
         <Typography>{t`delivery-fee`}</Typography>
         <Typography>{delivery_fee} KD</Typography>
       </Stack>
       <Stack direction="row" justifyContent="space-between" spacing={1}>
         <Typography>{t`service-fee`}</Typography>
         <Typography>{service_fee} KD</Typography>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between" spacing={1}>
+      </Stack> */}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={1}
+      >
         <Typography>{t`subtotal`}</Typography>
-        <Typography>{subtotal} KD</Typography>
+        <Typography color="secondary" variant="h6" fontWeight="bold">
+          {subtotal} KD
+        </Typography>
       </Stack>
     </Stack>
   );

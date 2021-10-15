@@ -1,5 +1,4 @@
 import { IApplicationContextProps } from '../lib/interfaces/IApplicationContext';
-import ItemCard from './components/ItemCard';
 
 export const PRIMARY_COLOR = '#FE3DBC';
 export const DEFAULT_LAT = 29.3352938;
@@ -31,6 +30,7 @@ export const INITIAL_STATE: IApplicationContextProps = {
     is_featured: true,
   },
 };
+export const LOCAL_STORAGE_CART_KEY = 'swlcct';
 export const FOOTER_LINKS: { href: string; label: string }[] = [
   {
     href: '/',
@@ -56,3 +56,10 @@ export const XL_MAX_WIDTH = '1820px';
 // --- Applies in (categories,promos,features) slides + DeliverTo + SearchBox
 export const HOME_FEED_SPACING_XS = 3;
 export const HOME_FEED_SPACING_MD = 4;
+
+// Cart constants
+
+export const NEW_CART_VALUE = {
+  items: [],
+  restaurant_id: null,
+};

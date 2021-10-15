@@ -100,7 +100,6 @@ export const getSearchResults = async (
 };
 export const getSingleItem = async (id: number) => {
   const session = await getSession();
-  console.log(session);
   const res = await instance.post('/get-single-item', { id });
   return res.data;
 };

@@ -1,29 +1,38 @@
-import { IconButton, Stack, Typography } from '@mui/material';
-import { ITEM } from '../../../lib/interfaces/IRestaurantItem';
+import { Fab, IconButton, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useState } from 'react';
+
 import { Box } from '@mui/system';
+import { IGetCartResponseItem } from '../../../lib/interfaces/cart/IGetCartResponse';
+import { useRouter } from 'next/dist/client/router';
 interface ICartItemProps {
-  item: ITEM;
+  item: IGetCartResponseItem;
+  incrementQuantity?: (id: number) => void;
+  decrementQuantity?: (id: number) => void;
 }
 
-const CartItem = ({ item }: ICartItemProps) => {
-  const [quantity, setQuantity] = useState<number>(1);
+const CartItem = ({
+  item,
+  incrementQuantity,
+  decrementQuantity,
+}: ICartItemProps) => {
+  const { locale } = useRouter();
   const handleAppendQuantity = () => {
     if (!item.max_allowed) {
-      setQuantity(quantity + 1);
+      incrementQuantity?.(item.id);
     } else {
-      if (item.max_allowed === quantity) {
+      if (item.max_allowed === item.quantity) {
         return;
       }
     }
   };
   const handleSubstractQuantity = () => {
-    if (quantity === 1) {
+    if (item.quantity === 1) {
+      // Delete the item
       return;
     } else {
-      setQuantity(quantity - 1);
+      // Decrement
+      decrementQuantity?.(item.id);
     }
   };
   return (
@@ -34,7 +43,9 @@ const CartItem = ({ item }: ICartItemProps) => {
         justifyContent="center"
         spacing={2}
       >
-        <IconButton
+        {/* Quantity buttons */}
+        <Fab
+          size="small"
           onClick={() => handleAppendQuantity()}
           aria-label="add"
           sx={{
@@ -45,11 +56,12 @@ const CartItem = ({ item }: ICartItemProps) => {
           }}
         >
           <AddIcon color="primary" fontSize="medium" />
-        </IconButton>
+        </Fab>
         <Typography variant="subtitle1" fontWeight="medium" color="secondary">
-          {quantity}
+          {item.quantity}
         </Typography>
-        <IconButton
+        <Fab
+          size="small"
           onClick={() => handleSubstractQuantity()}
           aria-label="add"
           sx={{
@@ -60,15 +72,37 @@ const CartItem = ({ item }: ICartItemProps) => {
           }}
         >
           <RemoveIcon color="primary" fontSize="medium" />
-        </IconButton>
+        </Fab>
       </Stack>
       <Box sx={{ flex: 1 }}>
-        <Typography>{item.name}</Typography>
-        <Typography>{item.ar_name}</Typography>
+        <Typography variant="h6">
+          {locale === 'ar' ? item.ar_name : item.name}
+        </Typography>
+        {item.selectedaddons.length > 0 && (
+          <Stack spacing={1}>
+            {item.selectedaddons.map(addon => (
+              <Stack
+                alignItems="center"
+                direction="row"
+                justifyContent="flex-start"
+                key={addon.id}
+                spacing={2}
+              >
+                <Typography variant="subtitle2">
+                  {locale === 'ar' ? addon.ar_name : addon.name}
+                </Typography>
+                {addon.price !== '0.00' && (
+                  <Typography color="secondary" fontWeight="bold">
+                    {addon.price} KD
+                  </Typography>
+                )}
+              </Stack>
+            ))}
+          </Stack>
+        )}
       </Box>
-      <Box>
-        <Typography>{item.price} KD</Typography>
-      </Box>
+
+      {item.price !== '0.00' && <Typography>{item.price} KD</Typography>}
     </Stack>
   );
 };

@@ -1,28 +1,55 @@
-import { Button, Divider, Paper, Stack } from '@mui/material';
-import { Box, BoxProps, styled } from '@mui/system';
+import { Divider, Paper, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import { product1 } from '../../../lib/fakeData/fakeProducts';
 import CartItem from '../CartItem';
 import CartCardOrderSummary from './CartCardOrderSummary';
-
+import useGetCartItems from '../../hooks/queryHooks/useGetCartItems';
+import useManipulateCart from '../../hooks/useManipulateCart';
+import { LoadingButton } from '@mui/lab';
 const DesktopCartCard = () => {
   const { t } = useTranslation();
+  const { data: cart, isFetching } = useGetCartItems();
+  const { incrementQuantity, decrementQuantity } = useManipulateCart();
+
   return (
     <Box p={2} component={Paper} elevation={1}>
-      <Button
+      <LoadingButton
         fullWidth
         variant="contained"
         size="large"
-      >{t`go-to-checkout`}</Button>
-      <Stack spacing={1} my={2}>
-        <CartItem item={product1} />
-      </Stack>
-      <Divider />
-      <CartCardOrderSummary
-        delivery_fee={43.4}
-        service_fee={20.1}
-        subtotal={63.5}
-      />
+        loading={cart?.items.length === 0 || isFetching}
+      >{t`go-to-checkout`}</LoadingButton>
+      {cart?.items.length === 0 && (
+        <Box
+          width="100%"
+          height="100px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography>Your cart is Empty</Typography>
+        </Box>
+      )}
+      {cart && cart.items.length > 0 && (
+        <>
+          <Stack spacing={2} my={2}>
+            {cart.items.map(cartItem => (
+              <CartItem
+                key={cartItem.id}
+                item={cartItem}
+                incrementQuantity={incrementQuantity}
+                decrementQuantity={decrementQuantity}
+              />
+            ))}
+          </Stack>
+          <Divider />
+          <CartCardOrderSummary
+            delivery_fee={43.4}
+            service_fee={20.1}
+            subtotal={cart.total}
+          />
+        </>
+      )}
     </Box>
   );
 };
