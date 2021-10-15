@@ -10,6 +10,7 @@ import { getDesignTokens } from '../../../styles/globalTheme';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import FiltersDrawer from '../FiltersDrawer';
 import SearchDrawer from '../SearchDrawer';
+import SingleItemDialog from '../SingleItemDialog';
 import UserDrawer from '../UserDrawer';
 
 const Layout: React.FC = ({ children }) => {
@@ -22,6 +23,7 @@ const Layout: React.FC = ({ children }) => {
       <FiltersDrawer />
       <SearchDrawer />
       <UserDrawer />
+      <SingleItemDialog />
       <CssBaseline />
       {children}
       <style global jsx>

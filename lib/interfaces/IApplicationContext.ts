@@ -6,9 +6,12 @@ import {
   SEARCH_TYPE,
   SHOP_VIEW,
 } from '../../src/contexts/ApplicationContext';
+import { ITEM } from './IRestaurantItem';
 import { IUSER_ADDRESS } from './IUserAddress';
 
 export interface IApplicationContextProps {
+  itemDialogOpen: boolean;
+  selectedItem: ITEM | null;
   colorMode: COLOR_MODES;
   userAddress: IUSER_ADDRESS | null | undefined;
   userLocation: POSITION_COORDS | null;

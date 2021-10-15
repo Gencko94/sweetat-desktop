@@ -10,7 +10,7 @@ import { Box } from '@mui/system';
 import { DarkImageOverlay } from '../../src/components/DarkImageOverlay';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import ItemPageDetails from '../../src/components/ItemPageDetails';
+import ItemDialogDetails from '../../src/components/ItemDialogDetails';
 import { memo, useState } from 'react';
 import Navbar from '../../src/components/Navbar';
 const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
@@ -63,7 +63,7 @@ const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
                 </DarkImageOverlay>
               )}
             </Box>
-            <ItemPageDetails
+            <ItemDialogDetails
               quantity={quantity}
               handleAppendQuantity={handleAppendQuantity}
               handleSubstractQuantity={handleSubstractQuantity}

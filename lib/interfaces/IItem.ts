@@ -1,4 +1,4 @@
-import { IRestaurantInfo } from "./IRestaurantInfo";
+import { IRestaurantInfo } from './IRestaurantInfo';
 
 export interface IItemsSearchResult {
   id: number;
@@ -9,7 +9,7 @@ export interface IItemsSearchResult {
   price: string;
   old_price: string;
   image: string | null;
-  preperation_time: unknown | null;
+  preparation_time: number | null;
   is_recommended: 0 | 1;
   is_popular: 0 | 1;
   is_new: 0 | 1;
@@ -21,5 +21,6 @@ export interface IItemsSearchResult {
   disable_cod: 0 | 1;
   in_stock: number | null;
   max_allowed: number | null;
+
   restaurant: IRestaurantInfo;
 }

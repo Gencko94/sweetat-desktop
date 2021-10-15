@@ -7,7 +7,7 @@ import PlacesAutoCompleteInput from '../../PlacesAutoCompleteInput';
 import { convertCoordinateToAddress } from '../../../../lib/queries/queries';
 
 const HeroContent = () => {
-  const [state, setState] = useApplicationState();
+  const [_, setState] = useApplicationState();
   const { locale, push } = useRouter();
   const handleAutoCompleteValueChange = async (value: string) => {
     try {

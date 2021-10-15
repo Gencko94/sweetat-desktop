@@ -2,7 +2,6 @@ import {
   AccordionSummary as MuiAccordionSummary,
   AccordionDetails as MuiAccordionDetails,
   Accordion as MuiAccordion,
-  Stack,
   Typography,
   AccordionProps,
   AccordionSummaryProps,
@@ -56,11 +55,11 @@ const ShopItemsSection = memo(
           </AccordionSummary>
           <AccordionDetails>
             {itemsView === 'wide' ? (
-              <Stack spacing={2} py={2}>
+              <WideItemsGrid>
                 {items.map(item => (
                   <ItemCardWide key={item.id} item={item as ITEM} />
                 ))}
-              </Stack>
+              </WideItemsGrid>
             ) : (
               <ItemsGrid>
                 {items.map(item => (
@@ -79,6 +78,12 @@ export default ShopItemsSection;
 const ItemsGrid = styled('div')(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill,minmax(170px,1fr))',
+  gap: theme.spacing(2),
+  padding: '1rem 0.5rem',
+}));
+const WideItemsGrid = styled('div')(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))',
   gap: theme.spacing(2),
   padding: '1rem 0.5rem',
 }));

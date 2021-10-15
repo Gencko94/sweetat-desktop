@@ -1,4 +1,5 @@
 import { IApplicationContextProps } from '../lib/interfaces/IApplicationContext';
+import ItemCard from './components/ItemCard';
 
 export const PRIMARY_COLOR = '#FE3DBC';
 export const DEFAULT_LAT = 29.3352938;
@@ -21,6 +22,8 @@ export const INITIAL_STATE: IApplicationContextProps = {
   itemsView: 'normal',
   shopsView: 'wide',
   userDrawerOpen: false,
+  selectedItem: null,
+  itemDialogOpen: false,
   restaurantsQuery: {
     category_ids: [],
     sort_by: 'delivery_time',

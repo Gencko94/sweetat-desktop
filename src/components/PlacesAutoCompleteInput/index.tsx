@@ -121,7 +121,12 @@ const PlacesAutoCompleteInput = ({
         )}
       />
 
-      <LoadingButton loading={loading} size="medium" variant="contained">
+      <LoadingButton
+        loading={loading}
+        size="medium"
+        variant="contained"
+        disabled={!ready}
+      >
         Search
       </LoadingButton>
     </Stack>

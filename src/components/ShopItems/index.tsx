@@ -18,6 +18,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
   const { t } = useTranslation();
   const [state] = useApplicationState();
   const [activeTab, setActiveTab] = useState<number>(0);
+
   const { data } = useGetRestaurantItems({ slug: shop.slug });
   const handleChangeTab = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
@@ -38,6 +39,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
       return [];
     }
   }, [data, t]);
+
   return (
     <>
       {data && (

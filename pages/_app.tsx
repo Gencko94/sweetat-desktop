@@ -52,7 +52,7 @@ function MyApp({
               <Layout>
                 <Component {...pageProps} />
               </Layout>
-              <ReactQueryDevtools initialIsOpen={false} />
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </ApplicationProvider>
           </Hydrate>
         </QueryClientProvider>
