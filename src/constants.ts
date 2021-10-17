@@ -1,6 +1,8 @@
 import { IApplicationContextProps } from '../lib/interfaces/IApplicationContext';
 
 export const PRIMARY_COLOR = '#FE3DBC';
+export const PRIMARY_LINEAR_GRADIENT_VALUE =
+  'linear-gradient(to left , #FE3DBC , #FFB90E)';
 export const DEFAULT_LAT = 29.3352938;
 export const DEFAULT_LNG = 48.0715612;
 export const DEFAULT_AREA_COVERAGE_ID = 10;
@@ -64,3 +66,7 @@ export const NEW_CART_VALUE = {
   items: [],
   restaurant_id: null,
 };
+
+// Auth Constants
+
+export const TOKEN_LOCAL_STORAGE_KEY = 'swtkn';

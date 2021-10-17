@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { SEARCH_TYPE } from '../../src/contexts/ApplicationContext';
 import { IUseGetRestaurantInfoProps } from '../../src/hooks/queryHooks/useGetRestaurantInfo';
 import { IUseGetRestaurantItemsProps } from '../../src/hooks/queryHooks/useGetRestaurantItems';
@@ -6,14 +5,14 @@ import { IUseGetRestaurantsProps } from '../../src/hooks/queryHooks/useGetRestau
 import { IItemsSearchResult } from '../interfaces/IItem';
 import { IRestaurantInfo } from '../interfaces/IRestaurantInfo';
 import { getSession } from 'next-auth/react';
-const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
+import axios from '../../utils/axios';
 
 export const getCategorySlides = async () => {
-  const res = await instance.post('/get-restaurant-category-slides');
+  const res = await axios.post('/get-restaurant-category-slides');
   return res.data;
 };
 export const getPromoSlides = async () => {
-  const res = await instance.post('/promo-slider');
+  const res = await axios.post('/promo-slider');
   return res.data.otherSlides;
 };
 export const getRestaurants = async ({
@@ -22,7 +21,7 @@ export const getRestaurants = async ({
   sort_by,
   coverage_area_id,
 }: IUseGetRestaurantsProps) => {
-  const res = await instance.post('/restaurants/filter', {
+  const res = await axios.post('/restaurants/filter', {
     filters,
     // sort_by,
 
@@ -35,7 +34,7 @@ export const getRestaurantInfo = async ({
   latitude,
   longitude,
 }: IUseGetRestaurantInfoProps) => {
-  const res = await instance.post(`/get-restaurant-info/${slug}`, {
+  const res = await axios.post(`/get-restaurant-info/${slug}`, {
     latitude,
     longitude,
   });
@@ -45,10 +44,7 @@ export const getRestaurantItems = async ({
   slug,
   locale,
 }: { locale: string } & IUseGetRestaurantItemsProps) => {
-  const res = await instance.post(
-    `/get-restaurant-items/${locale}/${slug}`,
-    {}
-  );
+  const res = await axios.post(`/get-restaurant-items/${locale}/${slug}`, {});
   return res.data;
 };
 export const convertCoordinateToAddress = async ({
@@ -60,7 +56,7 @@ export const convertCoordinateToAddress = async ({
   lat?: number;
   lng?: number;
 }) => {
-  const res = await instance.post('/coordinate-to-address', {
+  const res = await axios.post('/coordinate-to-address', {
     lat,
     lng,
     lang: lang.toUpperCase(),
@@ -68,7 +64,7 @@ export const convertCoordinateToAddress = async ({
   return res.data;
 };
 export const getRestaurantsCategories = async () => {
-  const res = await instance.post('/get-all-restaurants-categories');
+  const res = await axios.post('/get-all-restaurants-categories');
   return res.data.categories;
 };
 export const getSearchResults = async (
@@ -79,7 +75,7 @@ export const getSearchResults = async (
   page: number
 ) => {
   if (type === 'items') {
-    const res = await instance.post<IItemsSearchResult[]>('/search-items', {
+    const res = await axios.post<IItemsSearchResult[]>('/search-items', {
       q: query,
       latitude,
       longitude,
@@ -87,7 +83,7 @@ export const getSearchResults = async (
     });
     return res.data;
   } else {
-    const res = await instance.post<IRestaurantInfo[]>('/search-restaurants', {
+    const res = await axios.post<IRestaurantInfo[]>('/search-restaurants', {
       q: query,
       latitude,
       longitude,
@@ -98,6 +94,6 @@ export const getSearchResults = async (
 };
 export const getSingleItem = async (id: number) => {
   const session = await getSession();
-  const res = await instance.post('/get-single-item', { id });
+  const res = await axios.post('/get-single-item', { id });
   return res.data;
 };

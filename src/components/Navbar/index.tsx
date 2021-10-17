@@ -24,6 +24,7 @@ interface INavBarProps {
   withMenu?: boolean;
   logoVariant: 'white' | 'colored';
   variant: 'contained' | 'normal';
+  buttonsColor?: 'normal' | 'white';
 }
 
 const Navbar = ({
@@ -34,6 +35,7 @@ const Navbar = ({
   withSearch,
   logoVariant,
   variant,
+  buttonsColor,
 }: INavBarProps) => {
   const toggleUserDrawer = useToggleUserDrawer();
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
@@ -106,6 +108,10 @@ const Navbar = ({
             )}
             {withMenu && (
               <Button
+                sx={{
+                  color: buttonsColor === 'white' ? '#fff' : 'primary',
+                  borderColor: buttonsColor === 'white' ? '#fff' : 'primary',
+                }}
                 onClick={toggleUserDrawer}
                 endIcon={<MenuIcon />}
                 disableElevation
