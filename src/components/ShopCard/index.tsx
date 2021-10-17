@@ -92,7 +92,7 @@ const ShopCard = ({ shop }: IShopCard) => {
                 variant="body2"
                 fontWeight="medium"
               >
-                {shop.delivery_charges === '0'
+                {shop.delivery_charges === '0.000'
                   ? t`free-delivery`
                   : `${shop.delivery_charges} KD Delivery cost`}
               </Typography>

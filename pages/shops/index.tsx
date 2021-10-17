@@ -45,8 +45,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const queryClient = new QueryClient();
   const { locale } = ctx;
 
-  await queryClient.prefetchQuery('categories-slides', getCategorySlides);
-  await queryClient.prefetchQuery('promo-slides', getPromoSlides);
+  // await queryClient.prefetchQuery('categories-slides', getCategorySlides);
+  // await queryClient.prefetchQuery('promo-slides', getPromoSlides);
   return {
     props: {
       ...(await serverSideTranslations(locale as string, ['common'])),

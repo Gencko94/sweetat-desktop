@@ -17,7 +17,8 @@ const DesktopCartCard = () => {
         fullWidth
         variant="contained"
         size="large"
-        loading={cart?.items.length === 0 || isFetching}
+        disabled={cart?.items.length === 0}
+        loading={isFetching}
       >{t`go-to-checkout`}</LoadingButton>
       {cart?.items.length === 0 && (
         <Box

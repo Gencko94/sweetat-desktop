@@ -1,29 +1,41 @@
-import { useQuery } from "react-query";
-import { IRestaurantInfo } from "../../../lib/interfaces/IRestaurantInfo";
-import { getRestaurants } from "../../../lib/queries/queries";
-import { DEFAULT_LAT, DEFAULT_LNG } from "../../constants";
+import { useInfiniteQuery } from 'react-query';
+import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
+import { getRestaurants } from '../../../lib/queries/queries';
 
 export interface IUseGetRestaurantsProps {
-  latitude?: number;
-  longitude?: number;
+  coverage_area_id: number;
+  page: number;
+  results_per_page: number;
   filters: {
     category_ids: string[];
     is_featured?: boolean;
     free_delivery?: boolean;
   };
-  sort_by: "delivery_time" | "asc" | "desc" | "ar_asc" | "ar_desc";
-  page: number;
+  sort_by?: 'delivery_time' | 'asc' | 'desc' | 'ar_asc' | 'ar_desc';
+}
+
+interface IUseGetRestaurantsResponse {
+  current_page: number;
+  last_page: number;
+  total: number;
+  data: IRestaurantInfo[];
 }
 
 export const useGetRestaurants = ({
   filters,
-  latitude = DEFAULT_LAT,
-  longitude = DEFAULT_LNG,
-  page,
+  coverage_area_id,
+  results_per_page,
   sort_by,
-}: IUseGetRestaurantsProps) => {
-  return useQuery<IRestaurantInfo[]>(
-    [filters, latitude, longitude, page, sort_by, "restaurants"],
-    () => getRestaurants({ filters, latitude, longitude, page, sort_by })
+}: Omit<IUseGetRestaurantsProps, 'page'>) => {
+  return useInfiniteQuery<IUseGetRestaurantsResponse>(
+    [filters, coverage_area_id, results_per_page, sort_by, 'restaurants'],
+    ({ pageParam = 1 }) =>
+      getRestaurants({
+        filters,
+        coverage_area_id,
+        results_per_page,
+        sort_by,
+        page: pageParam,
+      })
   );
 };

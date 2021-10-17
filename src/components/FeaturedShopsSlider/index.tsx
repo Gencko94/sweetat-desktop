@@ -11,17 +11,21 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useRouter } from 'next/dist/client/router';
 import ShopCard from '../ShopCard';
-import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
+import {
+  DEFAULT_AREA_COVERAGE_ID,
+  HOME_FEED_SPACING_MD,
+  HOME_FEED_SPACING_XS,
+} from '../../constants';
 const FeaturedShopsSlider = () => {
-  const [state] = useApplicationState();
+  const [_] = useApplicationState();
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const { data: shops } = useGetRestaurants({
+  const { data } = useGetRestaurants({
     filters: { category_ids: [], free_delivery: true, is_featured: true },
-    latitude: state.userLocation?.lat,
-    longitude: state.userLocation?.lng,
-    page: 0,
-    sort_by: 'delivery_time',
+    coverage_area_id: DEFAULT_AREA_COVERAGE_ID,
+    results_per_page: 15,
+
+    // sort_by: 'delivery_time',
   });
   const breakpoints = useMemo(
     () => ({
@@ -73,11 +77,13 @@ const FeaturedShopsSlider = () => {
         </IconButton>
       </Stack>
       <Swiper breakpoints={breakpoints}>
-        {shops?.map(shop => (
-          <SwiperSlide key={shop.id}>
-            <ShopCardWide shop={shop} />
-          </SwiperSlide>
-        ))}
+        {data?.pages.map(page =>
+          page.data.map(shop => (
+            <SwiperSlide key={shop.id}>
+              <ShopCardWide shop={shop} />
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </Box>
   );

@@ -15,8 +15,8 @@ const ShopPageDescription = ({ shop }: IShopPageDescription) => {
   const info = useMemo(() => {
     return [
       locale === 'ar' ? shop.ar_description : shop.description,
-      `${shop.distance} ${t`km-away`}`,
-      shop.delivery_charges === '0'
+      // `${shop.distance} ${t`km-away`}`,
+      shop.delivery_charges === '0.000'
         ? t`free-delivery`
         : `${shop.delivery_charges} ${t`delivery-cost`}`,
       shop.min_order_price === '0.000'
@@ -28,7 +28,7 @@ const ShopPageDescription = ({ shop }: IShopPageDescription) => {
     shop.ar_description,
     shop.delivery_charges,
     shop.description,
-    shop.distance,
+    // shop.distance,
     shop.min_order_price,
     t,
   ]);

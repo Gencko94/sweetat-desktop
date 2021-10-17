@@ -122,7 +122,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
           </Stack>
           <ShopPageDescription shop={shop} />
           <Typography color="secondary" variant="body2" fontWeight="bold">
-            {shop.delivery_charges === '0'
+            {shop.delivery_charges === '0.000'
               ? t`free-delivery`
               : `${shop.delivery_charges} KD Delivery cost`}
           </Typography>

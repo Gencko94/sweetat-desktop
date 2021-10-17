@@ -12,7 +12,7 @@ import { useGetRestaurants } from '../../src/hooks/queryHooks/useGetRestaurants'
 import { Container, Grid, Typography } from '@mui/material';
 import ShopCardWide from '../../src/components/ShopCardWide';
 import { useGetRestaurantsCategories } from '../../src/hooks/queryHooks/useGetRestaurantsCategories';
-import { DEFAULT_LAT, DEFAULT_LNG } from '../../src/constants';
+import { DEFAULT_AREA_COVERAGE_ID } from '../../src/constants';
 import Navbar from '../../src/components/Navbar';
 
 const Category: NextPage<{ isMobileDevice: boolean }> = ({
@@ -21,10 +21,10 @@ const Category: NextPage<{ isMobileDevice: boolean }> = ({
   const { query } = useRouter();
   const { id } = query;
 
-  const { data: restaurants } = useGetRestaurants({
-    page: 0,
-    sort_by: 'delivery_time',
+  const { data } = useGetRestaurants({
     filters: { category_ids: [id as string], is_featured: true },
+    coverage_area_id: DEFAULT_AREA_COVERAGE_ID,
+    results_per_page: 15,
   });
   const { data: categories } = useGetRestaurantsCategories();
 
@@ -42,11 +42,13 @@ const Category: NextPage<{ isMobileDevice: boolean }> = ({
           {categories?.find(cat => cat.id === Number(id))?.name}
         </Typography>
         <Grid container spacing={2}>
-          {restaurants?.map(shop => (
-            <Grid key={shop.id} item xs={12} sm={6} lg={4}>
-              <ShopCardWide shop={shop} />
-            </Grid>
-          ))}
+          {data?.pages.map(page => {
+            return page.data.map(restaurant => (
+              <Grid key={restaurant.id} item xs={12} sm={6} lg={4}>
+                <ShopCardWide shop={restaurant} />
+              </Grid>
+            ));
+          })}
         </Grid>
       </Container>
     </>
@@ -63,21 +65,20 @@ export const getServerSideProps: GetServerSideProps = async ({
   const queryClient = new QueryClient();
   const { id } = query;
 
-  const latitude = DEFAULT_LAT;
-  const longitude = DEFAULT_LNG;
-  const page = 0;
+  const areaCoverageId = DEFAULT_AREA_COVERAGE_ID;
+  const results_per_page = 15;
   const sort_by = 'delivery_time' as const;
 
   const filters = { category_ids: [id as string], is_featured: true };
-  await queryClient.prefetchQuery(
-    [filters, latitude, longitude, page, sort_by, 'restaurants'],
-    () =>
+  await queryClient.prefetchInfiniteQuery(
+    [filters, areaCoverageId, sort_by, results_per_page, 'restaurants'],
+    ({ pageParam = 1 }) =>
       getRestaurants({
         filters,
-        latitude,
-        page,
+        coverage_area_id: areaCoverageId,
+        page: pageParam,
         sort_by,
-        longitude,
+        results_per_page,
       })
   );
   await queryClient.prefetchQuery(

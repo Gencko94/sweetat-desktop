@@ -61,7 +61,6 @@ export interface IRestaurantInfo {
   is_schedulable: 0 | 1;
   order_column: number;
   custom_message: string | null;
-  distance: number;
   is_operational: boolean;
   order_ratings: IORDER_RATING;
 }

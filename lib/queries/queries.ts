@@ -18,17 +18,15 @@ export const getPromoSlides = async () => {
 };
 export const getRestaurants = async ({
   filters,
-  page,
+
   sort_by,
-  latitude,
-  longitude,
+  coverage_area_id,
 }: IUseGetRestaurantsProps) => {
-  const res = await instance.post('/get-filtered-restaurants', {
-    latitude,
-    longitude,
+  const res = await instance.post('/restaurants/filter', {
     filters,
-    sort_by,
-    page,
+    // sort_by,
+
+    coverage_area_id,
   });
   return res.data;
 };
