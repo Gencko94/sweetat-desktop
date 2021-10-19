@@ -19,6 +19,7 @@ const CategoriesFilter = ({
   checkedCategories,
   handleCheckCategories,
 }: ICategoriesFilterProps) => {
+  console.log(checkedCategories);
   const { data: categories } = useGetRestaurantsCategories();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);

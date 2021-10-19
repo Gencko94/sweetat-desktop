@@ -10,17 +10,17 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useRouter } from 'next/dist/client/router';
-import ShopCard from '../ShopCard';
 import {
   DEFAULT_AREA_COVERAGE_ID,
   HOME_FEED_SPACING_MD,
   HOME_FEED_SPACING_XS,
 } from '../../constants';
+import LoadingItemCardWide from '../ShopCardWide/Loading';
 const FeaturedShopsSlider = () => {
   const [_] = useApplicationState();
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const { data } = useGetRestaurants({
+  const { data, isLoading } = useGetRestaurants({
     filters: { category_ids: [], free_delivery: true, is_featured: true },
     coverage_area_id: DEFAULT_AREA_COVERAGE_ID,
     results_per_page: 15,
@@ -36,16 +36,20 @@ const FeaturedShopsSlider = () => {
       },
       // when window width is >= 480px
       480: {
-        slidesPerView: 1.75,
+        slidesPerView: 2.25,
         spaceBetween: 5,
       },
       // when window width is >= 600px
       600: {
-        slidesPerView: 2.25,
+        slidesPerView: 2.5,
+        spaceBetween: 15,
+      },
+      700: {
+        slidesPerView: 2.75,
         spaceBetween: 15,
       },
       900: {
-        slidesPerView: 2.25,
+        slidesPerView: 2.5,
         spaceBetween: 15,
       },
       1200: {
@@ -77,6 +81,12 @@ const FeaturedShopsSlider = () => {
         </IconButton>
       </Stack>
       <Swiper breakpoints={breakpoints}>
+        {isLoading &&
+          [...Array.from(new Array(8))].map(i => (
+            <SwiperSlide key={i}>
+              <LoadingItemCardWide />
+            </SwiperSlide>
+          ))}
         {data?.pages.map(page =>
           page.data.map(shop => (
             <SwiperSlide key={shop.id}>

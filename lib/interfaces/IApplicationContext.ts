@@ -24,8 +24,8 @@ export interface IApplicationContextProps {
   userDrawerOpen: boolean;
   restaurantsQuery: {
     category_ids: number[];
-    is_featured: boolean;
-    free_delivery: boolean;
-    sort_by: SORT_BY_OPTIONS;
+    is_featured?: boolean;
+    free_delivery?: boolean;
+    sort_by?: SORT_BY_OPTIONS;
   };
 }

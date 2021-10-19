@@ -4,12 +4,10 @@ import Image from 'next/image';
 import 'swiper/css';
 import { Box } from '@mui/system';
 import { useGetPromoSlides } from '../../hooks/queryHooks/useGetPromoSlides';
-import { Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
+import PromoSliderLoadingItem from './Loading';
 const PromoSlider = () => {
-  const { data: promoSlides } = useGetPromoSlides();
-  const { t } = useTranslation();
+  const { data: promoSlides, status } = useGetPromoSlides();
   const breakpoints = useMemo(
     () => ({
       // when window width is >= 320px
@@ -45,12 +43,19 @@ const PromoSlider = () => {
   return (
     <Box my={{ md: HOME_FEED_SPACING_MD, xs: HOME_FEED_SPACING_XS }}>
       <Swiper freeMode breakpoints={breakpoints}>
+        {status === 'loading' &&
+          [...Array.from(new Array(4))].map(i => (
+            <SwiperSlide key={i}>
+              <PromoSliderLoadingItem />
+            </SwiperSlide>
+          ))}
         {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>
             <Box borderRadius={6} overflow="hidden">
               <Image
                 placeholder="blur"
-                blurDataURL={`https://sweetat.co/${slide.image_placeholder}`}
+                blurDataURL={`https://sweetat.co/${slide.image_placeholder ??
+                  slide.image}`}
                 src={`https://sweetat.co/${slide.image}`}
                 alt={`${slide.name} photo`}
                 layout="responsive"

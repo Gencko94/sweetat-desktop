@@ -5,10 +5,13 @@ import { useMemo } from 'react';
 import 'swiper/css';
 import { Typography } from '@mui/material';
 import { useGetCategoriesSlides } from '../../hooks/queryHooks/useGetCategoriesSlides';
-import Link from 'next/link';
+
 import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
+import { useApplicationState } from '../../contexts/ApplicationContext';
+import HomeCategoryLoadingItem from './Loading';
 const HomeCategoriesSlider = () => {
-  const { data: categories } = useGetCategoriesSlides();
+  const { data: categories, status } = useGetCategoriesSlides();
+  const [_, setState] = useApplicationState();
   const breakpoints = useMemo(
     () => ({
       // when window width is >= 320px
@@ -44,32 +47,45 @@ const HomeCategoriesSlider = () => {
   return (
     <Box mb={{ md: HOME_FEED_SPACING_MD, xs: HOME_FEED_SPACING_XS }}>
       <Swiper freeMode breakpoints={breakpoints}>
+        {status === 'loading' &&
+          [...Array.from(new Array(10))].map(i => (
+            <SwiperSlide key={i}>
+              <HomeCategoryLoadingItem />
+            </SwiperSlide>
+          ))}
         {categories?.map(category => (
           <SwiperSlide key={category.id}>
-            <Link
-              href={`/category/${category.categories_ids[0].value}`}
-              passHref
+            <Box
+              onClick={() =>
+                setState(prev => ({
+                  ...prev,
+                  restaurantsQuery: {
+                    category_ids: [category.categories_ids[0].value],
+                  },
+                }))
+              }
+              sx={{
+                position: 'relative',
+                cursor: 'pointer',
+              }}
             >
-              <Box sx={{ position: 'relative' }}>
-                <Typography
-                  sx={{ position: 'absolute', top: 2, left: 10, zIndex: 1 }}
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  color="white"
-                >
-                  {category.categories_ids[0].label}
-                </Typography>
-                <Image
-                  placeholder="blur"
-                  blurDataURL={`https://sweetat.co/${category.image_placeholder}`}
-                  src={`https://sweetat.co/${category.image}`}
-                  alt={`${category.name} photo`}
-                  layout="responsive"
-                  width={130}
-                  height={130}
-                />
-              </Box>
-            </Link>
+              <Typography
+                sx={{ position: 'absolute', top: 2, left: 10, zIndex: 1 }}
+                variant="subtitle1"
+                fontWeight="bold"
+                color="white"
+              >
+                {category.categories_ids[0].label}
+              </Typography>
+              <Image
+                placeholder="blur"
+                blurDataURL={`https://sweetat.co/${category.image_placeholder}`}
+                src={`https://sweetat.co/${category.image}`}
+                alt={`${category.name} photo`}
+                width={200}
+                height={200}
+              />
+            </Box>
           </SwiperSlide>
         ))}
       </Swiper>
