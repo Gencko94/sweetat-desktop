@@ -7,6 +7,8 @@ declare module 'next-auth' {
    */
   interface Session {
     user: IUser;
+    // running_order: unknown;
+    // delivery_details: unknown;
   }
   interface User {
     id: number;

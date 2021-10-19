@@ -1,4 +1,4 @@
-import { Fab, IconButton, Stack, Typography } from '@mui/material';
+import { Fab, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
@@ -7,8 +7,8 @@ import { IGetCartResponseItem } from '../../../lib/interfaces/cart/IGetCartRespo
 import { useRouter } from 'next/dist/client/router';
 interface ICartItemProps {
   item: IGetCartResponseItem;
-  incrementQuantity?: (id: number) => void;
-  decrementQuantity?: (id: number) => void;
+  incrementQuantity?: (_: number) => void;
+  decrementQuantity?: (_: number) => void;
 }
 
 const CartItem = ({
@@ -36,7 +36,7 @@ const CartItem = ({
     }
   };
   return (
-    <Stack direction="row" alignItems="flex-start" spacing={2}>
+    <Stack direction="row" alignItems="flex-start" px={2} spacing={2}>
       <Stack
         direction="row"
         alignItems="center"

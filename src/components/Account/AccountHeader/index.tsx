@@ -6,9 +6,17 @@ import AccountTabs from '../AccountTabs';
 interface IAccountHeaderProps {
   activeTab: number;
   handleChangeTab: (_: number) => void;
+  user: {
+    name: string;
+    email: string;
+  };
 }
 
-const AccountHeader = ({ activeTab, handleChangeTab }: IAccountHeaderProps) => {
+const AccountHeader = ({
+  activeTab,
+  handleChangeTab,
+  user,
+}: IAccountHeaderProps) => {
   return (
     <Box
       sx={{
@@ -26,11 +34,14 @@ const AccountHeader = ({ activeTab, handleChangeTab }: IAccountHeaderProps) => {
           withMenu
           buttonsColor="white"
         />
-        <Box sx={{ mt: { xs: 1, sm: 4 }, px: { xs: 2, sm: 4 } }} mb={3}>
+        <Box
+          sx={{ mt: { xs: 1, sm: 4 }, px: { xs: 2, sm: 4 }, color: '#fff' }}
+          mb={3}
+        >
           <Typography variant="h4" fontWeight="bold">
-            Ahmad Zaaza
+            {user.name}
           </Typography>
-          <Typography variant="body2">gfox.piano@hotmail.com</Typography>
+          <Typography variant="body2">{user.email}</Typography>
         </Box>
         <Box sx={{ px: { xs: 1, sm: 3 } }}>
           <AccountTabs

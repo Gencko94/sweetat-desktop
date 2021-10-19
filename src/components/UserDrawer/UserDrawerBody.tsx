@@ -7,11 +7,16 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import ColorModeToggle from '../ColorModeToggle';
 import LanguageToggle from '../LanguageToggle';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+import { useSession } from '../../hooks/useSession';
 const UserDrawerBody = () => {
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const { data: session, status } = useSession();
+  const [session, loading] = useSession({
+    required: false,
+    queryConfig: { staleTime: 1000 * 60 * 5 }, // ⌚ 5 minutes((1000ms * 60)(1 Minute) * 5 )
+  });
+
   const handleSignout = () => {
     signOut({
       redirect: false,
@@ -24,11 +29,11 @@ const UserDrawerBody = () => {
         <Typography variant="h6" color="primary" fontWeight="bold">
           Personal
         </Typography>
-        {status === 'authenticated' && (
+        {session && (
           <Link passHref href="/login">
             <Stack my={2} direction="row" justifyContent="space-between">
               <Typography fontWeight="medium">
-                {session?.user?.email}
+                {session?.user?.email} {session?.user.name}
               </Typography>
               {locale === 'ar' ? (
                 <KeyboardArrowLeftIcon />
@@ -38,7 +43,7 @@ const UserDrawerBody = () => {
             </Stack>
           </Link>
         )}
-        {status === 'unauthenticated' && (
+        {!session && (
           <Link passHref href="/login">
             <Stack my={2} direction="row" justifyContent="space-between">
               <Typography fontWeight="medium">{t`sign-in`}</Typography>
@@ -50,7 +55,7 @@ const UserDrawerBody = () => {
             </Stack>
           </Link>
         )}
-        {status === 'unauthenticated' && (
+        {!session && (
           <Link passHref href="/">
             <Stack my={2} direction="row" justifyContent="space-between">
               <Typography fontWeight="medium">{t`sign-up`}</Typography>
@@ -83,7 +88,7 @@ const UserDrawerBody = () => {
           </Stack>
         </Link>
 
-        {status === 'authenticated' && (
+        {session && (
           <Stack
             onClick={() => handleSignout()}
             my={2}

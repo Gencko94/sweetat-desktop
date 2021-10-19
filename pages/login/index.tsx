@@ -4,7 +4,6 @@ import LoginForm from '../../src/components/LoginForm';
 import Image from 'next/image';
 import SocialSection from '../../src/components/LoginForm/SocialSection';
 import {
-  useSession,
   getProviders,
   signOut,
   ClientSafeProvider,
@@ -13,12 +12,13 @@ import {
 import { BuiltInProviderType } from 'next-auth/providers';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSession } from '../../src/hooks/useSession';
 const Login = () => {
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
-  const { data: session, status } = useSession();
+  const [session, isLoading] = useSession();
   useEffect(() => {
     const setTheProviders = async () => {
       const setupProviders = await getProviders();

@@ -28,19 +28,16 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = useForm();
   const { t } = useTranslation();
-  const { push, replace } = useRouter();
+  const { replace } = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const onSubmit: SubmitHandler<ILoginForm> = async data => {
-    console.log(data);
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await signIn('credentials', {
       callbackUrl: 'http://localhost:3000',
       redirect: false,
-      email: 'saloom.ahmad@gmail.com',
-      password: 's@l00m@hm@d',
+      email: data.email,
+      password: data.password,
     });
-    console.log(res);
 
     if (!res?.error) {
       replace('/');

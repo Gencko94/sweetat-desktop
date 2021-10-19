@@ -12,7 +12,7 @@ interface ICartMenuContentsProps {
 
 const CartMenuContents = ({ handleToggleCartMenu }: ICartMenuContentsProps) => {
   const { t } = useTranslation();
-  const { data: cart, isLoading } = useGetCartItems();
+  const { data: cart } = useGetCartItems();
   const { incrementQuantity, decrementQuantity } = useManipulateCart();
   return (
     <>

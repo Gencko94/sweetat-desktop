@@ -1,13 +1,11 @@
 import { Drawer, Paper, Box } from '@mui/material';
 import { useCallback, useState } from 'react';
-import useGetCartItems from '../../hooks/queryHooks/useGetCartItems';
 import CartMenuActions from './CartMenuActions';
 import CartMenuContents from './CartMenuContents';
 import CartMenuOpenButton from './CartMenuOpenButton';
 
 const CartMenu = () => {
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
-  const { data: cart, isLoading } = useGetCartItems();
   const handleToggleCartMenu = useCallback(() => {
     setCartMenuOpen(!cartMenuOpen);
   }, [cartMenuOpen]);

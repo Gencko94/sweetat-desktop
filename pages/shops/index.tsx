@@ -41,16 +41,16 @@ const Shops = () => {
 };
 
 export default Shops;
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const queryClient = new QueryClient();
-  const { locale } = ctx;
+// export const getServerSideProps: GetServerSideProps = async ctx => {
+//   const queryClient = new QueryClient();
+//   const { locale } = ctx;
 
-  // await queryClient.prefetchQuery('categories-slides', getCategorySlides);
-  // await queryClient.prefetchQuery('promo-slides', getPromoSlides);
-  return {
-    props: {
-      ...(await serverSideTranslations(locale as string, ['common'])),
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+//   // await queryClient.prefetchQuery('categories-slides', getCategorySlides);
+//   // await queryClient.prefetchQuery('promo-slides', getPromoSlides);
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale as string, ['common'])),
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// };

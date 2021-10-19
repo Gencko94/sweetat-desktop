@@ -5,19 +5,33 @@ import { Person, Email, PhoneAndroid } from '@mui/icons-material';
 import Label from '../../Label';
 import { LoadingButton } from '@mui/lab';
 
+import { IUser } from '../../../../lib/interfaces/IUser';
+import useUpdateAccount from '../../../hooks/mutations/Account/useUpdateAccount';
+
 export interface IUpdateUserAccountProps {
   name: string;
   phone: string;
   email: string;
 }
 
-const AccountDetails = () => {
-  const { control, handleSubmit } = useForm<IUpdateUserAccountProps>();
-  const onSubmit: SubmitHandler<IUpdateUserAccountProps> = data => {
+interface IAccountDetailsProps {
+  user: IUser;
+}
+
+const AccountDetails = ({ user }: IAccountDetailsProps) => {
+  const { mutateAsync: updateAccount, isLoading } = useUpdateAccount();
+  const { control, handleSubmit } = useForm<IUpdateUserAccountProps>({
+    defaultValues: {
+      name: user.name,
+      phone: user.phone,
+      email: user.email,
+    },
+  });
+  const onSubmit: SubmitHandler<IUpdateUserAccountProps> = async data => {
     try {
-      console.log(data);
+      await updateAccount({ ...data, token: user.auth_token });
     } catch (error) {
-      console.log(data);
+      console.log(error);
     }
   };
   return (
@@ -119,7 +133,9 @@ const AccountDetails = () => {
 
         <Grid mt={2} item textAlign="center" xs={12}>
           <LoadingButton
+            loading={isLoading}
             variant="contained"
+            type="submit"
             sx={{ width: { xs: '100%', sm: 300 } }}
           >
             Submit
