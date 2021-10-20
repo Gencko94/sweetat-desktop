@@ -5,7 +5,6 @@ import { getCartItems } from '../../../lib/queries/cartService';
 const useGetCartItems = () => {
   return useQuery<IGetCartResponse>('/validate-cart-items', getCartItems, {
     enabled: typeof window !== 'undefined',
-    // staleTime: 60 * 300000,
   });
 };
 

@@ -1,5 +1,6 @@
-import { QueryOptions, useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import { useRouter } from 'next/router';
+import { DURATIONS } from '../constants';
 
 export async function fetchSession() {
   const res = await fetch('/api/auth/session');
@@ -21,8 +22,7 @@ export const useSession = (
     queryConfig?: UseQueryOptions<any>;
   } = {
     queryConfig: {
-      staleTime: 50 * 50 * 50,
-      refetchOnMount: false,
+      staleTime: DURATIONS.twoMins,
     },
   }
 ) => {

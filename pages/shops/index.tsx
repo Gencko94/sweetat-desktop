@@ -1,8 +1,4 @@
 import { Container, Stack } from '@mui/material';
-import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { dehydrate, QueryClient } from 'react-query';
-import { getCategorySlides, getPromoSlides } from '../../lib/queries/queries';
 import Navbar from '../../src/components/Navbar';
 import ShopsFeed from '../../src/components/ShopsFeed';
 import ShopsFeedFilters from '../../src/components/ShopsFeedFilters';
@@ -25,7 +21,7 @@ const Shops = () => {
             xl: XL_MAX_WIDTH,
             lg: 'lg',
           },
-          py: { md: 4, xs: 0 },
+          py: { md: 2, xs: 0 },
         }}
       >
         <Stack
@@ -41,16 +37,3 @@ const Shops = () => {
 };
 
 export default Shops;
-// export const getServerSideProps: GetServerSideProps = async ctx => {
-//   const queryClient = new QueryClient();
-//   const { locale } = ctx;
-
-//   // await queryClient.prefetchQuery('categories-slides', getCategorySlides);
-//   // await queryClient.prefetchQuery('promo-slides', getPromoSlides);
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale as string, ['common'])),
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//   };
-// };

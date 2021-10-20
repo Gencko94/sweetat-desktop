@@ -7,8 +7,8 @@ import CartMenuOpenButton from './CartMenuOpenButton';
 const CartMenu = () => {
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
   const handleToggleCartMenu = useCallback(() => {
-    setCartMenuOpen(!cartMenuOpen);
-  }, [cartMenuOpen]);
+    setCartMenuOpen(prev => !prev);
+  }, []);
   return (
     <>
       <Box

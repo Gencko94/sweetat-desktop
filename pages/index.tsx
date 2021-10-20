@@ -6,37 +6,21 @@ import { getCategorySlides, getPromoSlides } from '../lib/queries/queries';
 
 import HomePageHero from '../src/components/HomePageHero';
 
-import isMobile from '../utils/isMobile';
-
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  locale,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery('categories-slides', getCategorySlides);
   await queryClient.prefetchQuery('promo-slides', getPromoSlides);
-  const isMobileDevice = isMobile(req);
   return {
     props: {
       ...(await serverSideTranslations(locale as string, ['common'])),
-      isMobileDevice,
+
       dehydratedState: dehydrate(queryClient),
     },
   };
 };
 
-const Home: NextPage<{ isMobileDevice: boolean }> = ({ isMobileDevice }) => {
-  return (
-    <>
-      {/* 🍪 TODO : ADD COOKIES🍪 */}
-      {/* <Navbar isMobileDevice={isMobileDevice} /> */}
-      <HomePageHero />
-      {/* <HomeCategoriesSlider />
-      <PromoSlider />
-      <FeaturedShopsSlider /> */}
-      {/* <Footer /> */}
-    </>
-  );
+const Home: NextPage = () => {
+  return <HomePageHero />;
 };
 
 export default Home;

@@ -13,10 +13,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FILTER_BY_TYPES } from '../FiltersDrawer/FiltersDrawerBody';
 
 interface IFilterByProps {
-  handleChangeFilterByFilters: (key: FILTER_BY_TYPES) => void;
+  handleChangeFilterByFilters: (_: FILTER_BY_TYPES) => void;
   checkedFilterBy: {
-    free_delivery: boolean;
-    is_featured: boolean;
+    free_delivery?: boolean;
+    is_featured?: boolean;
   };
 }
 

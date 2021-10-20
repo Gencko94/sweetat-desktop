@@ -6,7 +6,10 @@ import { Box } from '@mui/system';
 import { useGetPromoSlides } from '../../hooks/queryHooks/useGetPromoSlides';
 import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
 import PromoSliderLoadingItem from './Loading';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 const PromoSlider = () => {
+  const { locale } = useRouter();
   const { data: promoSlides, status } = useGetPromoSlides();
   const breakpoints = useMemo(
     () => ({
@@ -51,17 +54,24 @@ const PromoSlider = () => {
           ))}
         {promoSlides?.map(slide => (
           <SwiperSlide key={slide.id}>
-            <Box borderRadius={6} overflow="hidden">
-              <Image
-                placeholder="blur"
-                blurDataURL={`https://sweetat.co/${slide.image_placeholder ??
-                  slide.image}`}
-                src={`https://sweetat.co/${slide.image}`}
-                alt={`${slide.name} photo`}
-                layout="responsive"
-                width={200}
-                height={120}
-              />
+            <Box sx={{ cursor: 'pointer' }} borderRadius={6} overflow="hidden">
+              <Link
+                href={slide.url ? `/shop/${slide.url.substring(7)}` : ''}
+                passHref
+              >
+                <Image
+                  placeholder="blur"
+                  blurDataURL={`https://sweetat.co/${slide.image_placeholder ??
+                    slide.image}`}
+                  src={`https://sweetat.co/${
+                    locale === 'ar' ? slide.ar_image : slide.image
+                  }`}
+                  alt={`${slide.name} photo`}
+                  layout="responsive"
+                  width={200}
+                  height={120}
+                />
+              </Link>
             </Box>
           </SwiperSlide>
         ))}

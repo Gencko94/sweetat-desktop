@@ -9,7 +9,9 @@ import { useGetCategoriesSlides } from '../../hooks/queryHooks/useGetCategoriesS
 import { HOME_FEED_SPACING_MD, HOME_FEED_SPACING_XS } from '../../constants';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import HomeCategoryLoadingItem from './Loading';
+import { useRouter } from 'next/router';
 const HomeCategoriesSlider = () => {
+  const { locale } = useRouter();
   const { data: categories, status } = useGetCategoriesSlides();
   const [_, setState] = useApplicationState();
   const breakpoints = useMemo(
@@ -59,6 +61,14 @@ const HomeCategoriesSlider = () => {
               onClick={() =>
                 setState(prev => ({
                   ...prev,
+                  shownCategories: [
+                    ...prev.shownCategories,
+                    {
+                      ar_name: category.categories_ids[0].ar_label,
+                      name: category.categories_ids[0].label,
+                      id: category.categories_ids[0].value,
+                    },
+                  ],
                   restaurantsQuery: {
                     category_ids: [category.categories_ids[0].value],
                   },
@@ -75,7 +85,9 @@ const HomeCategoriesSlider = () => {
                 fontWeight="bold"
                 color="white"
               >
-                {category.categories_ids[0].label}
+                {locale === 'ar'
+                  ? category.categories_ids[0].ar_label
+                  : category.categories_ids[0].label}
               </Typography>
               <Image
                 placeholder="blur"

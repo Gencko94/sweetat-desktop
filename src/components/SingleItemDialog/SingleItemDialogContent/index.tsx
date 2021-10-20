@@ -17,7 +17,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
 import { LoadingButton } from '@mui/lab';
-import useGetCartItems from '../../../hooks/queryHooks/useGetCartItems';
 
 interface IItemForm {
   selectedaddons: ILocalCartItemAddon[];

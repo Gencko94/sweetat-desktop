@@ -1,13 +1,14 @@
 import { useInfiniteQuery } from 'react-query';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import { getRestaurants } from '../../../lib/queries/queries';
+import { DURATIONS } from '../../constants';
 
 export interface IUseGetRestaurantsProps {
   coverage_area_id: number;
   page: number;
   results_per_page: number;
   filters: {
-    category_ids: string[];
+    category_ids: number[];
     is_featured?: boolean;
     free_delivery?: boolean;
   };
@@ -36,6 +37,7 @@ export const useGetRestaurants = ({
         results_per_page,
         sort_by,
         page: pageParam,
-      })
+      }),
+    { staleTime: DURATIONS.fifteenMins }
   );
 };

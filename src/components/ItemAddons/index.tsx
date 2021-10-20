@@ -1,5 +1,4 @@
 import { FormControlLabel, RadioGroup, Stack, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/dist/client/router';
 import { ADDON_CATEGORY } from '../../../lib/interfaces/IRestaurantItem';
@@ -43,10 +42,10 @@ const ItemAddons = ({ addon_categories }: IItemAddonsProps) => {
                         value={addon.id}
                         sx={{ flex: 1, justifyContent: 'space-between' }}
                         label={
-                          <FormLabel fontWeight="bold">
+                          <Typography fontWeight="bold">
                             {locale === 'ar' ? addon.ar_name : addon.name} ( +
                             {addon.price} KD)
-                          </FormLabel>
+                          </Typography>
                         }
                         control={<RadioButton disableRipple color="default" />}
                         labelPlacement="start"
@@ -64,5 +63,3 @@ const ItemAddons = ({ addon_categories }: IItemAddonsProps) => {
 };
 
 export default ItemAddons;
-
-const FormLabel = styled(Typography)();

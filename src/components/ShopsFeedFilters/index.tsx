@@ -1,5 +1,4 @@
-import { Divider, Hidden } from '@mui/material';
-import { Box } from '@mui/system';
+import { Divider, Hidden, Paper, Box } from '@mui/material';
 import { useCallback } from 'react';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import CategoriesFilter from '../CategoriesFilter';
@@ -24,33 +23,58 @@ const ShopsFeedFilters = () => {
     [setState]
   );
   const handleCheckCategories = useCallback(
-    (id: number) => {
+    (category: { ar_name: string; name: string; id: number }) => {
       // In Desktop mode, set the global query restaurants directly without a confirm button
-      if (state.restaurantsQuery.category_ids.includes(id)) {
+      if (state.restaurantsQuery.category_ids.includes(category.id)) {
         setState(prev => ({
           ...prev,
           restaurantsQuery: {
             ...prev.restaurantsQuery,
             category_ids: prev.restaurantsQuery.category_ids.filter(
-              cat => cat !== id
+              cat => cat !== category.id
             ),
           },
+          shownCategories: prev.shownCategories.filter(
+            cat => cat.id !== category.id
+          ),
         }));
       } else {
         setState(prev => ({
           ...prev,
           restaurantsQuery: {
             ...prev.restaurantsQuery,
-            category_ids: [...prev.restaurantsQuery.category_ids, id],
+            category_ids: [...prev.restaurantsQuery.category_ids, category.id],
           },
+          shownCategories: [...prev.shownCategories, { ...category }],
         }));
       }
     },
     [setState, state.restaurantsQuery.category_ids]
   );
   return (
-    <Box sx={{ width: { md: '250px', xs: 'auto' } }}>
-      <Box pr={{ md: 2 }}>
+    <Box
+      sx={{
+        alignSelf: 'flex-start',
+        position: 'sticky',
+        top: 0,
+        pt: { md: 2 },
+
+        zIndex: 2,
+        width: { md: '300px', xs: '100%' },
+      }}
+    >
+      <Box
+        component={Paper}
+        pb={{ xs: 0, md: 2 }}
+        pt={{ xs: 2, md: 0 }}
+        sx={{
+          borderBottom: theme => `1px solid ${theme.palette.divider}`,
+          border: { md: 0 },
+          borderRadius: 0,
+        }}
+        elevation={0}
+        pr={{ md: 2 }}
+      >
         <DeliverTo />
         <Hidden mdUp>
           <SearchBox withFilters />
@@ -79,6 +103,7 @@ const ShopsFeedFilters = () => {
             handleChangeFilterByFilters={handleChangeFilterByFilters}
           />
           <Divider />
+
           <CategoriesFilter
             checkedCategories={state.restaurantsQuery.category_ids}
             handleCheckCategories={handleCheckCategories}

@@ -4,6 +4,7 @@ import ShopPageImage from '../ShopPageImage';
 import ShopPageDetails from '../ShopPageDetails';
 import ShopPageDeliveryStatus from '../ShopPageDeliveryStatus';
 import DeliverTo from '../DeliverTo';
+import { XL_MAX_WIDTH } from '../../constants';
 
 interface IShopPageHeaderProps {
   shop: IRestaurantInfo;
@@ -23,7 +24,7 @@ const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
       </Hidden>
       <Container
         sx={{
-          maxWidth: { xl: 'xl', lg: 'lg', md: 'md' },
+          maxWidth: { xl: 'xl', lg: 'lg' },
           py: { md: 4, xs: 2 },
         }}
       >

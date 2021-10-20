@@ -17,14 +17,14 @@ export const getPromoSlides = async () => {
 };
 export const getRestaurants = async ({
   filters,
-
+  results_per_page,
   sort_by,
   coverage_area_id,
 }: IUseGetRestaurantsProps) => {
   const res = await axios.post('/restaurants/filter', {
     filters,
     // sort_by,
-
+    results_per_page,
     coverage_area_id,
   });
   return res.data;

@@ -1,9 +1,14 @@
 import { Radio, RadioProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { forwardRef } from 'react';
-const RadioButton = forwardRef<any, RadioProps>(delegated => {
+const RadioButton = forwardRef<any, RadioProps>((delegated, ref) => {
   return (
-    <Radio checkedIcon={<BpCheckedIcon />} icon={<BpIcon />} {...delegated} />
+    <Radio
+      checkedIcon={<BpCheckedIcon />}
+      icon={<BpIcon />}
+      ref={ref}
+      {...delegated}
+    />
   );
 });
 

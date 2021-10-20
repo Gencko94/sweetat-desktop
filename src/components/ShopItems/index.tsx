@@ -56,7 +56,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
           <CategoriesAndCartWrapper>
             <Container
               sx={{
-                maxWidth: { xl: 'xl', lg: 'lg', md: 'md' },
+                maxWidth: { xl: 'xl', lg: 'lg' },
               }}
             >
               <Stack direction="row" spacing={4}>

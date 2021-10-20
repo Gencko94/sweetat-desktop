@@ -26,11 +26,12 @@ export const INITIAL_STATE: IApplicationContextProps = {
   userDrawerOpen: false,
   selectedItem: null,
   itemDialogOpen: false,
+  shownCategories: [],
   restaurantsQuery: {
     category_ids: [],
     sort_by: 'delivery_time',
-    free_delivery: true,
-    is_featured: true,
+    // free_delivery: true,
+    // is_featured: true,
   },
 };
 export const LOCAL_STORAGE_CART_KEY = 'swlcct';
@@ -70,3 +71,12 @@ export const NEW_CART_VALUE = {
 // Auth Constants
 
 export const TOKEN_LOCAL_STORAGE_KEY = 'swtkn';
+
+export const DURATIONS = {
+  twoMins: 1000 * 60 * 2,
+  fiveMins: 1000 * 60 * 5,
+  tenMins: 1000 * 60 * 10,
+  fifteenMins: 1000 * 60 * 15,
+  thirtyMins: 1000 * 60 * 15,
+  oneHour: 1000 * 60 * 60,
+};

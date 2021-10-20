@@ -22,6 +22,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
         position="relative"
         overflow="hidden"
         sx={{
+          cursor: 'pointer',
           height: '300px',
           minHeight: '300px',
           border: theme => `1px solid ${theme.palette.divider}`,

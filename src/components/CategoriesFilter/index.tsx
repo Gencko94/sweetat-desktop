@@ -12,14 +12,17 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/dist/client/router';
 import { useGetRestaurantsCategories } from '../../hooks/queryHooks/useGetRestaurantsCategories';
 interface ICategoriesFilterProps {
-  handleCheckCategories: (key: number) => void;
+  handleCheckCategories: (_: {
+    ar_name: string;
+    name: string;
+    id: number;
+  }) => void;
   checkedCategories: number[];
 }
 const CategoriesFilter = ({
   checkedCategories,
   handleCheckCategories,
 }: ICategoriesFilterProps) => {
-  console.log(checkedCategories);
   const { data: categories } = useGetRestaurantsCategories();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);
@@ -59,7 +62,13 @@ const CategoriesFilter = ({
             </Typography>
             <Checkbox
               checked={checkedCategories.includes(category.id)}
-              onChange={() => handleCheckCategories(category.id)}
+              onChange={() =>
+                handleCheckCategories({
+                  ar_name: category.ar_name,
+                  name: category.name,
+                  id: category.id,
+                })
+              }
               id={category.id.toString()}
             />
           </Stack>

@@ -24,7 +24,7 @@ const DeliverTo = () => {
         display="flex"
         alignItems="center"
         spacing={1}
-        my={{ xs: HOME_FEED_SPACING_XS - 1 }}
+        // pb={{ xs: HOME_FEED_SPACING_XS - 1 }}
         mt={{ md: 0 }}
       >
         <Image
@@ -33,9 +33,12 @@ const DeliverTo = () => {
           width={40}
           height={40}
         />
-        <Stack spacing={0}>
-          <Typography variant="subtitle2">{t('deliver-to')}</Typography>
+        <Stack flex="1" spacing={0}>
+          <Typography sx={{ px: 1 }} variant="subtitle2">
+            {t('deliver-to')}
+          </Typography>
           <Button
+            sx={{ justifyContent: 'flex-start' }}
             disableRipple
             onClick={() => {
               if (isDesktop) {

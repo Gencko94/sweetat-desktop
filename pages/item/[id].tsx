@@ -64,9 +64,9 @@ const SingleItem: NextPage<{ isMobileDevice: boolean }> = memo(
               )}
             </Box>
             <ItemDialogDetails
-              quantity={quantity}
-              handleAppendQuantity={handleAppendQuantity}
-              handleSubstractQuantity={handleSubstractQuantity}
+              // quantity={quantity}
+              // handleAppendQuantity={handleAppendQuantity}
+              // handleSubstractQuantity={handleSubstractQuantity}
               item={data}
             />
           </>

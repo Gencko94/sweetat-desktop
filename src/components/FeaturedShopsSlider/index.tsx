@@ -20,7 +20,7 @@ const FeaturedShopsSlider = () => {
   const [_] = useApplicationState();
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const { data, isLoading } = useGetRestaurants({
+  const { data, status } = useGetRestaurants({
     filters: { category_ids: [], free_delivery: true, is_featured: true },
     coverage_area_id: DEFAULT_AREA_COVERAGE_ID,
     results_per_page: 15,
@@ -49,10 +49,14 @@ const FeaturedShopsSlider = () => {
         spaceBetween: 15,
       },
       900: {
-        slidesPerView: 2.5,
+        slidesPerView: 2.25,
         spaceBetween: 15,
       },
       1200: {
+        slidesPerView: 3.25,
+        spaceBetween: 20,
+      },
+      1420: {
         slidesPerView: 3.25,
         spaceBetween: 20,
       },
@@ -81,7 +85,7 @@ const FeaturedShopsSlider = () => {
         </IconButton>
       </Stack>
       <Swiper breakpoints={breakpoints}>
-        {isLoading &&
+        {status === 'loading' &&
           [...Array.from(new Array(8))].map(i => (
             <SwiperSlide key={i}>
               <LoadingItemCardWide />

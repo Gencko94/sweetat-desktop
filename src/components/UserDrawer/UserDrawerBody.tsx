@@ -9,12 +9,13 @@ import ColorModeToggle from '../ColorModeToggle';
 import LanguageToggle from '../LanguageToggle';
 import { signOut } from 'next-auth/react';
 import { useSession } from '../../hooks/useSession';
+import { DURATIONS } from '../../constants';
 const UserDrawerBody = () => {
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const [session, loading] = useSession({
+  const [session] = useSession({
     required: false,
-    queryConfig: { staleTime: 1000 * 60 * 5 }, // ⌚ 5 minutes((1000ms * 60)(1 Minute) * 5 )
+    queryConfig: { staleTime: DURATIONS.twoMins },
   });
 
   const handleSignout = () => {

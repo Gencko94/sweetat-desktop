@@ -21,6 +21,11 @@ export interface IApplicationContextProps {
   globalSearchType: SEARCH_TYPE;
   shopsView: SHOP_VIEW;
   itemsView: ITEM_VIEW;
+  shownCategories: {
+    id: number;
+    name: string;
+    ar_name: string;
+  }[]; // The one that shows in Category Shops
   userDrawerOpen: boolean;
   restaurantsQuery: {
     category_ids: number[];
