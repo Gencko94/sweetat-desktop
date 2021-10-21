@@ -10,18 +10,21 @@ import LanguageToggle from '../LanguageToggle';
 import { signOut } from 'next-auth/react';
 import { useSession } from '../../hooks/useSession';
 import { DURATIONS } from '../../constants';
+import { useQueryClient } from 'react-query';
 const UserDrawerBody = () => {
   const { locale } = useRouter();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const { session } = useSession({
     required: false,
     queryConfig: { staleTime: DURATIONS.twoMins },
   });
 
-  const handleSignout = () => {
-    signOut({
+  const handleSignout = async () => {
+    await signOut({
       redirect: false,
     });
+    queryClient.invalidateQueries('session');
   };
 
   return (

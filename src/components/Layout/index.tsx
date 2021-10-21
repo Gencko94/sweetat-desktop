@@ -18,7 +18,10 @@ import UserDrawer from '../UserDrawer';
 const Layout: React.FC = ({ children }) => {
   const [state] = useApplicationState();
 
-  useSession({ queryConfig: { staleTime: DURATIONS.twoMins } });
+  useSession({
+    required: false,
+    queryConfig: { staleTime: DURATIONS.twoMins },
+  });
   const theme = useMemo(() => createTheme(getDesignTokens(state.colorMode)), [
     state.colorMode,
   ]);
