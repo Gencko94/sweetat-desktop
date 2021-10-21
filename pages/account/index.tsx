@@ -8,10 +8,9 @@ import { useSession } from '../../src/hooks/useSession';
 
 const Account: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [session, loading] = useSession();
-  console.log(session, 'SESSION');
+  const { session, isLoading } = useSession();
   const handleChangeTab = (tab: number) => setActiveTab(tab);
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   return (

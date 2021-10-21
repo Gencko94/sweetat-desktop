@@ -12,13 +12,11 @@ import {
 import { BuiltInProviderType } from 'next-auth/providers';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSession } from '../../src/hooks/useSession';
 const Login = () => {
   const [providers, setProviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>(null);
-  const [session, isLoading] = useSession();
   useEffect(() => {
     const setTheProviders = async () => {
       const setupProviders = await getProviders();

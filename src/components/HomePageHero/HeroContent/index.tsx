@@ -23,7 +23,7 @@ const HeroContent = () => {
         userAddress,
         userLocation: { lat, lng },
       }));
-      push('/shop/bora-bora-dehj12hgkf4tbrc');
+      push('/shops');
     } catch (error) {
       console.log(error);
     }

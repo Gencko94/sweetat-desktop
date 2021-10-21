@@ -14,10 +14,10 @@ export type SORT_BY_OPTIONS =
   | 'ar_desc';
 export type FILTER_BY_TYPES = 'free_delivery' | 'is_featured';
 export interface CHECKED_FILTERS {
-  sort_by: SORT_BY_OPTIONS;
+  sort_by?: SORT_BY_OPTIONS;
   categories: number[];
-  is_featured: boolean;
-  free_delivery: boolean;
+  is_featured?: boolean;
+  free_delivery?: boolean;
 }
 
 const FiltersDrawerBody = () => {
@@ -36,18 +36,18 @@ const FiltersDrawerBody = () => {
     }));
   }, []);
   const handleCheckCategories = useCallback(
-    (id: number) => {
+    (category: { ar_name: string; name: string; id: number }) => {
       //  if the category is available in the local state
-      if (checkedFilters.categories.includes(id)) {
+      if (checkedFilters.categories.includes(category.id)) {
         setCheckedFilters(prev => ({
           ...prev,
-          categories: prev.categories.filter(cat => cat !== id),
+          categories: prev.categories.filter(cat => cat !== category.id),
         }));
         // else append the category to the local state
       } else {
         setCheckedFilters(prev => ({
           ...prev,
-          categories: [...prev.categories, id],
+          categories: [...prev.categories, category.id],
         }));
       }
     },

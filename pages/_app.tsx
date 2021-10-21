@@ -8,7 +8,6 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { useEffect, useState } from 'react';
 import Layout from '../src/components/Layout';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { SessionProvider } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
 import { getCartItems } from '../lib/queries/cartService';
 import { LOCAL_STORAGE_CART_KEY, NEW_CART_VALUE } from '../src/constants';
@@ -31,7 +30,6 @@ function MyApp({
       })
   );
   const { locale } = useRouter();
-
   // ⭐ ---  Local cart initializor --- ⭐
   useEffect(() => {
     const initialLocalCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
@@ -55,18 +53,17 @@ function MyApp({
           async
         ></script>
       </Head>
-      {/* <SessionProvider session={pageProps.session}> */}
+
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <ApplicationProvider>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            <ReactQueryDevtools initialIsOpen={false} />
           </ApplicationProvider>
         </Hydrate>
       </QueryClientProvider>
-      {/* </SessionProvider> */}
     </CacheProvider>
   );
 }

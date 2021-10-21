@@ -7,7 +7,9 @@ import {
 
 import { useMemo } from 'react';
 import { getDesignTokens } from '../../../styles/globalTheme';
+import { DURATIONS } from '../../constants';
 import { useApplicationState } from '../../contexts/ApplicationContext';
+import { useSession } from '../../hooks/useSession';
 import FiltersDrawer from '../FiltersDrawer';
 import SearchDrawer from '../SearchDrawer';
 import SingleItemDialog from '../SingleItemDialog';
@@ -15,6 +17,8 @@ import UserDrawer from '../UserDrawer';
 
 const Layout: React.FC = ({ children }) => {
   const [state] = useApplicationState();
+
+  useSession({ queryConfig: { staleTime: DURATIONS.twoMins } });
   const theme = useMemo(() => createTheme(getDesignTokens(state.colorMode)), [
     state.colorMode,
   ]);

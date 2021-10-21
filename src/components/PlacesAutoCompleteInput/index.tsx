@@ -12,9 +12,9 @@ import usePlacesAutocomplete from 'use-places-autocomplete';
 import { LoadingButton } from '@mui/lab';
 
 interface IPlacesAutoCompleteInputProps {
-  onChange: (value: string) => void;
-  getGeoLocationSuccessCb: (position: GeolocationPosition) => void;
-  getGeoLocationFailureCb: (error: GeolocationPositionError) => void;
+  onChange: (_: string) => void;
+  getGeoLocationSuccessCb: (_: GeolocationPosition) => void;
+  getGeoLocationFailureCb: (_: GeolocationPositionError) => void;
   markerAddress?: string;
 }
 

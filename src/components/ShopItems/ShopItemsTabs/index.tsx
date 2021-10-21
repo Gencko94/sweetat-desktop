@@ -1,7 +1,7 @@
 import { Tab, Tabs as MuiTabs, TabsProps } from '@mui/material';
 import { styled } from '@mui/system';
 interface IShopItemsTabsProps {
-  handleChangeTab: (e: React.SyntheticEvent, newValue: number) => void;
+  handleChangeTab: (_: React.SyntheticEvent, newValue: number) => void;
   activeTab: number;
   tabTitles: string[];
 }

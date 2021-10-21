@@ -30,8 +30,6 @@ export const INITIAL_STATE: IApplicationContextProps = {
   restaurantsQuery: {
     category_ids: [],
     sort_by: 'delivery_time',
-    // free_delivery: true,
-    // is_featured: true,
   },
 };
 export const LOCAL_STORAGE_CART_KEY = 'swlcct';

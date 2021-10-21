@@ -1,10 +1,12 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 import { useRouter } from 'next/router';
 import { DURATIONS } from '../constants';
+import { IUser } from '../../lib/interfaces/IUser';
+import axios from 'axios';
 
 export async function fetchSession() {
-  const res = await fetch('/api/auth/session');
-  const session = await res.json();
+  const res = await axios.get('/api/auth/session');
+  const session = res.data;
   if (Object.keys(session).length > 0) {
     return session;
   }
@@ -19,7 +21,7 @@ export const useSession = (
   }: {
     required?: boolean;
     redirectTo?: string;
-    queryConfig?: UseQueryOptions<any>;
+    queryConfig?: UseQueryOptions<{ user: IUser }>;
   } = {
     queryConfig: {
       staleTime: DURATIONS.twoMins,
@@ -27,7 +29,7 @@ export const useSession = (
   }
 ) => {
   const router = useRouter();
-  const query = useQuery('session', fetchSession, {
+  const query = useQuery<{ user: IUser }>('session', fetchSession, {
     ...queryConfig,
     onSettled(data, error) {
       if (queryConfig?.onSettled) queryConfig?.onSettled(data, error);
@@ -35,5 +37,5 @@ export const useSession = (
       router.push(redirectTo);
     },
   });
-  return [query.data, query.status === 'loading'];
+  return { session: query.data, isLoading: query.status === 'loading' };
 };

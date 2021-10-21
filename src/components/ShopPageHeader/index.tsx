@@ -4,7 +4,6 @@ import ShopPageImage from '../ShopPageImage';
 import ShopPageDetails from '../ShopPageDetails';
 import ShopPageDeliveryStatus from '../ShopPageDeliveryStatus';
 import DeliverTo from '../DeliverTo';
-import { XL_MAX_WIDTH } from '../../constants';
 
 interface IShopPageHeaderProps {
   shop: IRestaurantInfo;

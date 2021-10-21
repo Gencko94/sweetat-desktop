@@ -13,7 +13,7 @@ import { DURATIONS } from '../../constants';
 const UserDrawerBody = () => {
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const [session] = useSession({
+  const { session } = useSession({
     required: false,
     queryConfig: { staleTime: DURATIONS.twoMins },
   });
