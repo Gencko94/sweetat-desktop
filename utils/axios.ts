@@ -1,3 +1,3 @@
 import axios from 'axios';
-const instance = axios.create({ baseURL: 'https://sweetat.co/public/api' });
+const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
 export default instance;

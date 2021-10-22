@@ -43,6 +43,7 @@ const PlacesAutoCompleteInput = ({
     },
     debounce: 300,
   });
+
   async function getCurrentPosition() {
     if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
@@ -58,9 +59,6 @@ const PlacesAutoCompleteInput = ({
       setValue(markerAddress, false);
     }
   }, [markerAddress, setValue]);
-  useEffect(() => {
-    getCurrentPosition();
-  }, []);
 
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, md: 3 }}>
@@ -96,11 +94,6 @@ const PlacesAutoCompleteInput = ({
         size="small"
         renderInput={params => (
           <TextField
-            // onChange={e => {
-            //   console.log(e.target.value, 'onChange');
-            //   setValue(e.target.value);
-            // }}
-            // value={value}
             {...params}
             size="small"
             InputProps={{

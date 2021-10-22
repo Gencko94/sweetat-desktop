@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { HOME_FEED_SPACING_XS } from '../../constants';
 import MapModal from '../MapModal';
 import { useCallback, useState } from 'react';
 const DeliverTo = () => {
@@ -24,7 +23,6 @@ const DeliverTo = () => {
         display="flex"
         alignItems="center"
         spacing={1}
-        // pb={{ xs: HOME_FEED_SPACING_XS - 1 }}
         mt={{ md: 0 }}
       >
         <Image

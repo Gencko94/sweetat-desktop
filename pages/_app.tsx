@@ -16,19 +16,17 @@ const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false },
+  },
+});
 function MyApp({
   Component,
   pageProps,
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: { refetchOnWindowFocus: false },
-        },
-      })
-  );
   const { locale } = useRouter();
   // ⭐ ---  Local cart initializor --- ⭐
   useEffect(() => {
@@ -42,7 +40,7 @@ function MyApp({
     } else {
       queryClient.prefetchQuery('/validate-cart-items', getCartItems);
     }
-  }, [queryClient]);
+  }, []);
   // ⭐ ---  End of Local cart initializor --- ⭐
   return (
     <CacheProvider value={emotionCache}>
@@ -54,16 +52,16 @@ function MyApp({
         ></script>
       </Head>
 
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <ApplicationProvider>
+      <ApplicationProvider>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
             <Layout>
               <Component {...pageProps} />
             </Layout>
             <ReactQueryDevtools initialIsOpen={false} />
-          </ApplicationProvider>
-        </Hydrate>
-      </QueryClientProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </ApplicationProvider>
     </CacheProvider>
   );
 }

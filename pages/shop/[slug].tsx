@@ -10,41 +10,37 @@ import {
 } from '../../lib/queries/queries';
 import { DEFAULT_LAT, DEFAULT_LNG } from '../../src/constants';
 import { useGetRestaurantInfo } from '../../src/hooks/queryHooks/useGetRestaurantInfo';
-import isMobile from '../../utils/isMobile';
 
 import ShopItems from '../../src/components/ShopItems';
-import { memo } from 'react';
 import ShopPageHeader from '../../src/components/ShopPageHeader';
 import CartMenu from '../../src/components/CartMenu';
 import Navbar from '../../src/components/Navbar';
-const Shop: NextPage<{ isMobileDevice: boolean }> = memo(
-  ({ isMobileDevice }) => {
-    const {
-      query: { slug },
-    } = useRouter();
+const Shop: NextPage = () => {
+  const {
+    query: { slug },
+  } = useRouter();
 
-    const { data: shop } = useGetRestaurantInfo({ slug: slug as string });
-    return (
-      <>
-        <Navbar
-          logoVariant="colored"
-          variant="contained"
-          withBorderBottom
-          withMenu
-        />
-        {shop && (
-          <>
-            <ShopPageHeader shop={shop} />
-            <ShopItems shop={shop} />
-            <Hidden mdUp>
-              <CartMenu />
-            </Hidden>
-          </>
-        )}
-      </>
-    );
-  }
-);
+  const { data: shop } = useGetRestaurantInfo({ slug: slug as string });
+  return (
+    <>
+      <Navbar
+        logoVariant="colored"
+        variant="contained"
+        withBorderBottom
+        withMenu
+      />
+      {shop && (
+        <>
+          <ShopPageHeader shop={shop} />
+          <ShopItems shop={shop} />
+          <Hidden mdUp>
+            <CartMenu />
+          </Hidden>
+        </>
+      )}
+    </>
+  );
+};
 
 export default Shop;
 
@@ -53,7 +49,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   const queryClient = new QueryClient();
   const latitude = DEFAULT_LAT;
   const longitude = DEFAULT_LNG;
-  const isMobileDevice = isMobile(ctx.req);
   const { locale } = ctx;
   await queryClient.prefetchQuery(
     [latitude, longitude, 'restaurant', slug],
@@ -65,7 +60,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   return {
     props: {
       ...(await serverSideTranslations(locale as string, ['common'])),
-      isMobileDevice,
       dehydratedState: dehydrate(queryClient),
     },
   };

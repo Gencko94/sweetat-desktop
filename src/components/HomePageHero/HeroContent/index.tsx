@@ -5,9 +5,12 @@ import { useApplicationState } from '../../../contexts/ApplicationContext';
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PlacesAutoCompleteInput from '../../PlacesAutoCompleteInput';
 import { convertCoordinateToAddress } from '../../../../lib/queries/queries';
+import { LOCAL_STORAGE_USER_LOCATION_KEY } from '../../../constants';
+import { useState } from 'react';
 
 const HeroContent = () => {
   const [_, setState] = useApplicationState();
+  const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const { locale, push } = useRouter();
   const handleAutoCompleteValueChange = async (value: string) => {
     try {
@@ -29,8 +32,29 @@ const HeroContent = () => {
     }
   };
 
-  const getGeoLocationSuccessCb: PositionCallback = position => {
-    console.log(position);
+  const getGeoLocationSuccessCb: PositionCallback = async position => {
+    const {
+      coords: { latitude, longitude },
+    } = position;
+    const userAddress = await convertCoordinateToAddress({
+      lat: latitude,
+      lng: longitude,
+      lang: locale as string,
+    });
+    console.log(userAddress, 'address');
+    setState(prev => ({
+      ...prev,
+      userAddress,
+      userLocation: {
+        lat: latitude,
+        lng: longitude,
+      },
+    }));
+    localStorage.setItem(
+      LOCAL_STORAGE_USER_LOCATION_KEY,
+      JSON.stringify(userAddress)
+    );
+    push('/shops');
   };
   const getGeoLocationFailureCb: PositionErrorCallback = error => {
     console.error(error);

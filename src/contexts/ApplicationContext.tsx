@@ -1,18 +1,18 @@
-import { createContext, useState } from "react";
-import { INITIAL_STATE } from "../constants";
-import { createContainer } from "react-tracked";
+import { createContext, useState } from 'react';
+import { INITIAL_STATE } from '../constants';
+import { createContainer } from 'react-tracked';
 
 // import { getInitialColorMode } from "../helpers/getInitialColorMode";
 
-export type COLOR_MODES = "light" | "dark";
+export type COLOR_MODES = 'light' | 'dark';
 
 export type POSITION_COORDS = {
   lat: number;
   lng: number;
 };
-export type SEARCH_TYPE = "stores" | "items";
-export type SHOP_VIEW = "normal" | "wide";
-export type ITEM_VIEW = "normal" | "wide";
+export type SEARCH_TYPE = 'stores' | 'items';
+export type SHOP_VIEW = 'normal' | 'wide';
+export type ITEM_VIEW = 'normal' | 'wide';
 
 const useMyState = () => useState(INITIAL_STATE);
 export const ApplicationContext = createContext<ReturnType<

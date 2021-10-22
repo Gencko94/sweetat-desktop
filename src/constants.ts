@@ -33,6 +33,7 @@ export const INITIAL_STATE: IApplicationContextProps = {
   },
 };
 export const LOCAL_STORAGE_CART_KEY = 'swlcct';
+export const LOCAL_STORAGE_USER_LOCATION_KEY = 'swul';
 export const FOOTER_LINKS: { href: string; label: string }[] = [
   {
     href: '/',

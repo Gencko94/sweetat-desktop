@@ -6,6 +6,7 @@ import { IItemsSearchResult } from '../interfaces/IItem';
 import { IRestaurantInfo } from '../interfaces/IRestaurantInfo';
 import { getSession } from 'next-auth/react';
 import axios from '../../utils/axios';
+import { IUSER_ADDRESS } from '../interfaces/IUserAddress';
 
 export const getCategorySlides = async () => {
   const res = await axios.post('/get-restaurant-category-slides');
@@ -56,7 +57,7 @@ export const convertCoordinateToAddress = async ({
   lat?: number;
   lng?: number;
 }) => {
-  const res = await axios.post('/coordinate-to-address', {
+  const res = await axios.post<IUSER_ADDRESS>('/coordinate-to-address', {
     lat,
     lng,
     lang: lang.toUpperCase(),

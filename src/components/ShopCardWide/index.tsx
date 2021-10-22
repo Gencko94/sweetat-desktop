@@ -16,7 +16,7 @@ const ShopCardWide = ({ shop }: IShopSliderCard) => {
   const { t } = useTranslation();
   const [state, setState] = useApplicationState();
   return (
-    <Link href={`/shop/${shop.slug}`} passHref>
+    <Link href={`/shop/${shop.slug}`} passHref shallow>
       <Box
         borderRadius="6px"
         position="relative"
