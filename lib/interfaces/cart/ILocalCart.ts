@@ -12,6 +12,6 @@ export interface ILocalCartItem {
 
 export interface ILocalCartItemAddon {
   addon_category_name: string;
-  addon_category_ar_name: string;
+  addon_category_ar_name: string | null;
   addon_id: number;
 }

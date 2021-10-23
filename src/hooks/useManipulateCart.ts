@@ -43,11 +43,12 @@ const useManipulateCart = () => {
       newItem: ILocalCartItem,
       restaurant_id: number
     ) => {
+      console.log(newItem, 'new cart item');
       // If the cart is empty, then we initialize a cart with a restaurant id
       if (isCartEmpty()) {
         const newCart: ILocalCart = {
           restaurant_id,
-          items: [...localCart.items, newItem],
+          items: [newItem],
         };
         localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
         invalidateTheCart();

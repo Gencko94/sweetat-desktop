@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import ItemAddons from '../ItemAddons';
 import { useFormContext } from 'react-hook-form';
 import { ILocalCartItem } from '../../../lib/interfaces/cart/ILocalCart';
+import { IItemForm } from '../SingleItemDialog/SingleItemDialogContent';
 
 interface IItemDialogDetailsProps {
   item: ITEM;
@@ -17,28 +18,28 @@ interface IItemDialogDetailsProps {
 const ItemDialogDetails = ({ item }: IItemDialogDetailsProps) => {
   const { locale } = useRouter();
   const { t } = useTranslation();
-  const { setValue, watch } = useFormContext<ILocalCartItem>();
+  const { setValue, watch } = useFormContext<IItemForm>();
   const quantity = watch('quantity', 1);
 
   const handleAppendQuantity = () => {
-    if (!item?.max_allowed) {
+    if (!item.max_allowed) {
       setValue('quantity', quantity + 1);
-    } else {
-      if (item.max_allowed === quantity) {
-        return;
-      }
+      return;
     }
+    if (item.max_allowed === quantity) {
+      return;
+    }
+    setValue('quantity', quantity + 1);
   };
   const handleSubstractQuantity = () => {
     if (quantity === 1) {
       return;
-    } else {
-      setValue('quantity', quantity - 1);
     }
+    setValue('quantity', quantity - 1);
   };
   return (
     <div>
-      <Stack spacing={2} mb={2}>
+      <Stack spacing={1} mb={2}>
         <Typography variant="h5" fontWeight="bold">
           {locale === 'ar' ? item.ar_name : item.name}
         </Typography>
@@ -54,10 +55,10 @@ const ItemDialogDetails = ({ item }: IItemDialogDetailsProps) => {
             }}
           ></div>
         )}
+        {item.addon_categories.length > 0 && (
+          <ItemAddons addon_categories={item.addon_categories} />
+        )}
       </Stack>
-      {item.addon_categories.length > 0 && (
-        <ItemAddons addon_categories={item.addon_categories} />
-      )}
       <Stack
         direction="row"
         alignItems="center"

@@ -17,9 +17,15 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
 import { LoadingButton } from '@mui/lab';
+import { OneKPlusOutlined } from '@mui/icons-material';
 
-interface IItemForm {
-  selectedaddons: ILocalCartItemAddon[];
+export interface IItemForm {
+  selectedaddons: {
+    id: number;
+    addon_category_name: string;
+    addon_category_ar_name: string | null;
+    addon_id: number;
+  }[];
   quantity: number;
 }
 
@@ -38,11 +44,22 @@ const SingleItemDialogContent = ({
     defaultValues: { quantity: 1, selectedaddons: [] },
   });
   const onSubmit: SubmitHandler<IItemForm> = data => {
+    // console.log(
+    //   data.selectedaddons.map(i => ({
+    //     addon_id: i.addon_id,
+    //     addon_category_name: i.addon_category_name,
+    //     addon_category_ar_name: i.addon_category_ar_name,
+    //   }))
+    // );
     const item: ILocalCartItem = {
       id: selectedItem.id,
       price: selectedItem.price,
       quantity: data.quantity,
-      selectedaddons: data.selectedaddons,
+      selectedaddons: data.selectedaddons.map(i => ({
+        addon_id: i.addon_id,
+        addon_category_name: i.addon_category_name,
+        addon_category_ar_name: i.addon_category_ar_name,
+      })),
     };
     cartMethods?.addToCart?.(item, selectedItem.restaurant_id);
     handleHideItem();

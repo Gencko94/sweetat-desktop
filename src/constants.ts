@@ -24,7 +24,7 @@ export const INITIAL_STATE: IApplicationContextProps = {
   itemsView: 'normal',
   shopsView: 'wide',
   userDrawerOpen: false,
-  selectedItem: null,
+  selectedItem: null, // Selected Item that shows in item dialog
   itemDialogOpen: false,
   shownCategories: [],
   restaurantsQuery: {

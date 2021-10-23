@@ -36,14 +36,20 @@ const CartItem = ({
     }
   };
   return (
-    <Stack direction="row" alignItems="flex-start" px={2} spacing={2}>
+    <Stack
+      direction="row"
+      justifyContent="center"
+      alignItems="flex-start"
+      px={2}
+      spacing={2}
+    >
+      {/* Quantity buttons */}
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="center"
         spacing={2}
       >
-        {/* Quantity buttons */}
         <Fab
           size="small"
           onClick={() => handleAppendQuantity()}
@@ -75,11 +81,11 @@ const CartItem = ({
         </Fab>
       </Stack>
       <Box sx={{ flex: 1 }}>
-        <Typography variant="h6">
+        <Typography gutterBottom variant="subtitle1" fontWeight="bold">
           {locale === 'ar' ? item.ar_name : item.name}
         </Typography>
         {item.selectedaddons.length > 0 && (
-          <Stack spacing={1}>
+          <Stack spacing={0}>
             {item.selectedaddons.map(addon => (
               <Stack
                 alignItems="center"
@@ -93,7 +99,7 @@ const CartItem = ({
                 </Typography>
                 {addon.price !== '0.00' && (
                   <Typography color="secondary" fontWeight="bold">
-                    {addon.price} KD
+                    +{addon.price} KD
                   </Typography>
                 )}
               </Stack>
@@ -102,7 +108,15 @@ const CartItem = ({
         )}
       </Box>
 
-      {item.price !== '0.00' && <Typography>{item.price} KD</Typography>}
+      {item.price !== '0.00' && (
+        <Typography
+          color="secondary"
+          fontWeight="bold"
+          // sx={{ alignSelf: 'center' }}
+        >
+          {item.price} KD
+        </Typography>
+      )}
     </Stack>
   );
 };
