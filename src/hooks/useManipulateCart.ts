@@ -39,6 +39,23 @@ const useManipulateCart = () => {
       }
       return false;
     };
+    const doItemsMatch = (arr1: ILocalCartItem, arr2: ILocalCartItem) => {
+      const array1Sorted = arr1.selectedaddons
+        .slice()
+        .sort((a, b) => a.addon_id - b.addon_id);
+      const array2Sorted = arr2.selectedaddons
+        .slice()
+        .sort((a, b) => a.addon_id - b.addon_id);
+      if (
+        arr1.selectedaddons.length === arr2.selectedaddons.length &&
+        array1Sorted.every(function(value, index) {
+          return value.addon_id === array2Sorted[index].addon_id;
+        })
+      ) {
+        return true;
+      }
+      return false;
+    };
     const clearTheCart = () => {
       localStorage.setItem(
         LOCAL_STORAGE_CART_KEY,
@@ -78,9 +95,14 @@ const useManipulateCart = () => {
           }));
         } else {
           // Check if the item exists in the cart
-          const existingItemIndex = localCart.items.findIndex(
-            i => i.id === newItem.id
-          );
+
+          const existingItemIndex = localCart.items.findIndex(i => {
+            if (i.id === newItem.id && doItemsMatch(i, newItem)) {
+              return true;
+            }
+
+            return false;
+          });
 
           //  if the item doesn't exist in the cart, add it
           if (existingItemIndex === -1) {
@@ -94,20 +116,25 @@ const useManipulateCart = () => {
             );
             invalidateTheCart();
           } else {
-            // If item exists
-            incrementQuantity(newItem.id, newItem.quantity);
+            incrementQuantity(newItem, newItem.quantity);
+            invalidateTheCart();
           }
         }
       }
     };
 
     // ➕ Increment Item
-    const incrementQuantity = (id: number, q?: number) => {
+    const incrementQuantity = (item: ILocalCartItem, q?: number) => {
       try {
         // Get the desired item index
-        const oldItemIndex = localCart.items.findIndex(i => i.id === id);
+        const existingItemIndex = localCart.items.findIndex(i => {
+          if (i.id === item.id && doItemsMatch(i, item)) {
+            return true;
+          }
 
-        if (oldItemIndex !== -1) {
+          return false;
+        });
+        if (existingItemIndex !== -1) {
           // copy the old cart
           const newCart: ILocalCart = {
             restaurant_id: localCart.restaurant_id,
@@ -115,8 +142,8 @@ const useManipulateCart = () => {
           };
 
           // increment the quantity in the new array
-          newCart.items[oldItemIndex].quantity =
-            newCart.items[oldItemIndex].quantity + (q ?? 1);
+          newCart.items[existingItemIndex].quantity =
+            newCart.items[existingItemIndex].quantity + (q ?? 1);
           //set the new array to the local storage and validate the cart
           localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
           invalidateTheCart();
@@ -127,18 +154,26 @@ const useManipulateCart = () => {
     };
 
     // ➖ Decrement Item
-    const decrementQuantity = (id: number) => {
+    const decrementQuantity = (item: ILocalCartItem) => {
       try {
         // Get the desired item index
-        const oldItemIndex = localCart.items.findIndex(i => i.id === id);
-        if (oldItemIndex !== -1) {
+
+        const existingItemIndex = localCart.items.findIndex(i => {
+          if (i.id === item.id && doItemsMatch(i, item)) {
+            return true;
+          }
+
+          return false;
+        });
+
+        if (existingItemIndex !== -1) {
           // copy the old cart
           const newCart: ILocalCart = {
             restaurant_id: localCart.restaurant_id,
             items: [...localCart.items],
           };
           // decrement the quantity in the new array
-          newCart.items[oldItemIndex].quantity--;
+          newCart.items[existingItemIndex].quantity--;
           //set the new array to the local storage and validate the cart
           localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
           invalidateTheCart();
@@ -149,11 +184,20 @@ const useManipulateCart = () => {
     };
 
     // ❌ Remove From Cart
-    const removeFromCart = (id: number) => {
+    const removeFromCart = (item: ILocalCartItem) => {
+      const existingItemIndex = localCart.items.findIndex(i => {
+        if (i.id === item.id && doItemsMatch(i, item)) {
+          return true;
+        }
+
+        return false;
+      });
+
       const newCart: ILocalCart = {
         restaurant_id: localCart.restaurant_id,
-        items: localCart.items.filter(cartItem => cartItem.id !== id),
+        items: [...localCart.items],
       };
+      newCart.items.splice(existingItemIndex, 1);
       if (newCart.items.length === 0) {
         clearTheCart();
       } else {

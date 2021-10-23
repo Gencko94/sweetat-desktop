@@ -5,11 +5,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/system';
 import { IGetCartResponseItem } from '../../../lib/interfaces/cart/IGetCartResponse';
 import { useRouter } from 'next/dist/client/router';
+import { ILocalCartItem } from '../../../lib/interfaces/cart/ILocalCart';
 interface ICartItemProps {
   item: IGetCartResponseItem;
-  incrementQuantity?: (_: number) => void;
-  decrementQuantity?: (_: number) => void;
-  removeFromCart?: (_: number) => void;
+  incrementQuantity?: (_: ILocalCartItem) => void;
+  decrementQuantity?: (_: ILocalCartItem) => void;
+  removeFromCart?: (_: ILocalCartItem) => void;
 }
 
 const CartItem = ({
@@ -21,7 +22,17 @@ const CartItem = ({
   const { locale } = useRouter();
   const handleAppendQuantity = () => {
     if (!item.max_allowed) {
-      incrementQuantity?.(item.id);
+      // addToCart(item.id, item.restaurant_id);
+      incrementQuantity?.({
+        id: item.id,
+        price: item.price,
+        quantity: item.quantity,
+        selectedaddons: item.selectedaddons.map(i => ({
+          addon_category_name: i.addon_category_name as string,
+          addon_category_ar_name: i.addon_category_ar_name,
+          addon_id: i.addon_id,
+        })),
+      });
     } else {
       if (item.max_allowed === item.quantity) {
         return;
@@ -31,11 +42,29 @@ const CartItem = ({
   const handleSubstractQuantity = () => {
     if (item.quantity === 1) {
       // Delete the item
-      removeFromCart?.(item.id);
+      removeFromCart?.({
+        id: item.id,
+        price: item.price,
+        quantity: item.quantity,
+        selectedaddons: item.selectedaddons.map(i => ({
+          addon_category_name: i.addon_category_name as string,
+          addon_category_ar_name: i.addon_category_ar_name,
+          addon_id: i.addon_id,
+        })),
+      });
       return;
     } else {
       // Decrement
-      decrementQuantity?.(item.id);
+      decrementQuantity?.({
+        id: item.id,
+        price: item.price,
+        quantity: item.quantity,
+        selectedaddons: item.selectedaddons.map(i => ({
+          addon_category_name: i.addon_category_name as string,
+          addon_category_ar_name: i.addon_category_ar_name,
+          addon_id: i.addon_id,
+        })),
+      });
     }
   };
   return (
