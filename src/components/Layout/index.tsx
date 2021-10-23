@@ -10,6 +10,7 @@ import { getDesignTokens } from '../../../styles/globalTheme';
 import { DURATIONS } from '../../constants';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useSession } from '../../hooks/useSession';
+import CartAlertDialog from '../CartAlertDialog';
 import FiltersDrawer from '../FiltersDrawer';
 import SearchDrawer from '../SearchDrawer';
 import SingleItemDialog from '../SingleItemDialog';
@@ -31,6 +32,7 @@ const Layout: React.FC = ({ children }) => {
       <SearchDrawer />
       <UserDrawer />
       <SingleItemDialog />
+      <CartAlertDialog />
       <CssBaseline />
       {children}
       <style global jsx>

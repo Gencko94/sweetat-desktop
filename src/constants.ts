@@ -27,6 +27,11 @@ export const INITIAL_STATE: IApplicationContextProps = {
   selectedItem: null, // Selected Item that shows in item dialog
   itemDialogOpen: false,
   shownCategories: [],
+  cartAlertState: {
+    open: false,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    cb: () => {},
+  },
   restaurantsQuery: {
     category_ids: [],
     sort_by: 'delivery_time',

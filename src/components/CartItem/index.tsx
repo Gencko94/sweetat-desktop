@@ -1,7 +1,7 @@
 import { Fab, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/system';
 import { IGetCartResponseItem } from '../../../lib/interfaces/cart/IGetCartResponse';
 import { useRouter } from 'next/dist/client/router';
@@ -9,12 +9,14 @@ interface ICartItemProps {
   item: IGetCartResponseItem;
   incrementQuantity?: (_: number) => void;
   decrementQuantity?: (_: number) => void;
+  removeFromCart?: (_: number) => void;
 }
 
 const CartItem = ({
   item,
   incrementQuantity,
   decrementQuantity,
+  removeFromCart,
 }: ICartItemProps) => {
   const { locale } = useRouter();
   const handleAppendQuantity = () => {
@@ -29,6 +31,7 @@ const CartItem = ({
   const handleSubstractQuantity = () => {
     if (item.quantity === 1) {
       // Delete the item
+      removeFromCart?.(item.id);
       return;
     } else {
       // Decrement
@@ -77,7 +80,11 @@ const CartItem = ({
             minHeight: 0,
           }}
         >
-          <RemoveIcon color="primary" fontSize="medium" />
+          {item.quantity === 1 ? (
+            <DeleteIcon color="primary" fontSize="medium" />
+          ) : (
+            <RemoveIcon color="primary" fontSize="medium" />
+          )}
         </Fab>
       </Stack>
       <Box sx={{ flex: 1 }}>

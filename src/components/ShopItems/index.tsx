@@ -87,7 +87,7 @@ const ShopItems = ({ shop }: IShopItemsProps) => {
 
           <Container
             sx={{
-              maxWidth: { xl: 'xl', lg: 'lg', md: 'md' },
+              maxWidth: { xl: 'xl', lg: 'lg' },
             }}
           >
             <br />

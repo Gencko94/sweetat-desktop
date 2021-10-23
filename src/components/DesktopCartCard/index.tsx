@@ -9,7 +9,11 @@ import { LoadingButton } from '@mui/lab';
 const DesktopCartCard = () => {
   const { t } = useTranslation();
   const { data: cart, isFetching } = useGetCartItems();
-  const { incrementQuantity, decrementQuantity } = useManipulateCart();
+  const {
+    incrementQuantity,
+    decrementQuantity,
+    removeFromCart,
+  } = useManipulateCart();
 
   return (
     <Box p={2} component={Paper} elevation={1}>
@@ -40,6 +44,7 @@ const DesktopCartCard = () => {
                 item={cartItem}
                 incrementQuantity={incrementQuantity}
                 decrementQuantity={decrementQuantity}
+                removeFromCart={removeFromCart}
               />
             ))}
           </Stack>

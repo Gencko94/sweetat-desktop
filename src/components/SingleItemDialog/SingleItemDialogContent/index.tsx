@@ -10,14 +10,9 @@ import { DarkImageOverlay } from '../../DarkImageOverlay';
 import { Box } from '@mui/system';
 import ItemDialogDetails from '../../ItemDialogDetails';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import {
-  ILocalCartItemAddon,
-  ILocalCartItem,
-} from '../../../../lib/interfaces/cart/ILocalCart';
+import { ILocalCartItem } from '../../../../lib/interfaces/cart/ILocalCart';
 import { useTranslation } from 'react-i18next';
 import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
-import { LoadingButton } from '@mui/lab';
-import { OneKPlusOutlined } from '@mui/icons-material';
 
 export interface IItemForm {
   selectedaddons: {
@@ -44,13 +39,6 @@ const SingleItemDialogContent = ({
     defaultValues: { quantity: 1, selectedaddons: [] },
   });
   const onSubmit: SubmitHandler<IItemForm> = data => {
-    // console.log(
-    //   data.selectedaddons.map(i => ({
-    //     addon_id: i.addon_id,
-    //     addon_category_name: i.addon_category_name,
-    //     addon_category_ar_name: i.addon_category_ar_name,
-    //   }))
-    // );
     const item: ILocalCartItem = {
       id: selectedItem.id,
       price: selectedItem.price,
@@ -64,6 +52,7 @@ const SingleItemDialogContent = ({
     cartMethods?.addToCart?.(item, selectedItem.restaurant_id);
     handleHideItem();
   };
+
   return (
     <>
       {selectedItem && (
@@ -98,7 +87,7 @@ const SingleItemDialogContent = ({
             <Button size="large" onClick={handleHideItem}>
               Cancel
             </Button>
-            <LoadingButton
+            <Button
               onClick={formMethods.handleSubmit(onSubmit)}
               variant="contained"
               size="large"
@@ -106,7 +95,7 @@ const SingleItemDialogContent = ({
               // loading={isFetching}
             >
               Add to cart
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </FormProvider>
       )}

@@ -14,7 +14,7 @@ const MultiItemAddons = ({ addonCategory }: IMultiItemAddonsProps) => {
   const watchedAddons = watch('selectedaddons');
   const { locale } = useRouter();
 
-  const handleCheckValue = (addon: ADDON, onChange: (..._: any[]) => void) => {
+  const handleCheckValue = (addon: ADDON) => {
     // ✨ here we have a Multi option addon category,
     // this means we can have more than one option per addon category,
     // we're using the addonCategory.id as a reference for manipulating the values.
@@ -33,7 +33,6 @@ const MultiItemAddons = ({ addonCategory }: IMultiItemAddonsProps) => {
       // ⚡ Remember: We're on the Multi option (Checkboxes..).
       const copiedArray = [...watchedAddons];
       copiedArray.splice(foundIndex, 1);
-      console.log(copiedArray, 'new arr');
       setValue('selectedaddons', copiedArray);
     } else {
       // if we haven't yet selected an option..
@@ -62,7 +61,7 @@ const MultiItemAddons = ({ addonCategory }: IMultiItemAddonsProps) => {
       <Controller
         control={control}
         name="selectedaddons"
-        render={({ field: { onChange, value } }) => {
+        render={({ field: { value } }) => {
           return (
             <Stack spacing={1}>
               {addonCategory.addons.map(addon => {
@@ -97,7 +96,7 @@ const MultiItemAddons = ({ addonCategory }: IMultiItemAddonsProps) => {
                       control={
                         <Checkbox
                           checked={isSelected}
-                          onChange={() => handleCheckValue(addon, onChange)}
+                          onChange={() => handleCheckValue(addon)}
                           disableRipple
                         />
                       }

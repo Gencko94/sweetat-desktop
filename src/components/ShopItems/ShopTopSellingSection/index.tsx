@@ -25,7 +25,7 @@ const ShopTopSellingSection = memo(
       () => ({
         // when window width is >= 320px
         320: {
-          slidesPerView: 2.25,
+          slidesPerView: 1.75,
           spaceBetween: 10,
         },
         // when window width is >= 480px
@@ -38,14 +38,14 @@ const ShopTopSellingSection = memo(
           slidesPerView: 3.25,
           spaceBetween: 5,
         },
-        768: {
-          slidesPerView: 3.75,
-          spaceBetween: 5,
-        },
-        1100: {
-          slidesPerView: 4.25,
-          spaceBetween: 5,
-        },
+        // 768: {
+        //   slidesPerView: 3.25,
+        //   spaceBetween: 5,
+        // },
+        // 1100: {
+        //   slidesPerView: 4.25,
+        //   spaceBetween: 5,
+        // },
         1440: {
           slidesPerView: 5.25,
           spaceBetween: 5,

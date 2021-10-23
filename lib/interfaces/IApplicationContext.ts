@@ -21,6 +21,10 @@ export interface IApplicationContextProps {
   globalSearchType: SEARCH_TYPE;
   shopsView: SHOP_VIEW;
   itemsView: ITEM_VIEW;
+  cartAlertState: {
+    open: boolean;
+    cb: (..._: any[]) => void;
+  };
   shownCategories: {
     id: number;
     name: string;

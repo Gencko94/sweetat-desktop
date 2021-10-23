@@ -8,7 +8,6 @@ import MessageIcon from '@mui/icons-material/Message';
 import { useTranslation } from 'react-i18next';
 import ItemAddons from '../ItemAddons';
 import { useFormContext } from 'react-hook-form';
-import { ILocalCartItem } from '../../../lib/interfaces/cart/ILocalCart';
 import { IItemForm } from '../SingleItemDialog/SingleItemDialogContent';
 
 interface IItemDialogDetailsProps {
@@ -50,6 +49,7 @@ const ItemDialogDetails = ({ item }: IItemDialogDetailsProps) => {
         )}
         {item.ar_desc !== null && item.desc !== null && (
           <div
+            style={{ overflowX: 'hidden' }}
             dangerouslySetInnerHTML={{
               __html: locale === 'ar' ? item.ar_desc : item.desc,
             }}

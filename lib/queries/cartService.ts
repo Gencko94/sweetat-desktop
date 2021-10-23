@@ -8,6 +8,7 @@ export const getCartItems = async () => {
   const localCart: ILocalCart = JSON.parse(
     localStorage.getItem(LOCAL_STORAGE_CART_KEY) as string
   );
+  console.log(localCart);
   const res = await instance.post('/validate-cart-items', {
     items: localCart.items,
   });

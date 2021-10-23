@@ -5,10 +5,11 @@ import {
   ILocalCartItem,
 } from '../../lib/interfaces/cart/ILocalCart';
 import { LOCAL_STORAGE_CART_KEY, NEW_CART_VALUE } from '../constants';
+import { useApplicationState } from '../contexts/ApplicationContext';
 
 const useManipulateCart = () => {
   const queryClient = useQueryClient();
-
+  const [_, setState] = useApplicationState();
   const invalidateTheCart = useDebouncedCallback(
     () => {
       queryClient.invalidateQueries('/validate-cart-items');
@@ -38,12 +39,21 @@ const useManipulateCart = () => {
       }
       return false;
     };
+    const clearTheCart = () => {
+      localStorage.setItem(
+        LOCAL_STORAGE_CART_KEY,
+        JSON.stringify(NEW_CART_VALUE)
+      );
+      localCart = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_CART_KEY) as string
+      );
+    };
+
     // 🎉 Add to cart
     const addToCart = async (
       newItem: ILocalCartItem,
       restaurant_id: number
     ) => {
-      console.log(newItem, 'new cart item');
       // If the cart is empty, then we initialize a cart with a restaurant id
       if (isCartEmpty()) {
         const newCart: ILocalCart = {
@@ -51,11 +61,21 @@ const useManipulateCart = () => {
           items: [newItem],
         };
         localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
-        invalidateTheCart();
+        queryClient.invalidateQueries('/validate-cart-items');
       } else {
         // If the cart exists, then we check if the added item belongs to the same restautant.
         if (restaurant_id !== localCart.restaurant_id) {
-          //💀 Create new cart with new restaurant.
+          //💀 Show Cart alert then Create new cart with new restaurant.
+          setState(prev => ({
+            ...prev,
+            cartAlertState: {
+              open: true,
+              cb: () => {
+                clearTheCart();
+                addToCart(newItem, restaurant_id);
+              },
+            },
+          }));
         } else {
           // Check if the item exists in the cart
           const existingItemIndex = localCart.items.findIndex(
@@ -134,8 +154,11 @@ const useManipulateCart = () => {
         restaurant_id: localCart.restaurant_id,
         items: localCart.items.filter(cartItem => cartItem.id !== id),
       };
-
-      localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
+      if (newCart.items.length === 0) {
+        clearTheCart();
+      } else {
+        localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
+      }
       invalidateTheCart();
     };
     return { addToCart, removeFromCart, incrementQuantity, decrementQuantity };
