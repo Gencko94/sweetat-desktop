@@ -7,7 +7,7 @@ import PlacesAutoCompleteInput from '../../PlacesAutoCompleteInput';
 import { convertCoordinateToAddress } from '../../../../lib/queries/queries';
 import { LOCAL_STORAGE_USER_LOCATION_KEY } from '../../../constants';
 import { useState } from 'react';
-
+// import cookie from 'cookie';
 const HeroContent = () => {
   const [_, setState] = useApplicationState();
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);

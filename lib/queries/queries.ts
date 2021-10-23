@@ -32,12 +32,14 @@ export const getRestaurants = async ({
 };
 export const getRestaurantInfo = async ({
   slug,
-  latitude,
-  longitude,
-}: IUseGetRestaurantInfoProps) => {
-  const res = await axios.post(`/get-restaurant-info/${slug}`, {
-    latitude,
-    longitude,
+  coverage_area_id,
+}: {
+  slug: string;
+  coverage_area_id: number;
+}) => {
+  const res = await axios.post(`/restaurant`, {
+    coverage_area_id,
+    slug,
   });
   return res.data;
 };
@@ -48,6 +50,7 @@ export const getRestaurantItems = async ({
   const res = await axios.post(`/get-restaurant-items/${locale}/${slug}`, {});
   return res.data;
 };
+
 export const convertCoordinateToAddress = async ({
   lang,
   lng,
