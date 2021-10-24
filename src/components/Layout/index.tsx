@@ -5,8 +5,9 @@ import {
   responsiveFontSizes,
 } from '@mui/material/styles';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { getDesignTokens } from '../../../styles/globalTheme';
+import { getLocalCart } from '../../../utils/getLocalCart';
 import { DURATIONS } from '../../constants';
 import { useApplicationState } from '../../contexts/ApplicationContext';
 import { useSession } from '../../hooks/useSession';
@@ -17,7 +18,7 @@ import SingleItemDialog from '../SingleItemDialog';
 import UserDrawer from '../UserDrawer';
 
 const Layout: React.FC = ({ children }) => {
-  const [state] = useApplicationState();
+  const [state, setState] = useApplicationState();
 
   useSession({
     required: false,
@@ -26,6 +27,13 @@ const Layout: React.FC = ({ children }) => {
   const theme = useMemo(() => createTheme(getDesignTokens(state.colorMode)), [
     state.colorMode,
   ]);
+  useEffect(() => {
+    // TODO : update cart restaurant info every now and then. + add timestamp for the cart
+    setState(prev => ({
+      ...prev,
+      cart_restaurant: getLocalCart().restaurant,
+    }));
+  }, [setState]);
   return (
     <ThemeProvider theme={responsiveFontSizes(theme)}>
       <FiltersDrawer />

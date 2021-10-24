@@ -1,15 +1,17 @@
 import { useQueryClient } from 'react-query';
 import { useDebouncedCallback } from 'use-debounce';
 import {
+  CART_RESTAURANT,
   ILocalCart,
   ILocalCartItem,
 } from '../../lib/interfaces/cart/ILocalCart';
+import { getLocalCart } from '../../utils/getLocalCart';
 import { LOCAL_STORAGE_CART_KEY, NEW_CART_VALUE } from '../constants';
 import { useApplicationState } from '../contexts/ApplicationContext';
 
 const useManipulateCart = () => {
   const queryClient = useQueryClient();
-  const [_, setState] = useApplicationState();
+  const [, setState] = useApplicationState();
   const invalidateTheCart = useDebouncedCallback(
     () => {
       queryClient.invalidateQueries('/validate-cart-items');
@@ -19,18 +21,14 @@ const useManipulateCart = () => {
   );
 
   if (typeof window !== 'undefined') {
-    let localCart: ILocalCart = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_CART_KEY) as string
-    );
+    let localCart = getLocalCart();
     // Check if cart key exists in local storage
     if (!localCart) {
       localStorage.setItem(
         LOCAL_STORAGE_CART_KEY,
         JSON.stringify(NEW_CART_VALUE)
       );
-      localCart = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_CART_KEY) as string
-      );
+      localCart = getLocalCart();
     }
 
     const isCartEmpty = () => {
@@ -61,27 +59,25 @@ const useManipulateCart = () => {
         LOCAL_STORAGE_CART_KEY,
         JSON.stringify(NEW_CART_VALUE)
       );
-      localCart = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_CART_KEY) as string
-      );
+      localCart = getLocalCart();
     };
 
     // 🎉 Add to cart
     const addToCart = async (
       newItem: ILocalCartItem,
-      restaurant_id: number
+      restaurant: CART_RESTAURANT
     ) => {
       // If the cart is empty, then we initialize a cart with a restaurant id
       if (isCartEmpty()) {
         const newCart: ILocalCart = {
-          restaurant_id,
+          restaurant: restaurant,
           items: [newItem],
         };
         localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
         queryClient.invalidateQueries('/validate-cart-items');
       } else {
         // If the cart exists, then we check if the added item belongs to the same restautant.
-        if (restaurant_id !== localCart.restaurant_id) {
+        if (restaurant.id !== localCart.restaurant?.id) {
           //💀 Show Cart alert then Create new cart with new restaurant.
           setState(prev => ({
             ...prev,
@@ -89,7 +85,7 @@ const useManipulateCart = () => {
               open: true,
               cb: () => {
                 clearTheCart();
-                addToCart(newItem, restaurant_id);
+                addToCart(newItem, restaurant);
               },
             },
           }));
@@ -107,7 +103,7 @@ const useManipulateCart = () => {
           //  if the item doesn't exist in the cart, add it
           if (existingItemIndex === -1) {
             const newCart: ILocalCart = {
-              restaurant_id: localCart.restaurant_id,
+              restaurant: localCart.restaurant,
               items: [...localCart.items, newItem],
             };
             localStorage.setItem(
@@ -137,7 +133,7 @@ const useManipulateCart = () => {
         if (existingItemIndex !== -1) {
           // copy the old cart
           const newCart: ILocalCart = {
-            restaurant_id: localCart.restaurant_id,
+            restaurant: localCart.restaurant,
             items: [...localCart.items],
           };
 
@@ -169,7 +165,7 @@ const useManipulateCart = () => {
         if (existingItemIndex !== -1) {
           // copy the old cart
           const newCart: ILocalCart = {
-            restaurant_id: localCart.restaurant_id,
+            restaurant: localCart.restaurant,
             items: [...localCart.items],
           };
           // decrement the quantity in the new array
@@ -194,7 +190,7 @@ const useManipulateCart = () => {
       });
 
       const newCart: ILocalCart = {
-        restaurant_id: localCart.restaurant_id,
+        restaurant: localCart.restaurant,
         items: [...localCart.items],
       };
       newCart.items.splice(existingItemIndex, 1);

@@ -1,4 +1,6 @@
+import { ILocalCart } from '../lib/interfaces/cart/ILocalCart';
 import { IApplicationContextProps } from '../lib/interfaces/IApplicationContext';
+import { getLocalCart } from '../utils/getLocalCart';
 
 export const PRIMARY_COLOR = '#FE3DBC';
 export const PRIMARY_LINEAR_GRADIENT_VALUE =
@@ -15,6 +17,7 @@ export const FILTER_TYPES: {
 ];
 export const INITIAL_STATE: IApplicationContextProps = {
   colorMode: 'light',
+  cart_restaurant: null, // Selected order Restaurant
   userAddress: null,
   userLocation: null,
   filtersMenuOpen: false,
@@ -61,20 +64,16 @@ export const FOOTER_LINKS: { href: string; label: string }[] = [
 export const XL_MAX_WIDTH = '1820px';
 
 // 🌌 Spacing between home feed components.
-// --- Applies in (categories,promos,features) slides + DeliverTo + SearchBox
+// --- Applies in (categories,promos,featured) slides + DeliverTo + SearchBox
 export const HOME_FEED_SPACING_XS = 3;
 export const HOME_FEED_SPACING_MD = 4;
 
 // Cart constants
 
-export const NEW_CART_VALUE = {
+export const NEW_CART_VALUE: ILocalCart = {
   items: [],
-  restaurant_id: null,
+  restaurant: null,
 };
-
-// Auth Constants
-
-export const TOKEN_LOCAL_STORAGE_KEY = 'swtkn';
 
 export const DURATIONS = {
   twoMins: 1000 * 60 * 2,

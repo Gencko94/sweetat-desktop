@@ -13,6 +13,8 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { ILocalCartItem } from '../../../../lib/interfaces/cart/ILocalCart';
 import { useTranslation } from 'react-i18next';
 import { ITEM } from '../../../../lib/interfaces/IRestaurantItem';
+import { useGetRestaurantInfo } from '../../../hooks/queryHooks/useGetRestaurantInfo';
+import { useApplicationState } from '../../../contexts/ApplicationContext';
 
 export interface IItemForm {
   selectedaddons: {
@@ -34,11 +36,17 @@ const SingleItemDialogContent = ({
   selectedItem,
 }: ISingleItemDialogContentProps) => {
   const { t } = useTranslation();
+  const { data: restaurant } = useGetRestaurantInfo({
+    id: selectedItem.restaurant_id,
+    queryOptions: { staleTime: 60 * 1000 * 1 }, // 1 minute
+  });
   const cartMethods = useManipulateCart();
+  const [_, setState] = useApplicationState();
   const formMethods = useForm<IItemForm>({
     defaultValues: { quantity: 1, selectedaddons: [] },
   });
   const onSubmit: SubmitHandler<IItemForm> = data => {
+    if (!restaurant) return;
     const item: ILocalCartItem = {
       id: selectedItem.id,
       price: selectedItem.price,
@@ -49,7 +57,24 @@ const SingleItemDialogContent = ({
         addon_category_ar_name: i.addon_category_ar_name,
       })),
     };
-    cartMethods?.addToCart?.(item, selectedItem.restaurant_id);
+    const cart_restaurant = {
+      accept_preorder: restaurant.accept_preorder,
+      ar_name: restaurant.ar_name,
+      delivery_time: restaurant.delivery_time,
+      id: restaurant.id,
+      image: restaurant.image,
+      is_busy: restaurant.is_busy,
+      is_schedulable: restaurant.is_schedulable,
+      logo: restaurant.logo,
+      min_order_price: restaurant.min_order_price,
+      name: restaurant.name,
+      slug: restaurant.slug,
+    };
+    setState(prev => ({
+      ...prev,
+      cart_restaurant,
+    }));
+    cartMethods?.addToCart?.(item, cart_restaurant);
     handleHideItem();
   };
 

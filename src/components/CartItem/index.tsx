@@ -1,4 +1,4 @@
-import { Fab, Stack, Typography } from '@mui/material';
+import { Fab, Paper, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -68,92 +68,95 @@ const CartItem = ({
     }
   };
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      alignItems="flex-start"
-      px={2}
-      spacing={2}
-    >
-      {/* Quantity buttons */}
+    <Box component={Paper} p={1} border={1} borderColor="divider" elevation={0}>
       <Stack
         direction="row"
-        alignItems="center"
         justifyContent="center"
+        alignItems="flex-start"
+        px={2}
         spacing={2}
       >
-        <Fab
-          size="small"
-          onClick={() => handleAppendQuantity()}
-          aria-label="add"
-          sx={{
-            backgroundColor: 'transparent',
-            width: '27px',
-            height: '27px',
-            minHeight: 0,
-          }}
+        {/* Quantity buttons */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
         >
-          <AddIcon color="primary" fontSize="medium" />
-        </Fab>
-        <Typography variant="subtitle1" fontWeight="medium" color="secondary">
-          {item.quantity}
-        </Typography>
-        <Fab
-          size="small"
-          onClick={() => handleSubstractQuantity()}
-          aria-label="add"
-          sx={{
-            backgroundColor: 'transparent',
-            width: '27px',
-            height: '27px',
-            minHeight: 0,
-          }}
-        >
-          {item.quantity === 1 ? (
-            <DeleteIcon color="primary" fontSize="medium" />
-          ) : (
-            <RemoveIcon color="primary" fontSize="medium" />
-          )}
-        </Fab>
-      </Stack>
-      <Box sx={{ flex: 1 }}>
-        <Typography gutterBottom variant="subtitle1" fontWeight="bold">
-          {locale === 'ar' ? item.ar_name : item.name}
-        </Typography>
-        {item.selectedaddons.length > 0 && (
-          <Stack spacing={0}>
-            {item.selectedaddons.map(addon => (
-              <Stack
-                alignItems="center"
-                direction="row"
-                justifyContent="flex-start"
-                key={addon.id}
-                spacing={2}
-              >
-                <Typography variant="subtitle2">
-                  {locale === 'ar' ? addon.ar_name : addon.name}
-                </Typography>
-                {addon.price !== '0.00' && (
-                  <Typography color="secondary" fontWeight="bold">
-                    +{addon.price} KD
-                  </Typography>
-                )}
-              </Stack>
-            ))}
-          </Stack>
-        )}
-      </Box>
+          <Fab
+            size="small"
+            onClick={() => handleAppendQuantity()}
+            aria-label="add"
+            sx={{
+              backgroundColor: 'transparent',
+              width: '27px',
+              height: '27px',
+              minHeight: 0,
+            }}
+          >
+            <AddIcon color="primary" fontSize="medium" />
+          </Fab>
+          <Typography variant="subtitle1" fontWeight="medium" color="secondary">
+            {item.quantity}
+          </Typography>
+          <Fab
+            size="small"
+            onClick={() => handleSubstractQuantity()}
+            aria-label="add"
+            sx={{
+              backgroundColor: 'transparent',
+              width: '27px',
+              height: '27px',
+              minHeight: 0,
+            }}
+          >
+            {item.quantity === 1 ? (
+              <DeleteIcon color="primary" fontSize="medium" />
+            ) : (
+              <RemoveIcon color="primary" fontSize="medium" />
+            )}
+          </Fab>
+        </Stack>
+        <Box sx={{ flex: 1 }}>
+          <Typography gutterBottom variant="subtitle1" fontWeight="bold">
+            {locale === 'ar' ? item.ar_name : item.name}
+          </Typography>
+        </Box>
 
-      {item.price !== '0.00' && (
-        <Typography
-          color="secondary"
-          fontWeight="bold"
-          // sx={{ alignSelf: 'center' }}
-        >
-          {item.price} KD
-        </Typography>
+        {item.price !== '0.00' && (
+          <Typography
+            color="secondary"
+            fontWeight="bold"
+            // sx={{ alignSelf: 'center' }}
+          >
+            {item.price} KD
+          </Typography>
+        )}
+      </Stack>
+
+      {item.selectedaddons.length > 0 && (
+        <Stack justifyContent="center" spacing={1}>
+          {item.selectedaddons.map((addon, i) => (
+            <Stack
+              alignItems="center"
+              direction="row"
+              justifyContent="space-evenly"
+              key={i}
+              spacing={2}
+            >
+              <Typography variant="subtitle2">
+                {locale === 'ar' ? addon.ar_name : addon.name}
+              </Typography>
+              {addon.price !== '0.00' && (
+                <Typography color="secondary" fontWeight="bold">
+                  +{addon.price} KD
+                </Typography>
+              )}
+            </Stack>
+          ))}
+        </Stack>
       )}
-    </Stack>
+    </Box>
   );
 };
 

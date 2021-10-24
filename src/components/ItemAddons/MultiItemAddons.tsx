@@ -49,7 +49,7 @@ const MultiItemAddons = ({ addonCategory }: IMultiItemAddonsProps) => {
     }
   };
   return (
-    <Box key={addonCategory.id}>
+    <Box>
       <Typography
         gutterBottom
         variant="subtitle1"

@@ -30,16 +30,20 @@ export const getRestaurants = async ({
   });
   return res.data;
 };
+
 export const getRestaurantInfo = async ({
   slug,
+  id,
   coverage_area_id,
 }: {
-  slug: string;
+  slug?: string;
+  id?: number;
   coverage_area_id: number;
 }) => {
   const res = await axios.post(`/restaurant`, {
     coverage_area_id,
     slug,
+    id,
   });
   return res.data;
 };

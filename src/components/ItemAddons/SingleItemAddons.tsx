@@ -60,7 +60,7 @@ const SingleItemAddons = ({ addonCategory }: ISingleItemAddonsProps) => {
     }
   };
   return (
-    <Box key={addonCategory.id}>
+    <Box>
       <Typography
         gutterBottom
         variant="subtitle1"

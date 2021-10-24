@@ -1,5 +1,19 @@
+export type CART_RESTAURANT = {
+  id: number;
+  slug: string;
+  name: string;
+  ar_name: string;
+  image: string;
+  logo: string;
+  delivery_time: string;
+  accept_preorder: 0 | 1;
+  is_busy: 0 | 1;
+  is_schedulable: 0 | 1;
+  min_order_price: string;
+};
+
 export interface ILocalCart {
-  restaurant_id: number;
+  restaurant: CART_RESTAURANT | null;
   items: ILocalCartItem[];
 }
 

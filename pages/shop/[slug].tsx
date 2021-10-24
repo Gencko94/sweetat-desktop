@@ -68,14 +68,16 @@ const Shop: NextPage = () => {
 export default Shop;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
+  console.log(ctx.params);
   if (ctx.params) {
     const { locale, params } = ctx;
     const slug = params.slug;
+    const id = null;
     const queryClient = new QueryClient();
     const coverage_area_id = DEFAULT_AREA_COVERAGE_ID;
 
     await queryClient.prefetchQuery(
-      [coverage_area_id, '/restaurant', slug],
+      [coverage_area_id, '/restaurant', slug, id],
       () => getRestaurantInfo({ slug: slug as string, coverage_area_id })
     );
     await queryClient.prefetchQuery(['restaurant-items', slug, locale], () =>

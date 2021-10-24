@@ -6,7 +6,6 @@ export const updateAccount = async (
     token: string;
   }
 ) => {
-  // const token = getToken();
   const resp = await axios.post('/update-profile', {
     ...data,
   });

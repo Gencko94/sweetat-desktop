@@ -42,12 +42,13 @@ const ShopTopSellingSection = memo(
         //   slidesPerView: 3.25,
         //   spaceBetween: 5,
         // },
-        // 1100: {
-        //   slidesPerView: 4.25,
-        //   spaceBetween: 5,
-        // },
+
         1440: {
-          slidesPerView: 5.25,
+          slidesPerView: 4.25,
+          spaceBetween: 5,
+        },
+        1530: {
+          slidesPerView: 4.25,
           spaceBetween: 5,
         },
       }),

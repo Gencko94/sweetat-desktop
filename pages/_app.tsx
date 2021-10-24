@@ -5,12 +5,13 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../styles/createEmotionCache';
 import { appWithTranslation } from 'next-i18next';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Layout from '../src/components/Layout';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { useRouter } from 'next/dist/client/router';
 import { getCartItems } from '../lib/queries/cartService';
 import { LOCAL_STORAGE_CART_KEY, NEW_CART_VALUE } from '../src/constants';
+import { getLocalCart } from '../utils/getLocalCart';
 
 const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
@@ -28,9 +29,10 @@ function MyApp({
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
   const { locale } = useRouter();
-  // ⭐ ---  Local cart initializor --- ⭐
+  // ⭐ --- App initializor --- ⭐
   useEffect(() => {
-    const initialLocalCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+    // 🛒 Local Cart Initialization
+    const initialLocalCart = getLocalCart();
     if (!initialLocalCart) {
       localStorage.setItem(
         LOCAL_STORAGE_CART_KEY,
@@ -41,7 +43,7 @@ function MyApp({
       queryClient.prefetchQuery('/validate-cart-items', getCartItems);
     }
   }, []);
-  // ⭐ ---  End of Local cart initializor --- ⭐
+  // ⭐ ---  End of App initializor --- ⭐
   return (
     <CacheProvider value={emotionCache}>
       <Head>
