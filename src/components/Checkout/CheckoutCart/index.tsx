@@ -1,50 +1,31 @@
-import { Divider, Paper, Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { useTranslation } from 'react-i18next';
-import CartItem from '../CartItem';
-import CartCardOrderSummary from './CartCardOrderSummary';
-import useGetCartItems from '../../hooks/queryHooks/useGetCartItems';
-import useManipulateCart from '../../hooks/useManipulateCart';
 import { LoadingButton } from '@mui/lab';
-import { useMemo } from 'react';
-import { useApplicationState } from '../../contexts/ApplicationContext';
-import { useRouter } from 'next/router';
-const DesktopCartCard = () => {
-  const { t } = useTranslation();
+import { Box, Divider, Paper, Stack, Typography } from '@mui/material';
+import useGetCartItems from '../../../hooks/queryHooks/useGetCartItems';
+import useManipulateCart from '../../../hooks/useManipulateCart';
+import CartItem from '../../CartItem';
+import CartCardOrderSummary from '../../DesktopCartCard/CartCardOrderSummary';
+const CheckoutCart = () => {
   const { data: cart, isFetching } = useGetCartItems();
-  const [state] = useApplicationState();
-  const { push } = useRouter();
-
   const {
     incrementQuantity,
     decrementQuantity,
     removeFromCart,
   } = useManipulateCart();
-  const checkoutDisabled = useMemo(() => {
-    if (cart && state.cart_restaurant !== null) {
-      if (cart.total < +state.cart_restaurant?.min_order_price) {
-        return true;
-      }
-    }
-    return false;
-  }, [cart, state.cart_restaurant]);
-  const handleCheckout = () => {
-    push('/checkout');
-  };
   return (
     <Box p={2} component={Paper} elevation={0} border={1} borderColor="divider">
       <LoadingButton
         fullWidth
-        onClick={handleCheckout}
+        // onClick={handleCheckout}
         variant="contained"
         size="large"
         disableElevation
-        disabled={cart?.items.length === 0 || checkoutDisabled}
+        // disabled={cart?.items.length === 0 || checkoutDisabled}
         loading={isFetching}
       >
-        {checkoutDisabled
+        Complete Checkout
+        {/* {checkoutDisabled
           ? `${t`min-order`} ${state.cart_restaurant?.min_order_price} KD`
-          : `${t`go-to-checkout`}`}
+          : `${t`go-to-checkout`}`} */}
       </LoadingButton>
       {cart?.items.length === 0 && (
         <Box
@@ -82,4 +63,4 @@ const DesktopCartCard = () => {
   );
 };
 
-export default DesktopCartCard;
+export default CheckoutCart;

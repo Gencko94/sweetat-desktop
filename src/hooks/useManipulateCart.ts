@@ -195,7 +195,12 @@ const useManipulateCart = () => {
       };
       newCart.items.splice(existingItemIndex, 1);
       if (newCart.items.length === 0) {
+        // Clear the cart and reset the global cart restaurant state
         clearTheCart();
+        setState(prev => ({
+          ...prev,
+          cart_restaurant: null,
+        }));
       } else {
         localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(newCart));
       }

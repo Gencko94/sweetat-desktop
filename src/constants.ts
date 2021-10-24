@@ -1,4 +1,5 @@
 import { ILocalCart } from '../lib/interfaces/cart/ILocalCart';
+import { IPaymentMethod } from '../lib/interfaces/cart/IPaymentMethod';
 import { IApplicationContextProps } from '../lib/interfaces/IApplicationContext';
 import { getLocalCart } from '../utils/getLocalCart';
 
@@ -83,3 +84,27 @@ export const DURATIONS = {
   thirtyMins: 1000 * 60 * 15,
   oneHour: 1000 * 60 * 60,
 };
+
+export const PAYMENT_METHODS: IPaymentMethod[] = [
+  {
+    name: {
+      ar: 'فيزا او ماستر كارد',
+      en: 'Visa / Mastercard',
+    },
+    logo: '/assets/master-card.svg',
+  },
+  {
+    name: {
+      ar: 'كي-نت',
+      en: 'K-Net',
+    },
+    logo: '/assets/knet.svg',
+  },
+  {
+    name: {
+      ar: 'الدفع عند الإستلام',
+      en: 'Cash on delivery',
+    },
+    logo: '',
+  },
+];
