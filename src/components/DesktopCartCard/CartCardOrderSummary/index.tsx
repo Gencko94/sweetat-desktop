@@ -14,7 +14,7 @@ const CartCardOrderSummary = ({
 }: ICartCardOrderSummaryProps) => {
   const { t } = useTranslation();
   return (
-    <Stack spacing={1} my={2}>
+    <Stack spacing={1} my={2} px={1}>
       {/* <Stack direction="row" justifyContent="space-between" spacing={1}>
         <Typography>{t`delivery-fee`}</Typography>
         <Typography>{delivery_fee} KD</Typography>

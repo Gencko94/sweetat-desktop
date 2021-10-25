@@ -11,6 +11,7 @@ interface ICartItemProps {
   incrementQuantity?: (_: ILocalCartItem) => void;
   decrementQuantity?: (_: ILocalCartItem) => void;
   removeFromCart?: (_: ILocalCartItem) => void;
+  isCheckout?: boolean;
 }
 
 const CartItem = ({
@@ -18,6 +19,7 @@ const CartItem = ({
   incrementQuantity,
   decrementQuantity,
   removeFromCart,
+  isCheckout,
 }: ICartItemProps) => {
   const { locale } = useRouter();
   const handleAppendQuantity = () => {
@@ -68,83 +70,87 @@ const CartItem = ({
     }
   };
   return (
-    <Box component={Paper} p={1} border={1} borderColor="divider" elevation={0}>
+    <Box
+      component={Paper}
+      borderRadius={0}
+      p={1}
+      borderBottom={1}
+      borderColor="divider"
+      elevation={0}
+    >
       <Stack
         direction="row"
         justifyContent="center"
         alignItems="flex-start"
-        px={2}
         spacing={2}
       >
         {/* Quantity buttons */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-        >
-          <Fab
-            size="small"
-            onClick={() => handleAppendQuantity()}
-            aria-label="add"
-            sx={{
-              backgroundColor: 'transparent',
-              width: '27px',
-              height: '27px',
-              minHeight: 0,
-            }}
+        {!isCheckout && (
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
           >
-            <AddIcon color="primary" fontSize="medium" />
-          </Fab>
-          <Typography variant="subtitle1" fontWeight="medium" color="secondary">
-            {item.quantity}
-          </Typography>
-          <Fab
-            size="small"
-            onClick={() => handleSubstractQuantity()}
-            aria-label="add"
-            sx={{
-              backgroundColor: 'transparent',
-              width: '27px',
-              height: '27px',
-              minHeight: 0,
-            }}
-          >
-            {item.quantity === 1 ? (
-              <DeleteIcon color="primary" fontSize="medium" />
-            ) : (
-              <RemoveIcon color="primary" fontSize="medium" />
-            )}
-          </Fab>
-        </Stack>
+            <Fab
+              size="small"
+              onClick={() => handleAppendQuantity()}
+              aria-label="add"
+              sx={{
+                backgroundColor: 'transparent',
+                width: '27px',
+                height: '27px',
+                minHeight: 0,
+              }}
+            >
+              <AddIcon color="primary" fontSize="medium" />
+            </Fab>
+            <Typography variant="subtitle1" fontWeight="bold" color="secondary">
+              {item.quantity}
+            </Typography>
+            <Fab
+              size="small"
+              onClick={() => handleSubstractQuantity()}
+              aria-label="add"
+              sx={{
+                backgroundColor: 'transparent',
+                width: '27px',
+                height: '27px',
+                minHeight: 0,
+              }}
+            >
+              {item.quantity === 1 ? (
+                <DeleteIcon color="primary" fontSize="medium" />
+              ) : (
+                <RemoveIcon color="primary" fontSize="medium" />
+              )}
+            </Fab>
+          </Stack>
+        )}
         <Box sx={{ flex: 1 }}>
-          <Typography gutterBottom variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight="bold">
             {locale === 'ar' ? item.ar_name : item.name}
           </Typography>
         </Box>
 
         {item.price !== '0.00' && (
-          <Typography
-            color="secondary"
-            fontWeight="bold"
-            // sx={{ alignSelf: 'center' }}
-          >
+          <Typography color="secondary" fontWeight="bold" variant="subtitle1">
             {item.price} KD
           </Typography>
         )}
       </Stack>
 
       {item.selectedaddons.length > 0 && (
-        <Stack justifyContent="center" spacing={1}>
+        <Stack justifyContent="center" mt={1.5} spacing={1}>
           {item.selectedaddons.map((addon, i) => (
             <Stack
               alignItems="center"
               direction="row"
-              justifyContent="space-evenly"
+              justifyContent={isCheckout ? 'space-between' : 'space-between'}
               key={i}
               spacing={2}
             >
-              <Typography variant="subtitle2">
+              <Typography variant="body1">
                 {locale === 'ar' ? addon.ar_name : addon.name}
               </Typography>
               {addon.price !== '0.00' && (

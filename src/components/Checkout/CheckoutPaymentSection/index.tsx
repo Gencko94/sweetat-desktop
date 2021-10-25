@@ -2,7 +2,7 @@ import { FormControlLabel, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { PAYMENT_METHODS } from '../../../constants';
 import RadioButton from '../../RadioButton';
-
+import Image from 'next/image';
 const CheckoutPaymentSection = () => {
   const { locale } = useRouter();
   return (
@@ -27,26 +27,27 @@ const CheckoutPaymentSection = () => {
               '&:hover': {
                 borderColor: 'primary.main',
               },
-              //   borderInlineStart: theme =>
-              //     isSelected ? `4px solid ${theme.palette.primary.main}` : '',
             }}
           >
             <FormControlLabel
-              //   value={addon.id}
               sx={{ flex: 1, justifyContent: 'space-between', mx: 0 }}
               label={
-                <Typography fontWeight="medium">
-                  {locale === 'ar' ? method.name.ar : method.name.en}
-                </Typography>
+                <Stack alignItems="center" direction="row" spacing={2}>
+                  <Typography fontWeight="medium">
+                    {locale === 'ar' ? method.name.ar : method.name.en}
+                  </Typography>
+                  {method.logo !== '' && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={method.logo}
+                      alt={method.name.en}
+                      style={{ width: '50px', height: '30px' }}
+                    />
+                  )}
+                </Stack>
               }
               control={
-                <RadioButton
-                  size="small"
-                  //   value={addon.id}
-                  //   onChange={() => handleCheckValue(addon, onChange)}
-                  disableRipple
-                  color="default"
-                />
+                <RadioButton size="small" disableRipple color="default" />
               }
               labelPlacement="start"
             />

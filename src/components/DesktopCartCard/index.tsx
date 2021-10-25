@@ -59,7 +59,15 @@ const DesktopCartCard = () => {
       )}
       {cart && cart.items.length > 0 && (
         <>
-          <Stack spacing={2} my={2}>
+          <Stack
+            sx={{
+              'div:last-child': {
+                border: 'none !important',
+              },
+            }}
+            spacing={1}
+            my={1}
+          >
             {cart.items.map((cartItem, i) => (
               <CartItem
                 key={i}

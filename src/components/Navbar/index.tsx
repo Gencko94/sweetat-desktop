@@ -13,8 +13,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Image from 'next/image';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useToggleUserDrawer } from '../../hooks/useToggleUserDrawer';
-import { XL_MAX_WIDTH } from '../../constants';
+import { DURATIONS, XL_MAX_WIDTH } from '../../constants';
 import SearchBox from '../SearchBox';
+import { useSession } from '../../hooks/useSession';
 
 interface INavBarProps {
   withBorderBottom?: boolean;
@@ -38,6 +39,10 @@ const Navbar = ({
   buttonsColor,
 }: INavBarProps) => {
   const toggleUserDrawer = useToggleUserDrawer();
+  const { session } = useSession({
+    required: false,
+    queryConfig: { staleTime: DURATIONS.twoMins },
+  });
   const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
   return (
     <AppBar
@@ -99,7 +104,7 @@ const Navbar = ({
                 </Button>
               </Hidden>
             )}
-            {withAuth && (
+            {withAuth && !session?.user && (
               <Hidden smDown>
                 <Button disableElevation variant="contained">
                   Sign up or login

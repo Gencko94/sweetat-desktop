@@ -8,9 +8,7 @@ import {
 import { useEffect, useMemo } from 'react';
 import { getDesignTokens } from '../../../styles/globalTheme';
 import { getLocalCart } from '../../../utils/getLocalCart';
-import { DURATIONS } from '../../constants';
 import { useApplicationState } from '../../contexts/ApplicationContext';
-import { useSession } from '../../hooks/useSession';
 import CartAlertDialog from '../CartAlertDialog';
 import FiltersDrawer from '../FiltersDrawer';
 import SearchDrawer from '../SearchDrawer';
@@ -20,10 +18,6 @@ import UserDrawer from '../UserDrawer';
 const Layout: React.FC = ({ children }) => {
   const [state, setState] = useApplicationState();
 
-  useSession({
-    required: false,
-    queryConfig: { staleTime: DURATIONS.twoMins },
-  });
   const theme = useMemo(() => createTheme(getDesignTokens(state.colorMode)), [
     state.colorMode,
   ]);

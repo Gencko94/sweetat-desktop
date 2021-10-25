@@ -1,8 +1,8 @@
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Container, Divider, Stack, Typography } from '@mui/material';
 import CheckoutCart from '../../src/components/Checkout/CheckoutCart';
+import CheckoutCouponSection from '../../src/components/Checkout/CheckoutCouponSection';
 import CheckoutDeliverySection from '../../src/components/Checkout/CheckoutDeliverySection';
 import CheckoutPaymentSection from '../../src/components/Checkout/CheckoutPaymentSection';
-import DesktopCartCard from '../../src/components/DesktopCartCard';
 import Navbar from '../../src/components/Navbar';
 import { useApplicationState } from '../../src/contexts/ApplicationContext';
 
@@ -22,13 +22,24 @@ const Checkout = () => {
         <Typography variant="h5" fontWeight="bold">
           Review your order from {state?.cart_restaurant?.name}
         </Typography>
-        <Stack mt={4} direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+        <Stack mt={4} direction={{ xs: 'column', md: 'row' }} spacing={3}>
           <Stack spacing={3} sx={{ flexBasis: { xs: 'auto', sm: '65%' } }}>
             <CheckoutDeliverySection />
+            <Divider />
             <CheckoutPaymentSection />
+            <Divider />
+            <CheckoutCouponSection restaurant={state.cart_restaurant} />
           </Stack>
-          <Box sx={{ flexBasis: { xs: 'auto', sm: '35%' } }}>
-            <CheckoutCart />
+          <Box
+            sx={{
+              flexBasis: {
+                xs: 'auto',
+                sm: '35%',
+              },
+              minWidth: { xs: 'unset', md: '376px' },
+            }}
+          >
+            <CheckoutCart restaurant={state.cart_restaurant} />
           </Box>
         </Stack>
       </Container>

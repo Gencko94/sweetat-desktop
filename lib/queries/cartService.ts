@@ -11,3 +11,19 @@ export const getCartItems = async () => {
   });
   return res.data;
 };
+export const applyCoupon = async ({
+  coupon,
+  restaurant_id,
+  subtotal,
+}: {
+  coupon: string;
+  restaurant_id: number;
+  subtotal: number;
+}) => {
+  const res = await instance.post('/apply-coupon', {
+    coupon,
+    restaurant_id,
+    subtotal,
+  });
+  return res.data;
+};
