@@ -48,10 +48,10 @@ function MyApp({
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <script
+        {/* <script
           src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYprqr3Vrnmhwx9UQozUNNks7CVH9m3Xg&language=${locale}&libraries=places&v=weekly`}
           async
-        ></script>
+        ></script> */}
       </Head>
 
       <ApplicationProvider>

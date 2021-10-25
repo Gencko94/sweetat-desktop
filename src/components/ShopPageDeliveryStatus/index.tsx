@@ -15,7 +15,7 @@ const ShopPageDeliveryStatus = ({
 }: IShopPageDeliveryStatus) => {
   const { t } = useTranslation();
   return (
-    <Stack direction="row" alignItems="center" spacing={0.5} py={2}>
+    <Stack direction="row" alignItems="center" spacing={0.5} py={1}>
       <AccessTimeIcon color="success" />
 
       <Typography variant="body2" fontWeight="bold">

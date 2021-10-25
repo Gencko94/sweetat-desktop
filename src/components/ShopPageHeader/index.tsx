@@ -1,4 +1,4 @@
-import { Container, Paper, Grid, Divider, Hidden } from '@mui/material';
+import { Container, Paper, Grid, Divider, Hidden, Box } from '@mui/material';
 import { IRestaurantInfo } from '../../../lib/interfaces/IRestaurantInfo';
 import ShopPageImage from '../ShopPageImage';
 import ShopPageDetails from '../ShopPageDetails';
@@ -24,7 +24,8 @@ const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
       <Container
         sx={{
           maxWidth: { xl: 'xl', lg: 'lg' },
-          py: { md: 4, xs: 2 },
+          pt: { md: 2, xs: 2 },
+          pb: { xs: 1, md: 2 },
         }}
       >
         <Grid container spacing={4}>
@@ -36,17 +37,18 @@ const ShopPageHeader = ({ shop }: IShopPageHeaderProps) => {
               <ShopPageImage
                 src={shop.image}
                 placeholder={shop.placeholder_image}
-                alt={`${shop.name} photo`}
+                alt={`${shop.name} cover`}
                 is_active={shop.is_active === 1}
                 accept_preorder={shop.accept_preorder === 1}
               />
-              <Divider />
-              <DeliverTo />
-              <ShopPageDeliveryStatus
-                is_active={shop.is_active === 1}
-                accept_preorder={shop.accept_preorder === 1}
-                delivery_time_label={shop.delivery_time_label}
-              />
+              <Box mt={2}>
+                <DeliverTo />
+                <ShopPageDeliveryStatus
+                  is_active={shop.is_active === 1}
+                  accept_preorder={shop.accept_preorder === 1}
+                  delivery_time_label={shop.delivery_time_label}
+                />
+              </Box>
             </Grid>
           </Hidden>
         </Grid>

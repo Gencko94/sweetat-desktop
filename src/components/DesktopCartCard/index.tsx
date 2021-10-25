@@ -32,7 +32,13 @@ const DesktopCartCard = () => {
     push('/checkout');
   };
   return (
-    <Box p={2} component={Paper} elevation={0} border={1} borderColor="divider">
+    <Box
+      p={2}
+      component={Paper}
+      elevation={2}
+      // border={1}
+      //  borderColor="divider"
+    >
       <LoadingButton
         fullWidth
         onClick={handleCheckout}

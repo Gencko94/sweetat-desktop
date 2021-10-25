@@ -17,6 +17,11 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@200;300;400;500;600;700&display=swap"
             rel="stylesheet"
           />
+          <script
+            src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAYprqr3Vrnmhwx9UQozUNNks7CVH9m3Xg&language=${'en'}&libraries=places&v=weekly`}
+            async
+            defer
+          ></script>
         </Head>
         <body>
           <Main />

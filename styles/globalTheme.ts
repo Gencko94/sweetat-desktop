@@ -19,6 +19,13 @@ export const getDesignTokens = (mode: COLOR_MODES): ThemeOptions => ({
         enableColorOnDark: false,
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'inset 0 2px 4px rgb(0 0 0 / 9%), inset 0 0 0 100px #fff',
+        },
+      },
+    },
     MuiAccordion: {
       defaultProps: {
         disableGutters: true,

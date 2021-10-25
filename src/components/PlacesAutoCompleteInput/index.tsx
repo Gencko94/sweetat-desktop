@@ -30,6 +30,7 @@ const PlacesAutoCompleteInput = ({
     value,
     suggestions: { data, loading },
     setValue,
+    init,
   } = usePlacesAutocomplete({
     requestOptions: {
       /* Define search scope here */
@@ -59,6 +60,9 @@ const PlacesAutoCompleteInput = ({
       setValue(markerAddress, false);
     }
   }, [markerAddress, setValue]);
+  useEffect(() => {
+    init();
+  }, [init]);
 
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 2, md: 3 }}>
